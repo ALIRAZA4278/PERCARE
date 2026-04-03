@@ -1,0 +1,50 @@
+import { Tag } from 'lucide-react';
+
+export default function ExclusiveDeals() {
+  const deals = [
+    {
+      badge: '🩺 VET DEALS',
+      badgeColor: 'bg-green-100 text-green-700',
+      bgColor: 'bg-green-50',
+      borderColor: 'border-green-100',
+      title: 'Up to 30% Off',
+      description: 'On consultations & checkups at partner clinics',
+    },
+    {
+      badge: '📦 PRODUCT DEALS',
+      badgeColor: 'bg-blue-100 text-blue-700',
+      bgColor: 'bg-blue-50',
+      borderColor: 'border-blue-100',
+      title: 'Up to 40% Off',
+      description: 'Premium food, toys & accessories',
+    },
+    {
+      badge: '🐕 SHELTER IMPACT',
+      badgeColor: 'bg-orange-100 text-orange-700',
+      bgColor: 'bg-orange-50',
+      borderColor: 'border-orange-100',
+      title: 'Rs. 3.2M+',
+      description: 'Raised for shelters through our platform',
+    },
+  ];
+
+  return (
+    <div className="mb-8">
+      <div className="flex items-center gap-2 mb-5">
+        <Tag className="text-blue-600" size={24} />
+        <h2 className="text-2xl font-bold text-gray-900">Exclusive Deals — Only on PetCare</h2>
+      </div>
+      <div className="grid grid-cols-3 gap-5">
+        {deals.map((deal, index) => (
+          <div key={index} className={`${deal.bgColor} ${deal.borderColor} rounded-2xl p-6 border hover:shadow-lg transition-shadow`}>
+            <div className={`inline-block ${deal.badgeColor} text-xs font-semibold px-3 py-1.5 rounded-full mb-3`}>
+              {deal.badge}
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">{deal.title}</h3>
+            <p className="text-sm text-gray-600 leading-relaxed">{deal.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
