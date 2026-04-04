@@ -45,19 +45,19 @@ export default function Features() {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-5 mb-8">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-6 sm:mb-8 px-4">
       {features.map((feature) => {
         const Icon = feature.icon;
         return (
           <div
             key={feature.title}
-            className="bg-white rounded-2xl p-6 text-center hover:shadow-lg transition-all cursor-pointer border border-gray-100 group"
+            className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center hover:shadow-lg transition-all cursor-pointer border border-gray-100 group"
           >
-            <div className={`w-14 h-14 ${bgColors[feature.color]} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-              <Icon className={iconColors[feature.color]} size={26} />
+            <div className={`w-12 h-12 sm:w-14 sm:h-14 ${bgColors[feature.color]} rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 group-hover:scale-110 transition-transform`}>
+              <Icon className={iconColors[feature.color]} size={22} className="sm:w-[26px] sm:h-[26px]" />
             </div>
-            <h3 className="font-semibold text-gray-900 mb-2 text-base">{feature.title}</h3>
-            <p className="text-xs text-gray-600 leading-relaxed">{feature.description}</p>
+            <h3 className="font-semibold text-gray-900 mb-1.5 sm:mb-2 text-sm sm:text-base">{feature.title}</h3>
+            <p className="text-xs text-gray-600 leading-relaxed hidden sm:block">{feature.description}</p>
           </div>
         );
       })}

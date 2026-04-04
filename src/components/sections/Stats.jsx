@@ -25,19 +25,19 @@ export default function Stats() {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-5 mb-8">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-6 sm:mb-8 px-4">
       {stats.map((stat) => {
         const Icon = stat.icon;
         return (
           <div
             key={stat.label}
-            className={`${bgColors[stat.color]} rounded-2xl p-6 relative overflow-hidden border border-${stat.color}-100`}
+            className={`${bgColors[stat.color]} rounded-xl sm:rounded-2xl p-4 sm:p-6 relative overflow-hidden border border-${stat.color}-100`}
           >
-            <div className={`absolute top-4 right-4 ${iconColors[stat.color]} opacity-40`}>
-              <Icon size={48} strokeWidth={1.5} />
+            <div className={`absolute top-3 right-3 sm:top-4 sm:right-4 ${iconColors[stat.color]} opacity-40`}>
+              <Icon size={36} strokeWidth={1.5} className="sm:w-12 sm:h-12" />
             </div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-1 relative z-10">{stat.number}</h3>
-            <p className="text-sm text-gray-600 relative z-10">{stat.label}</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 relative z-10">{stat.number}</h3>
+            <p className="text-xs sm:text-sm text-gray-600 relative z-10">{stat.label}</p>
           </div>
         );
       })}

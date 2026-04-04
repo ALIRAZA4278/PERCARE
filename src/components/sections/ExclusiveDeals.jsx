@@ -29,19 +29,19 @@ export default function ExclusiveDeals() {
   ];
 
   return (
-    <div className="mb-8">
-      <div className="flex items-center gap-2 mb-5">
-        <Tag className="text-blue-600" size={24} />
-        <h2 className="text-2xl font-bold text-gray-900">Exclusive Deals — Only on PetCare</h2>
+    <div className="mb-6 sm:mb-8 px-4">
+      <div className="flex items-center gap-2 mb-4 sm:mb-5">
+        <Tag className="text-blue-600" size={20} className="sm:w-6 sm:h-6" />
+        <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Exclusive Deals — Only on PetCare</h2>
       </div>
-      <div className="grid grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
         {deals.map((deal, index) => (
-          <div key={index} className={`${deal.bgColor} ${deal.borderColor} rounded-2xl p-6 border hover:shadow-lg transition-shadow`}>
+          <div key={index} className={`${deal.bgColor} ${deal.borderColor} rounded-xl sm:rounded-2xl p-5 sm:p-6 border hover:shadow-lg transition-shadow`}>
             <div className={`inline-block ${deal.badgeColor} text-xs font-semibold px-3 py-1.5 rounded-full mb-3`}>
               {deal.badge}
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">{deal.title}</h3>
-            <p className="text-sm text-gray-600 leading-relaxed">{deal.description}</p>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{deal.title}</h3>
+            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{deal.description}</p>
           </div>
         ))}
       </div>
