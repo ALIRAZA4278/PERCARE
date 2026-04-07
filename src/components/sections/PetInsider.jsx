@@ -2,42 +2,22 @@ import { BookOpen, ArrowRight } from 'lucide-react';
 
 export default function PetInsider() {
   const articles = [
-    {
-      emoji: '🐾',
-      badge: 'Getting Started',
-      badgeColor: 'bg-purple-50 text-purple-700',
-      title: 'What to Consider When Choosing a New Pet',
-    },
-    {
-      emoji: '🦁',
-      badge: 'Training',
-      badgeColor: 'bg-orange-50 text-orange-700',
-      title: 'Tips for Training Your Cat',
-    },
-    {
-      emoji: '🐕',
-      badge: 'Health',
-      badgeColor: 'bg-green-50 text-green-700',
-      title: 'How to Keep Your Dog Healthy',
-    },
-    {
-      emoji: '💉',
-      badge: 'Health',
-      badgeColor: 'bg-blue-50 text-blue-700',
-      title: 'Understanding Pet Vaccinations',
-    },
+    { emoji: '🐾', badge: 'Getting Started', badgeColor: 'bg-purple-50 text-purple-700', title: 'What to Consider When Choosing a New Pet' },
+    { emoji: '🦁', badge: 'Training', badgeColor: 'bg-orange-50 text-orange-700', title: 'Tips for Training Your Cat' },
+    { emoji: '🐕', badge: 'Health', badgeColor: 'bg-green-50 text-green-700', title: 'How to Keep Your Dog Healthy' },
+    { emoji: '💉', badge: 'Health', badgeColor: 'bg-blue-50 text-blue-700', title: 'Understanding Pet Vaccinations' },
   ];
 
   return (
     <div className="mb-6 sm:mb-8 px-4">
       <div className="flex items-center justify-between mb-4 sm:mb-5">
         <div className="flex items-center gap-2 sm:gap-3">
-          <BookOpen className="text-blue-600" size={20} className="sm:w-6 sm:h-6" />
+          <BookOpen className="text-blue-600" size={20} />
           <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Pet Insider</h2>
         </div>
         <button className="text-blue-600 font-medium hover:text-blue-700 flex items-center gap-1 text-xs sm:text-sm transition-colors">
           View All
-          <ArrowRight size={14} className="sm:w-4 sm:h-4" />
+          <ArrowRight size={14} />
         </button>
       </div>
 

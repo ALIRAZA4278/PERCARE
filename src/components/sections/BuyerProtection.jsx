@@ -1,11 +1,7 @@
 import { CheckCircle } from 'lucide-react';
 
 export default function BuyerProtection() {
-  const features = [
-    'Verified Sellers Only',
-    'Full Accountability',
-    'Easy Returns',
-  ];
+  const features = ['Verified Sellers Only', 'Full Accountability', 'Easy Returns'];
 
   return (
     <div className="bg-green-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-5 sm:mb-6 border border-green-100 mx-4">

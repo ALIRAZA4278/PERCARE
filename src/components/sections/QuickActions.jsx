@@ -2,19 +2,8 @@ import { AlertTriangle, ArrowRight } from 'lucide-react';
 
 export default function QuickActions() {
   const actions = [
-    {
-      icon: AlertTriangle,
-      bgColor: 'bg-yellow-50',
-      iconColor: 'text-yellow-600',
-      title: 'Lost or Found a Pet?',
-      description: 'Report a lost pet or help reunite found animals with their owners.',
-    },
-    {
-      emoji: '🚨',
-      bgColor: 'bg-red-50',
-      title: 'Report a Rescue',
-      description: 'Spotted an abandoned or injured animal? Report it for rescue.',
-    },
+    { icon: AlertTriangle, bgColor: 'bg-yellow-50', iconColor: 'text-yellow-600', title: 'Lost or Found a Pet?', description: 'Report a lost pet or help reunite found animals with their owners.' },
+    { emoji: '🚨', bgColor: 'bg-red-50', title: 'Report a Rescue', description: 'Spotted an abandoned or injured animal? Report it for rescue.' },
   ];
 
   return (
@@ -28,7 +17,7 @@ export default function QuickActions() {
             <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
               <div className={`w-12 h-12 sm:w-14 sm:h-14 ${action.bgColor} rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0`}>
                 {action.icon ? (
-                  <action.icon className={action.iconColor} size={22} className="sm:w-[26px] sm:h-[26px]" />
+                  <action.icon className={action.iconColor} size={22} />
                 ) : (
                   <span className="text-2xl sm:text-3xl">{action.emoji}</span>
                 )}
@@ -39,7 +28,7 @@ export default function QuickActions() {
               </div>
             </div>
             <div className="text-gray-300 group-hover:text-gray-600 transition-colors flex-shrink-0">
-              <ArrowRight size={20} className="sm:w-6 sm:h-6" />
+              <ArrowRight size={20} />
             </div>
           </div>
         </div>

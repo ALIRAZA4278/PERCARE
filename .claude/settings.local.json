@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "WebFetch(domain:fluffynest-hub.lovable.app)"
+    ],
+    "additionalDirectories": [
+      "d:\\RABAH\\PET PROJECT\\my-app\\src\\app\\my-pets"
+    ]
+  }
+}
