@@ -189,7 +189,7 @@ export default function VetDetailPage() {
       </div>
 
       {/* Bottom Fixed Bar */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-10 lg:ml-48">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-10 lg:ml-64">
         <div className="max-w-4xl mx-auto grid grid-cols-2 gap-3">
           <a href={`tel:${vet.phone}`} className="bg-white border border-gray-200 text-gray-700 font-semibold py-3.5 rounded-xl text-center text-sm hover:bg-gray-50 transition-colors">
             Call

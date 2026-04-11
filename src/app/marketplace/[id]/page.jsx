@@ -94,7 +94,7 @@ export default function ProductDetails() {
             </div>
             <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-5 sm:mb-6">Rs. {product.price.toLocaleString()}</div>
 
-            <div className="bg-gray-50 rounded-xl p-3 sm:p-4 mb-5 sm:mb-6 flex items-center justify-between group cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
+            <Link href="/marketplace/seller/1" className="bg-gray-50 rounded-xl p-3 sm:p-4 mb-5 sm:mb-6 flex items-center justify-between group cursor-pointer hover:bg-gray-100 transition-colors border border-gray-100">
               <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
                   <Store className="text-blue-600" size={20} />
@@ -108,7 +108,7 @@ export default function ProductDetails() {
                 </div>
               </div>
               <ChevronRight size={18} className="text-gray-400 group-hover:text-gray-600 transition-colors flex-shrink-0" />
-            </div>
+            </Link>
 
             <p className="text-gray-700 leading-relaxed mb-5 sm:mb-6 text-xs sm:text-sm">{product.description}</p>
 

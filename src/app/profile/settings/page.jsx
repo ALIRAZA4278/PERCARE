@@ -2,9 +2,13 @@
 
 import { ArrowLeft, Bell, Moon, Globe, HelpCircle, Info, LogOut, ChevronRight, X, ExternalLink, Mail, Phone, MessageSquare } from 'lucide-react';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
 
 export default function SettingsPage() {
+  const { logout } = useAuth();
+  const router = useRouter();
   const [pushNotifications, setPushNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
@@ -95,7 +99,7 @@ export default function SettingsPage() {
           </button>
 
           {/* Log Out */}
-          <button className="w-full flex items-center bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-200 hover:shadow-md transition-all group text-left gap-3 sm:gap-4">
+          <button onClick={() => { logout(); router.push('/'); }} className="w-full flex items-center bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-200 hover:shadow-md transition-all group text-left gap-3 sm:gap-4">
             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-red-50 rounded-xl flex items-center justify-center flex-shrink-0 border border-red-100">
               <LogOut size={20} className="text-red-600" />
             </div>

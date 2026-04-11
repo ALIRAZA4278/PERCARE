@@ -2,6 +2,7 @@
 
 import Sidebar from "@/components/Sidebar";
 import { CartProvider } from "@/context/CartContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
 
 const authRoutes = ['/login', '/signup'];
@@ -11,15 +12,21 @@ export default function ClientLayout({ children }) {
   const isAuthPage = authRoutes.includes(pathname);
 
   if (isAuthPage) {
-    return <CartProvider>{children}</CartProvider>;
+    return (
+      <AuthProvider>
+        <CartProvider>{children}</CartProvider>
+      </AuthProvider>
+    );
   }
 
   return (
-    <CartProvider>
-      <Sidebar />
-      <main className="lg:ml-48 pt-16 lg:pt-0">
-        {children}
-      </main>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <Sidebar />
+        <main className="lg:ml-64 pt-16 lg:pt-0">
+          {children}
+        </main>
+      </CartProvider>
+    </AuthProvider>
   );
 }
