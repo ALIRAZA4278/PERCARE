@@ -1,31 +1,43 @@
 'use client';
 
-import { User, Stethoscope, ShoppingBag, Heart, Eye, EyeOff, UserPlus } from 'lucide-react';
+import { User, Stethoscope, ShoppingBag, Heart, Building2, Store, Eye, EyeOff, UserPlus } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 
 export default function SignupPage() {
-  const { login } = useAuth();
+  const { signup } = useAuth();
   const router = useRouter();
-  const [selectedRole, setSelectedRole] = useState('pet-owner');
+  const [selectedRole, setSelectedRole] = useState('pet_owner');
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const roles = [
-    { id: 'pet-owner', icon: User, label: 'Pet Owner', approval: false },
+    { id: 'pet_owner', icon: User, label: 'Pet Owner', approval: false },
     { id: 'veterinarian', icon: Stethoscope, label: 'Veterinarian', approval: true },
-    { id: 'seller', icon: ShoppingBag, label: 'Seller / Company', approval: true },
+    { id: 'clinic', icon: Building2, label: 'Clinic / Hospital', approval: true },
+    { id: 'seller', icon: ShoppingBag, label: 'Seller', approval: true },
+    { id: 'company', icon: Store, label: 'Company / Brand', approval: true },
     { id: 'shelter', icon: Heart, label: 'Shelter', approval: true },
   ];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    login();
-    router.push('/');
+    setError('');
+    setIsLoading(true);
+    try {
+      await signup(email, password, fullName, selectedRole);
+      router.push('/');
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -40,10 +52,16 @@ export default function SignupPage() {
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8">
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
+              {error}
+            </div>
+          )}
+
           <div className="mb-6">
             <h2 className="font-bold text-gray-900 mb-1">I want to join as</h2>
             <p className="text-sm text-gray-500 mb-4">Select your account type</p>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {roles.map(({ id, icon: Icon, label, approval }) => (
                 <button key={id} type="button" onClick={() => setSelectedRole(id)}
                   className={`p-4 rounded-xl border-2 text-center transition-all ${selectedRole === id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
@@ -70,7 +88,7 @@ export default function SignupPage() {
           <div className="mb-6">
             <label className="block text-sm font-bold text-gray-900 mb-2">Password</label>
             <div className="relative">
-              <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required
+              <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6}
                 className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all text-gray-900 text-sm bg-gray-50" />
               <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-colors">
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
@@ -78,8 +96,10 @@ export default function SignupPage() {
             </div>
           </div>
 
-          <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
-            <UserPlus size={16} />Create Account
+          <button type="submit" disabled={isLoading}
+            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
+            <UserPlus size={16} />
+            {isLoading ? 'Creating Account...' : 'Create Account'}
           </button>
 
           <p className="text-center text-sm text-gray-600 mt-5">
