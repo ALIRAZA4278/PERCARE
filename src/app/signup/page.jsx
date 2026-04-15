@@ -1,6 +1,6 @@
 'use client';
 
-import { User, Stethoscope, ShoppingBag, Heart, Building2, Store, Eye, EyeOff, UserPlus } from 'lucide-react';
+import { User, Stethoscope, ShoppingBag, Heart, Eye, EyeOff, UserPlus } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -20,9 +20,7 @@ export default function SignupPage() {
   const roles = [
     { id: 'pet_owner', icon: User, label: 'Pet Owner', approval: false },
     { id: 'veterinarian', icon: Stethoscope, label: 'Veterinarian', approval: true },
-    { id: 'clinic', icon: Building2, label: 'Clinic / Hospital', approval: true },
-    { id: 'seller', icon: ShoppingBag, label: 'Seller', approval: true },
-    { id: 'company', icon: Store, label: 'Company / Brand', approval: true },
+    { id: 'seller', icon: ShoppingBag, label: 'Seller / Company', approval: true },
     { id: 'shelter', icon: Heart, label: 'Shelter', approval: true },
   ];
 
@@ -61,7 +59,7 @@ export default function SignupPage() {
           <div className="mb-6">
             <h2 className="font-bold text-gray-900 mb-1">I want to join as</h2>
             <p className="text-sm text-gray-500 mb-4">Select your account type</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-2 gap-3">
               {roles.map(({ id, icon: Icon, label, approval }) => (
                 <button key={id} type="button" onClick={() => setSelectedRole(id)}
                   className={`p-4 rounded-xl border-2 text-center transition-all ${selectedRole === id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}>

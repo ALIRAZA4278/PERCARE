@@ -1,27 +1,47 @@
 'use client';
 
 import { X, Camera, Plus, Trash2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { uploadImage } from '@/lib/upload';
 
 export default function AddPetModal({ isOpen, onClose, onAdd }) {
+  const { user } = useAuth();
+  const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
     name: '', species: '', breed: '', age_years: '', age_months: '',
     gender: '', weight: '', color: '', medical_notes: '', is_neutered: false,
   });
   const [vaccines, setVaccines] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleImageSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImageFile(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      if (onAdd) await onAdd({ ...formData, vaccines });
+      let image_url = null;
+      if (imageFile && user) {
+        image_url = await uploadImage('pet-images', imageFile, user.id);
+      }
+      if (onAdd) await onAdd({ ...formData, vaccines, image_url });
       onClose();
       setFormData({
         name: '', species: '', breed: '', age_years: '', age_months: '',
         gender: '', weight: '', color: '', medical_notes: '', is_neutered: false,
       });
       setVaccines([]);
+      setImageFile(null);
+      setImagePreview(null);
     } catch (err) {
       console.error('Error adding pet:', err);
     } finally {
@@ -56,16 +76,22 @@ export default function AddPetModal({ isOpen, onClose, onAdd }) {
     <>
       <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto">
           <div className="flex items-center justify-between p-5 sm:p-6 border-b border-gray-200 sticky top-0 bg-white rounded-t-2xl z-10">
             <h2 className="text-lg font-bold text-gray-900">Add New Pet</h2>
             <button onClick={onClose} className="p-1 hover:bg-gray-100 rounded-lg transition-colors"><X size={20} className="text-gray-700" /></button>
           </div>
           <form onSubmit={handleSubmit} className="p-5 sm:p-6">
-            {/* Photo Placeholder */}
+            {/* Photo Upload */}
             <div className="flex justify-center mb-5">
-              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors border-2 border-dashed border-gray-300">
-                <Camera size={24} className="text-gray-400" />
+              <input type="file" ref={fileInputRef} accept="image/*" onChange={handleImageSelect} className="hidden" />
+              <div onClick={() => fileInputRef.current?.click()}
+                className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors border-2 border-dashed border-gray-300 overflow-hidden">
+                {imagePreview ? (
+                  <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
+                ) : (
+                  <Camera size={24} className="text-gray-400" />
+                )}
               </div>
             </div>
 

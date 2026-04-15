@@ -1,6 +1,6 @@
 'use client';
 
-import { User, Stethoscope, ShoppingBag, Heart, Building2, Store, Eye, EyeOff, LogIn } from 'lucide-react';
+import { User, Stethoscope, ShoppingBag, Heart, Eye, EyeOff, LogIn } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -9,11 +9,19 @@ import { useAuth } from '@/context/AuthContext';
 export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
+  const [selectedRole, setSelectedRole] = useState('pet_owner');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const roles = [
+    { id: 'pet_owner', icon: User, label: 'Pet Owner', description: 'Manage pets, book vets, shop' },
+    { id: 'veterinarian', icon: Stethoscope, label: 'Veterinarian', description: 'Manage clinic & patients' },
+    { id: 'seller', icon: ShoppingBag, label: 'Seller / Company', description: 'Sell products & manage store' },
+    { id: 'shelter', icon: Heart, label: 'Shelter', description: 'Manage shelter & adoptions' },
+  ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +54,21 @@ export default function LoginPage() {
               {error}
             </div>
           )}
+
+          <div className="mb-6">
+            <h2 className="font-bold text-gray-900 mb-1">Choose your role</h2>
+            <p className="text-sm text-gray-500 mb-4">Select how you want to sign in</p>
+            <div className="grid grid-cols-2 gap-3">
+              {roles.map(({ id, icon: Icon, label, description }) => (
+                <button key={id} type="button" onClick={() => setSelectedRole(id)}
+                  className={`p-4 rounded-xl border-2 text-center transition-all ${selectedRole === id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
+                  <Icon size={24} className={`mx-auto mb-2 ${selectedRole === id ? 'text-blue-600' : 'text-gray-400'}`} />
+                  <p className={`text-sm font-semibold ${selectedRole === id ? 'text-blue-600' : 'text-gray-700'}`}>{label}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{description}</p>
+                </button>
+              ))}
+            </div>
+          </div>
 
           <div className="mb-4">
             <label className="block text-sm font-bold text-gray-900 mb-2">Email</label>

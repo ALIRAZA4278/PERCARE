@@ -1,22 +1,66 @@
 'use client';
 
 import { AlertTriangle, MapPin, Clock, Plus } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/lib/supabase';
 import ReportPetModal from '@/components/ReportPetModal';
 
 export default function LostAndFoundPage() {
+  const { user } = useAuth();
   const [activeFilter, setActiveFilter] = useState('all');
   const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const reports = [
-    { id: 1, type: 'lost', species: 'Dog', breed: 'German Shepherd', name: 'Bruno', description: 'Brown and black, wearing a red collar. Very friendly.', location: 'Gulberg III, Lahore', timeAgo: '2 hours ago' },
-    { id: 2, type: 'found', species: 'Cat', breed: 'Persian', name: 'Unknown Cat', description: 'White Persian cat found near park. No collar.', location: 'DHA Phase 5, Karachi', timeAgo: '5 hours ago' },
-    { id: 3, type: 'lost', species: 'Bird', breed: 'Cockatiel', name: 'Coco', description: 'Grey cockatiel with orange cheeks. Responds to name.', location: 'F-7, Islamabad', timeAgo: '1 day ago' },
-    { id: 4, type: 'found', species: 'Dog', breed: 'Labrador', name: 'Unknown Dog', description: 'Golden Labrador found in park. Very friendly, no tags.', location: 'Bahria Town, Lahore', timeAgo: '3 hours ago' },
-    { id: 5, type: 'lost', species: 'Cat', breed: 'Siamese', name: 'Milo', description: 'Siamese cat with blue collar. Microchipped.', location: 'Clifton, Karachi', timeAgo: '6 hours ago' },
-  ];
+  useEffect(() => {
+    fetchReports();
+  }, []);
+
+  const fetchReports = async () => {
+    const { data } = await supabase
+      .from('lost_found_pets')
+      .select('*, reporter:profiles(full_name)')
+      .eq('status', 'active')
+      .order('created_at', { ascending: false });
+    setReports(data || []);
+    setLoading(false);
+  };
+
+  const handleSubmitReport = async (formData) => {
+    if (!user) return;
+    const { error } = await supabase.from('lost_found_pets').insert({
+      reporter_id: user.id,
+      type: formData.type,
+      pet_name: formData.pet_name,
+      species: formData.species,
+      breed: formData.breed || null,
+      color: formData.color || null,
+      last_seen_location: formData.last_seen_location,
+      last_seen_date: formData.last_seen_date || null,
+      city: formData.city,
+      contact_phone: formData.contact_phone,
+      contact_email: formData.contact_email || null,
+      description: formData.description,
+    });
+    if (error) throw error;
+    fetchReports();
+  };
+
+  const getTimeAgo = (dateStr) => {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    if (hours < 1) return 'Just now';
+    if (hours < 24) return `${hours} hours ago`;
+    const days = Math.floor(hours / 24);
+    return `${days} day${days > 1 ? 's' : ''} ago`;
+  };
 
   const filteredReports = reports.filter(r => activeFilter === 'all' || r.type === activeFilter);
+
+  if (loading) {
+    return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -25,15 +69,15 @@ export default function LostAndFoundPage() {
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Lost & Found</h1>
             <button onClick={() => setIsReportModalOpen(true)} className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg flex items-center gap-2 transition-colors shadow-sm text-sm sm:text-base">
-              <Plus size={18} />
-              <span className="hidden sm:inline">Report</span>
+              <Plus size={18} /><span className="hidden sm:inline">Report</span>
             </button>
           </div>
           <div className="flex items-center gap-2">
             {['all', 'lost', 'found'].map((f) => (
               <button key={f} onClick={() => setActiveFilter(f)}
-                className={`px-4 sm:px-5 py-2 rounded-lg font-medium text-sm transition-colors capitalize ${activeFilter === f ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
-              >{f}</button>
+                className={`px-4 sm:px-5 py-2 rounded-lg font-medium text-sm transition-colors capitalize ${activeFilter === f ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
+                {f}
+              </button>
             ))}
           </div>
         </div>
@@ -50,15 +94,17 @@ export default function LostAndFoundPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-2">
                     <span className={`text-[10px] sm:text-xs font-semibold px-2.5 py-1 rounded-full uppercase ${report.type === 'lost' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`}>{report.type}</span>
-                    <span className="text-xs sm:text-sm text-gray-600">{report.species} · {report.breed}</span>
+                    <span className="text-xs sm:text-sm text-gray-600 capitalize">{report.species} {report.breed ? `· ${report.breed}` : ''}</span>
                   </div>
-                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{report.name}</h3>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{report.pet_name || 'Unknown Pet'}</h3>
                   <p className="text-sm sm:text-base text-gray-700 mb-3 leading-relaxed">{report.description}</p>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-4 text-xs sm:text-sm text-gray-600">
-                    <div className="flex items-center gap-1.5"><MapPin size={14} className="text-gray-400" /><span>{report.location}</span></div>
-                    <div className="flex items-center gap-1.5"><Clock size={14} className="text-gray-400" /><span>{report.timeAgo}</span></div>
+                    <div className="flex items-center gap-1.5"><MapPin size={14} className="text-gray-400" /><span>{report.last_seen_location}{report.city ? `, ${report.city}` : ''}</span></div>
+                    <div className="flex items-center gap-1.5"><Clock size={14} className="text-gray-400" /><span>{getTimeAgo(report.created_at)}</span></div>
                   </div>
-                  <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2 rounded-lg transition-colors text-sm">Contact</button>
+                  {report.contact_phone && (
+                    <a href={`tel:${report.contact_phone}`} className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2 rounded-lg transition-colors text-sm inline-block">Contact</a>
+                  )}
                 </div>
               </div>
             </div>
@@ -75,7 +121,7 @@ export default function LostAndFoundPage() {
           </div>
         )}
       </div>
-      <ReportPetModal isOpen={isReportModalOpen} onClose={() => setIsReportModalOpen(false)} />
+      <ReportPetModal isOpen={isReportModalOpen} onClose={() => setIsReportModalOpen(false)} onSubmit={handleSubmitReport} />
     </div>
   );
 }

@@ -10,8 +10,9 @@ const authRoutes = ['/login', '/signup'];
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
   const isAuthPage = authRoutes.includes(pathname);
+  const isDashboardPage = pathname.startsWith('/vet-dashboard') || pathname.startsWith('/seller-dashboard') || pathname.startsWith('/shelter-dashboard') || pathname.startsWith('/admin-dashboard');
 
-  if (isAuthPage) {
+  if (isAuthPage || isDashboardPage) {
     return (
       <AuthProvider>
         <CartProvider>{children}</CartProvider>
