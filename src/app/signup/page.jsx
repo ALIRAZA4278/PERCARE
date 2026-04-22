@@ -24,13 +24,15 @@ export default function SignupPage() {
     { id: 'shelter', icon: Heart, label: 'Shelter', approval: true },
   ];
 
+  const roleRedirect = { veterinarian: '/vet-dashboard', seller: '/seller-dashboard', shelter: '/shelter-dashboard' };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
     try {
       await signup(email, password, fullName, selectedRole);
-      router.push('/');
+      router.push(roleRedirect[selectedRole] || '/');
     } catch (err) {
       setError(err.message);
     } finally {

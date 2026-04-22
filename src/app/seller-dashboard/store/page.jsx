@@ -20,6 +20,8 @@ export default function SellerStorePage() {
     name: '', description: '', store_category: '', store_type: 'Physical + Online Store',
     address: '', phone: '', website: '',
   });
+  const [createForm, setCreateForm] = useState({ name: '', description: '', store_category: 'General Pet Store', address: '', city: '', phone: '' });
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     if (user) fetchData();
@@ -81,13 +83,72 @@ export default function SellerStorePage() {
 
   if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
 
+  const handleCreateStore = async () => {
+    if (!createForm.name.trim()) return;
+    setCreating(true);
+    const { data } = await supabase.from('stores').insert({
+      owner_id: user.id,
+      name: createForm.name,
+      description: createForm.description || null,
+      store_category: createForm.store_category || null,
+      address: createForm.address || null,
+      city: createForm.city || null,
+      phone: createForm.phone || null,
+      location_type: 'both',
+    }).select().single();
+    if (data) setStore(data);
+    setCreating(false);
+  };
+
   if (!store) {
     return (
-      <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-[60vh]">
-        <div className="text-center max-w-md">
-          <div className="text-6xl mb-4">🏪</div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Create Your Store</h2>
-          <p className="text-gray-600 mb-6">Set up your store to start selling.</p>
+      <div className="p-4 sm:p-6 lg:p-8">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">My Store</h1>
+        <div className="bg-white rounded-2xl border border-gray-200 p-6 max-w-xl">
+          <h2 className="text-lg font-bold text-gray-900 mb-1">Create Your Store</h2>
+          <p className="text-sm text-gray-500 mb-5">Set up your store to start selling products.</p>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Store Name *</label>
+              <input type="text" value={createForm.name} onChange={e => setCreateForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g., PetCare Supplies"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <textarea value={createForm.description} onChange={e => setCreateForm(f => ({ ...f, description: e.target.value }))} rows={3} placeholder="Describe your store..."
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 text-sm text-gray-900 bg-white placeholder-gray-400 resize-none" />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <select value={createForm.store_category} onChange={e => setCreateForm(f => ({ ...f, store_category: e.target.value }))}
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 text-sm text-gray-900 bg-white">
+                  {categoryOptions.map(c => <option key={c}>{c}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <input type="text" value={createForm.phone} onChange={e => setCreateForm(f => ({ ...f, phone: e.target.value }))} placeholder="+92 300 1234567"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 text-sm text-gray-900 bg-white placeholder-gray-400" />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                <input type="text" value={createForm.address} onChange={e => setCreateForm(f => ({ ...f, address: e.target.value }))} placeholder="Street address"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 text-sm text-gray-900 bg-white placeholder-gray-400" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                <input type="text" value={createForm.city} onChange={e => setCreateForm(f => ({ ...f, city: e.target.value }))} placeholder="e.g., Karachi"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 text-sm text-gray-900 bg-white placeholder-gray-400" />
+              </div>
+            </div>
+            <button onClick={handleCreateStore} disabled={creating || !createForm.name.trim()}
+              className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
+              {creating ? 'Creating...' : 'Create Store'}
+            </button>
+          </div>
         </div>
       </div>
     );

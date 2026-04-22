@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { supabase } from '@/lib/supabase';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -23,13 +24,16 @@ export default function LoginPage() {
     { id: 'shelter', icon: Heart, label: 'Shelter', description: 'Manage shelter & adoptions' },
   ];
 
+  const roleRedirect = { veterinarian: '/vet-dashboard', seller: '/seller-dashboard', company: '/seller-dashboard', shelter: '/shelter-dashboard' };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
     try {
-      await login(email, password);
-      router.push('/');
+      const { user } = await login(email, password);
+      const { data: p } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+      router.push(roleRedirect[p?.role] || '/');
     } catch (err) {
       setError(err.message);
     } finally {

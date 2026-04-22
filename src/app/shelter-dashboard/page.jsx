@@ -14,6 +14,8 @@ export default function ShelterOverviewPage() {
   const [adoptionRequests, setAdoptionRequests] = useState([]);
   const [donations, setDonations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [createForm, setCreateForm] = useState({ name: '', description: '', address: '', city: '', phone: '', email: '' });
+  const [creating, setCreating] = useState(false);
 
   useEffect(() => {
     if (user) fetchData();
@@ -78,12 +80,68 @@ export default function ShelterOverviewPage() {
 
   if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
 
+  const handleCreateShelter = async () => {
+    if (!createForm.name.trim() || !createForm.address.trim() || !createForm.city.trim()) return;
+    setCreating(true);
+    const { data } = await supabase.from('shelters').insert({
+      owner_id: user.id,
+      name: createForm.name,
+      description: createForm.description || null,
+      address: createForm.address,
+      city: createForm.city,
+      phone: createForm.phone || null,
+      email: createForm.email || null,
+    }).select().single();
+    if (data) setShelter(data);
+    setCreating(false);
+  };
+
   if (!shelter) return (
     <div className="p-4 sm:p-6 lg:p-8">
-      <div className="text-center py-20">
-        <div className="text-6xl mb-4">🏠</div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2">No Shelter Profile</h3>
-        <p className="text-gray-600 mb-4">Set up your shelter profile to get started.</p>
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Welcome to Shelter Dashboard</h1>
+      <div className="bg-white rounded-2xl border border-gray-200 p-6 max-w-xl">
+        <h2 className="text-lg font-bold text-gray-900 mb-1">Set Up Your Shelter</h2>
+        <p className="text-sm text-gray-500 mb-5">Create your shelter profile to start managing animals and adoptions.</p>
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Shelter Name *</label>
+            <input type="text" value={createForm.name} onChange={e => setCreateForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g., Safe Paws Shelter"
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <textarea value={createForm.description} onChange={e => setCreateForm(f => ({ ...f, description: e.target.value }))} rows={3} placeholder="About your shelter..."
+              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 text-sm text-gray-900 bg-white placeholder-gray-400 resize-none" />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
+              <input type="text" value={createForm.address} onChange={e => setCreateForm(f => ({ ...f, address: e.target.value }))} placeholder="Street address"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 text-sm text-gray-900 bg-white placeholder-gray-400" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
+              <input type="text" value={createForm.city} onChange={e => setCreateForm(f => ({ ...f, city: e.target.value }))} placeholder="e.g., Karachi"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 text-sm text-gray-900 bg-white placeholder-gray-400" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+              <input type="text" value={createForm.phone} onChange={e => setCreateForm(f => ({ ...f, phone: e.target.value }))} placeholder="+92 300 1234567"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 text-sm text-gray-900 bg-white placeholder-gray-400" />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input type="email" value={createForm.email} onChange={e => setCreateForm(f => ({ ...f, email: e.target.value }))} placeholder="info@shelter.org"
+                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 text-sm text-gray-900 bg-white placeholder-gray-400" />
+            </div>
+          </div>
+          <button onClick={handleCreateShelter} disabled={creating || !createForm.name.trim() || !createForm.address.trim() || !createForm.city.trim()}
+            className="w-full bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
+            {creating ? 'Creating...' : 'Create Shelter Profile'}
+          </button>
+        </div>
       </div>
     </div>
   );
