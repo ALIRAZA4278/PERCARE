@@ -1,13 +1,35 @@
 'use client';
 
 import { Stethoscope, Building2, Package, Home } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabase';
 
 export default function Stats() {
+  const [counts, setCounts] = useState({ vets: 0, clinics: 0, products: 0, shelters: 0 });
+
+  useEffect(() => {
+    const fetchCounts = async () => {
+      const [vetsRes, clinicsRes, productsRes, sheltersRes] = await Promise.all([
+        supabase.from('vet_profiles').select('id', { count: 'exact', head: true }),
+        supabase.from('clinics').select('id', { count: 'exact', head: true }).eq('is_approved', true),
+        supabase.from('products').select('id', { count: 'exact', head: true }).eq('is_active', true).eq('is_approved', true),
+        supabase.from('shelters').select('id', { count: 'exact', head: true }),
+      ]);
+      setCounts({
+        vets: vetsRes.count || 0,
+        clinics: clinicsRes.count || 0,
+        products: productsRes.count || 0,
+        shelters: sheltersRes.count || 0,
+      });
+    };
+    fetchCounts();
+  }, []);
+
   const stats = [
-    { number: '500+', label: 'Verified Vets', color: 'blue', icon: Stethoscope },
-    { number: '120+', label: 'Clinics', color: 'green', icon: Building2 },
-    { number: '2,000+', label: 'Products', color: 'yellow', icon: Package },
-    { number: '50+', label: 'Shelters', color: 'red', icon: Home },
+    { number: counts.vets > 0 ? `${counts.vets}+` : '—', label: 'Verified Vets', color: 'blue', icon: Stethoscope },
+    { number: counts.clinics > 0 ? `${counts.clinics}+` : '—', label: 'Clinics', color: 'green', icon: Building2 },
+    { number: counts.products > 0 ? `${counts.products}+` : '—', label: 'Products', color: 'yellow', icon: Package },
+    { number: counts.shelters > 0 ? `${counts.shelters}+` : '—', label: 'Shelters', color: 'red', icon: Home },
   ];
 
   const bgColors = { blue: 'bg-blue-50', green: 'bg-green-50', red: 'bg-red-50', yellow: 'bg-yellow-50' };
