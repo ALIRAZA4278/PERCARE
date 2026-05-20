@@ -1,8 +1,10 @@
+import Link from 'next/link';
+
 export default function Footer() {
   const links = [
-    { label: 'FAQ', href: '#' },
-    { label: 'Terms & Conditions', href: '#' },
-    { label: 'Privacy Policy', href: '#' },
+    { label: 'FAQ', href: '/profile/settings/faq' },
+    { label: 'Terms & Conditions', href: '/terms' },
+    { label: 'Privacy Policy', href: '/privacy' },
   ];
 
   return (
@@ -10,9 +12,9 @@ export default function Footer() {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-xs sm:text-sm text-gray-600">
         {links.map((link, index) => (
           <span key={link.label} className="flex items-center gap-4 sm:gap-8">
-            <a href={link.href} className="hover:text-gray-900 transition-colors font-medium">
+            <Link href={link.href} className="hover:text-gray-900 transition-colors font-medium">
               {link.label}
-            </a>
+            </Link>
             {index < links.length - 1 && <span className="text-gray-300 hidden sm:inline">·</span>}
           </span>
         ))}
