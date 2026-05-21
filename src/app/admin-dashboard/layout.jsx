@@ -10,7 +10,7 @@ export default function AdminDashboardLayout({ children }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !isLoggedIn) { router.push('/login'); return; }
+    if (!loading && !isLoggedIn) { router.push('/admin/login'); return; }
     if (!loading && profile && profile.role !== 'admin') { router.push('/'); }
   }, [loading, isLoggedIn, profile]);
 

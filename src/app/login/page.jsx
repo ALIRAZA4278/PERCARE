@@ -24,7 +24,7 @@ export default function LoginPage() {
     { id: 'shelter', icon: Heart, label: 'Shelter', description: 'Manage shelter & adoptions' },
   ];
 
-  const roleRedirect = { veterinarian: '/vet-dashboard', seller: '/seller-dashboard', company: '/seller-dashboard', shelter: '/shelter-dashboard' };
+  const roleRedirect = { veterinarian: '/vet-dashboard', seller: '/seller-dashboard', company: '/seller-dashboard', shelter: '/shelter-dashboard', admin: '/admin-dashboard' };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
