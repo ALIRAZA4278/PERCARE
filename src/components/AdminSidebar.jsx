@@ -1,6 +1,6 @@
 'use client';
 
-import { LayoutDashboard, CheckSquare, Users, ShoppingBag, Flag, Star, Ticket, ScrollText, LogOut, Menu, X, Shield } from 'lucide-react';
+import { LayoutDashboard, CheckSquare, Users, ShoppingBag, Flag, Star, Ticket, ScrollText, LogOut, Shield, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -13,47 +13,47 @@ export default function AdminSidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navItems = [
-    { name: 'Overview', icon: LayoutDashboard, href: '/admin-dashboard' },
-    { name: 'Approvals', icon: CheckSquare, href: '/admin-dashboard/approvals' },
-    { name: 'Users', icon: Users, href: '/admin-dashboard/users' },
-    { name: 'Orders', icon: ShoppingBag, href: '/admin-dashboard/orders' },
-    { name: 'Reports', icon: Flag, href: '/admin-dashboard/reports' },
-    { name: 'Reviews', icon: Star, href: '/admin-dashboard/reviews' },
-    { name: 'Tickets', icon: Ticket, href: '/admin-dashboard/tickets' },
-    { name: 'Audit Log', icon: ScrollText, href: '/admin-dashboard/audit' },
+    { name: 'Overview', icon: LayoutDashboard, href: '/admin' },
+    { name: 'Approvals', icon: CheckSquare, href: '/admin/approvals' },
+    { name: 'Users', icon: Users, href: '/admin/users' },
+    { name: 'Orders', icon: ShoppingBag, href: '/admin/orders' },
+    { name: 'Reports', icon: Flag, href: '/admin/reports' },
+    { name: 'Reviews', icon: Star, href: '/admin/reviews' },
+    { name: 'Tickets', icon: Ticket, href: '/admin/tickets' },
+    { name: 'Audit Log', icon: ScrollText, href: '/admin/audit' },
   ];
 
   const handleLogout = async () => {
     await logout();
-    router.push('/login');
+    router.push('/admin/login');
   };
 
   const isActive = (href) => {
-    if (href === '/admin-dashboard') return pathname === '/admin-dashboard';
+    if (href === '/admin') return pathname === '/admin';
     return pathname.startsWith(href);
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full">
-      <div className="p-5 border-b border-gray-100">
+    <div className="flex flex-col h-full bg-gray-950">
+      <div className="p-5 border-b border-gray-800">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 bg-red-600 rounded-xl flex items-center justify-center">
             <Shield size={18} className="text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-gray-900 text-sm">PetCare</h1>
+            <h1 className="font-bold text-white text-sm">FluffyNest</h1>
             <p className="text-[10px] text-gray-500 uppercase tracking-wider font-semibold">ADMIN PANEL</p>
           </div>
         </div>
       </div>
 
-      <div className="p-4 border-b border-gray-100">
+      <div className="p-4 border-b border-gray-800">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-sm">
+          <div className="w-9 h-9 bg-red-900 rounded-full flex items-center justify-center text-red-400 font-bold text-sm">
             {profile?.full_name?.charAt(0) || 'A'}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-gray-900 truncate">{profile?.full_name || 'Admin'}</p>
+            <p className="text-sm font-semibold text-white truncate">{profile?.full_name || 'Admin'}</p>
             <p className="text-xs text-gray-500 truncate">{profile?.email}</p>
           </div>
         </div>
@@ -63,16 +63,18 @@ export default function AdminSidebar() {
         {navItems.map(({ name, icon: Icon, href }) => (
           <Link key={name} href={href} onClick={() => setIsMobileOpen(false)}
             className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-              isActive(href) ? 'bg-red-50 text-red-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+              isActive(href)
+                ? 'bg-red-600 text-white'
+                : 'text-gray-400 hover:bg-gray-800 hover:text-white'
             }`}>
             <Icon size={18} /><span>{name}</span>
           </Link>
         ))}
       </nav>
 
-      <div className="p-3 border-t border-gray-100">
+      <div className="p-3 border-t border-gray-800">
         <button onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-colors w-full">
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-500 hover:bg-gray-800 transition-colors w-full">
           <LogOut size={18} /><span>Sign Out</span>
         </button>
       </div>
@@ -81,26 +83,33 @@ export default function AdminSidebar() {
 
   return (
     <>
-      <div className="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-30 px-4 py-3 flex items-center justify-between">
+      {/* Mobile Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 bg-gray-950 border-b border-gray-800 z-30 px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center">
             <Shield size={16} className="text-white" />
           </div>
-          <span className="font-bold text-gray-900 text-sm">Admin Panel</span>
+          <span className="font-bold text-white text-sm">Admin Panel</span>
         </div>
-        <button onClick={() => setIsMobileOpen(!isMobileOpen)} className="p-2 hover:bg-gray-100 rounded-lg">
+        <button onClick={() => setIsMobileOpen(!isMobileOpen)} className="p-2 hover:bg-gray-800 rounded-lg text-white">
           {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
+      {/* Mobile Sidebar */}
       {isMobileOpen && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40 lg:hidden" onClick={() => setIsMobileOpen(false)} />
-          <div className="fixed left-0 top-0 bottom-0 w-64 bg-white z-50 lg:hidden shadow-xl"><SidebarContent /></div>
+          <div className="fixed inset-0 bg-black/70 z-40 lg:hidden" onClick={() => setIsMobileOpen(false)} />
+          <div className="fixed left-0 top-0 bottom-0 w-64 z-50 lg:hidden shadow-2xl">
+            <SidebarContent />
+          </div>
         </>
       )}
 
-      <div className="hidden lg:block fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-gray-200 z-20"><SidebarContent /></div>
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block fixed left-0 top-0 bottom-0 w-64 border-r border-gray-800 z-20">
+        <SidebarContent />
+      </div>
     </>
   );
 }
