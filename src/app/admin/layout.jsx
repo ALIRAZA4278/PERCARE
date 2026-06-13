@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import AdminSidebar from '@/components/AdminSidebar';
+import { canAccess } from '@/lib/adminRoles';
 
 export default function AdminLayout({ children }) {
   const { profile, isLoggedIn, loading } = useAuth();
@@ -15,21 +16,31 @@ export default function AdminLayout({ children }) {
   useEffect(() => {
     if (loading) return;
     if (isPublicPage) return;
+
+    // Not logged in or not admin → login
     if (!isLoggedIn || profile?.role !== 'admin') {
       router.replace('/admin/login');
+      return;
     }
-  }, [loading, isLoggedIn, profile, isPublicPage]);
 
-  // Login / setup pages — render directly, no sidebar
+    // Logged-in admin but no admin_role yet (legacy) → treat as super_admin, allow everything
+    const adminRole = profile?.admin_role;
+    if (!adminRole) return;
+
+    // Has a role — check page-level permission
+    if (!canAccess(adminRole, pathname)) {
+      router.replace('/admin'); // redirect to overview
+    }
+  }, [loading, isLoggedIn, profile, isPublicPage, pathname]);
+
   if (isPublicPage) return <>{children}</>;
-
-  // Still checking auth — show nothing (no flash of sidebar)
   if (loading) return null;
-
-  // Not admin — show nothing (redirect happening in useEffect)
   if (!isLoggedIn || profile?.role !== 'admin') return null;
 
-  // Confirmed admin — show full layout
+  // Check access for roles that have admin_role set
+  const adminRole = profile?.admin_role;
+  if (adminRole && !canAccess(adminRole, pathname) && pathname !== '/admin') return null;
+
   return (
     <div className="bg-gray-950 min-h-screen">
       <AdminSidebar />

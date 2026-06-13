@@ -168,7 +168,8 @@ export default function ApprovalsPage() {
             <p className="font-bold text-white">{store.name}</p>
             <p className="text-xs text-gray-500 mb-2">Owner: {store.owner?.full_name} · {store.owner?.email}</p>
             <div className="flex flex-wrap gap-1.5">
-              {store.category && <Tag label={store.category} />}
+              {store.store_category && <Tag label={store.store_category} />}
+              {store.store_type && <Tag label={store.store_type} />}
               {store.city && <Tag label={store.city} />}
             </div>
           </Card>
@@ -182,8 +183,8 @@ export default function ApprovalsPage() {
             <p className="font-bold text-white">{shelter.name}</p>
             <p className="text-xs text-gray-500 mb-2">{shelter.city}{shelter.address ? ` · ${shelter.address}` : ''}</p>
             <div className="flex flex-wrap gap-1.5">
-              {shelter.contact_phone && <Tag label={shelter.contact_phone} />}
-              {shelter.capacity && <Tag label={`Cap: ${shelter.capacity}`} />}
+              {shelter.phone && <Tag label={shelter.phone} />}
+              {shelter.email && <Tag label={shelter.email} />}
             </div>
           </Card>
         )))}
