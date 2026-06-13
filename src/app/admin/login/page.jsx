@@ -27,15 +27,16 @@ export default function AdminLoginPage() {
     setError('');
     setIsLoading(true);
     try {
-      const { user } = await login(email, password);
-      const { data: p } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+      const { data, error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+      if (signInError) throw signInError;
+      const { data: p } = await supabase.from('profiles').select('role').eq('id', data.user.id).single();
       if (p?.role !== 'admin') {
         await supabase.auth.signOut();
         setError('Access denied. Admin accounts only.');
         return;
       }
       router.replace('/admin');
-    } catch {
+    } catch (err) {
       setError('Invalid email or password.');
     } finally {
       setIsLoading(false);

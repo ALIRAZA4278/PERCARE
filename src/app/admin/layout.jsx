@@ -10,18 +10,18 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const isLoginPage = pathname === '/admin/login';
+  const isPublicPage = pathname === '/admin/login' || pathname === '/admin/setup';
 
   useEffect(() => {
     if (loading) return;
-    if (isLoginPage) return;
+    if (isPublicPage) return;
     if (!isLoggedIn || profile?.role !== 'admin') {
       router.replace('/admin/login');
     }
-  }, [loading, isLoggedIn, profile, isLoginPage]);
+  }, [loading, isLoggedIn, profile, isPublicPage]);
 
-  // Login page — render directly, no sidebar
-  if (isLoginPage) return <>{children}</>;
+  // Login / setup pages — render directly, no sidebar
+  if (isPublicPage) return <>{children}</>;
 
   // Still checking auth — show nothing (no flash of sidebar)
   if (loading) return null;

@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Ban, CheckCircle, Search, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Ban, CheckCircle, Search, ChevronLeft, ChevronRight, X, UserCog } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 
-const ROLES = ['All', 'admin', 'veterinarian', 'seller', 'shelter', 'pet_owner'];
+const ALL_ROLES = ['All', 'admin', 'veterinarian', 'seller', 'shelter', 'pet_owner'];
+const ASSIGNABLE_ROLES = ['pet_owner', 'veterinarian', 'seller', 'shelter', 'admin'];
 const PAGE_SIZE = 20;
 
 const roleBadge = {
@@ -27,6 +28,8 @@ export default function UsersPage() {
   const [processing, setProcessing] = useState(null);
   const [banModal, setBanModal] = useState(null);
   const [banReason, setBanReason] = useState('');
+  const [roleModal, setRoleModal] = useState(null);
+  const [newRole, setNewRole] = useState('');
 
   useEffect(() => { fetchUsers(); }, []);
 
@@ -59,11 +62,9 @@ export default function UsersPage() {
     const expiresAt = new Date();
     expiresAt.setFullYear(expiresAt.getFullYear() + 10);
     await supabase.from('user_bans').insert({
-      user_id: banModal.id,
-      banned_by: user.id,
+      user_id: banModal.id, banned_by: user.id,
       reason: banReason || 'Banned by admin',
-      expires_at: expiresAt.toISOString(),
-      is_active: true,
+      expires_at: expiresAt.toISOString(), is_active: true,
     });
     await supabase.from('profiles').update({ is_banned: true }).eq('id', banModal.id);
     await logAudit('ban_user', banModal.id, banReason || 'Banned by admin');
@@ -78,6 +79,20 @@ export default function UsersPage() {
     await logAudit('unban_user', u.id, `Unbanned: ${u.full_name}`);
     setUsers(prev => prev.map(x => x.id === u.id ? { ...x, is_banned: false } : x));
     setProcessing(null);
+  };
+
+  const openRoleModal = (u) => {
+    setRoleModal(u);
+    setNewRole(u.role);
+  };
+
+  const handleRoleChange = async () => {
+    if (!roleModal || newRole === roleModal.role) return;
+    setProcessing(roleModal.id);
+    await supabase.from('profiles').update({ role: newRole }).eq('id', roleModal.id);
+    await logAudit('change_role', roleModal.id, `Role changed: ${roleModal.role} → ${newRole}`);
+    setUsers(prev => prev.map(u => u.id === roleModal.id ? { ...u, role: newRole } : u));
+    setRoleModal(null); setProcessing(null);
   };
 
   const paged = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
@@ -99,10 +114,10 @@ export default function UsersPage() {
             className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-gray-600" />
         </div>
         <div className="flex gap-2 overflow-x-auto">
-          {ROLES.map(r => (
+          {ALL_ROLES.map(r => (
             <button key={r} onClick={() => setRoleFilter(r)}
               className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${roleFilter === r ? 'bg-red-600 text-white' : 'bg-gray-900 text-gray-400 border border-gray-800 hover:border-gray-600'}`}>
-              {r === 'All' ? 'All' : r}
+              {r}
             </button>
           ))}
         </div>
@@ -117,7 +132,7 @@ export default function UsersPage() {
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden sm:table-cell">Email</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Role</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden md:table-cell">Joined</th>
-                <th className="text-right text-xs font-semibold text-gray-500 px-4 py-3">Action</th>
+                <th className="text-right text-xs font-semibold text-gray-500 px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -133,25 +148,31 @@ export default function UsersPage() {
                       <span className="text-white font-medium truncate max-w-[120px]">{u.full_name || 'Unknown'}</span>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-gray-400 hidden sm:table-cell">{u.email}</td>
+                  <td className="px-4 py-3 text-gray-400 hidden sm:table-cell text-xs">{u.email}</td>
                   <td className="px-4 py-3">
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${roleBadge[u.role] || 'bg-gray-800 text-gray-400'}`}>{u.role}</span>
                   </td>
                   <td className="px-4 py-3 text-gray-500 text-xs hidden md:table-cell">
                     {u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}
                   </td>
-                  <td className="px-4 py-3 text-right">
-                    {u.is_banned ? (
-                      <button onClick={() => handleUnban(u)} disabled={processing === u.id}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-green-900/40 hover:bg-green-800/40 text-green-400 text-xs font-semibold rounded-lg transition-colors border border-green-900 ml-auto disabled:opacity-50">
-                        <CheckCircle size={13} /> Unban
+                  <td className="px-4 py-3">
+                    <div className="flex items-center justify-end gap-2">
+                      <button onClick={() => openRoleModal(u)} disabled={processing === u.id}
+                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 hover:bg-blue-950 text-blue-400 text-xs font-semibold rounded-lg transition-colors border border-gray-700 disabled:opacity-30">
+                        <UserCog size={13} /> Role
                       </button>
-                    ) : (
-                      <button onClick={() => setBanModal(u)} disabled={u.role === 'admin' || processing === u.id}
-                        className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 hover:bg-red-950 text-red-400 text-xs font-semibold rounded-lg transition-colors border border-gray-700 ml-auto disabled:opacity-30">
-                        <Ban size={13} /> Ban
-                      </button>
-                    )}
+                      {u.is_banned ? (
+                        <button onClick={() => handleUnban(u)} disabled={processing === u.id}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-green-900/40 hover:bg-green-800/40 text-green-400 text-xs font-semibold rounded-lg transition-colors border border-green-900 disabled:opacity-50">
+                          <CheckCircle size={13} /> Unban
+                        </button>
+                      ) : (
+                        <button onClick={() => setBanModal(u)} disabled={u.role === 'admin' || processing === u.id}
+                          className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 hover:bg-red-950 text-red-400 text-xs font-semibold rounded-lg transition-colors border border-gray-700 disabled:opacity-30">
+                          <Ban size={13} /> Ban
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -176,6 +197,49 @@ export default function UsersPage() {
         </div>
       )}
 
+      {/* Role Change Modal */}
+      {roleModal && (
+        <>
+          <div className="fixed inset-0 bg-black/70 z-40" onClick={() => setRoleModal(null)} />
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="bg-gray-900 rounded-2xl w-full max-w-sm border border-gray-800 p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-white">Change Role</h3>
+                <button onClick={() => setRoleModal(null)} className="p-1 hover:bg-gray-800 rounded-lg text-gray-400"><X size={18} /></button>
+              </div>
+              <div className="flex items-center gap-3 mb-4 p-3 bg-gray-800 rounded-xl">
+                <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-gray-400 font-bold text-sm shrink-0">
+                  {roleModal.full_name?.charAt(0) || '?'}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-white truncate">{roleModal.full_name}</p>
+                  <p className="text-xs text-gray-500 truncate">{roleModal.email}</p>
+                </div>
+              </div>
+              <label className="block text-xs font-semibold text-gray-400 mb-2">Select New Role</label>
+              <div className="grid grid-cols-1 gap-2 mb-4">
+                {ASSIGNABLE_ROLES.map(r => (
+                  <button key={r} onClick={() => setNewRole(r)}
+                    className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-colors border ${newRole === r ? 'bg-blue-600 border-blue-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-gray-500'}`}>
+                    <span className="capitalize">{r.replace(/_/g, ' ')}</span>
+                    {newRole === r && <span className="text-xs text-blue-200">Selected</span>}
+                  </button>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <button onClick={handleRoleChange} disabled={processing === roleModal.id || newRole === roleModal.role}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-800 disabled:text-gray-600 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  {processing === roleModal.id ? 'Saving...' : 'Save Role'}
+                </button>
+                <button onClick={() => setRoleModal(null)}
+                  className="px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-sm">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* Ban Modal */}
       {banModal && (
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => { setBanModal(null); setBanReason(''); }} />
