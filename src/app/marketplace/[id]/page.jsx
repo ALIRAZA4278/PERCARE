@@ -5,10 +5,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import FeatureDisabled from '@/components/FeatureDisabled';
 import { supabase } from '@/lib/supabase';
 
 export default function ProductDetails() {
   const { id } = useParams();
+  const { marketplaceEnabled, loading: flagsLoading } = useFeatureFlags();
   const { addToCart, getCartCount } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
@@ -42,6 +45,10 @@ export default function ProductDetails() {
   };
 
   const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  if (!flagsLoading && !marketplaceEnabled) {
+    return <FeatureDisabled title="Marketplace" />;
+  }
 
   if (loading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;

@@ -5,21 +5,31 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 import { supabase } from '@/lib/supabase';
 
 const iconMap = {
   vet: Stethoscope, clinic: MapPin, product: ShoppingBag, store: Store, shelter: Home, animal: PawPrint,
 };
 const filterLabels = { vet: 'Vets', clinic: 'Clinics', product: 'Products', store: 'Stores', shelter: 'Shelters', animal: 'Animals' };
+const marketplaceTypes = ['product', 'store'];
+const shelterTypes = ['shelter', 'animal'];
 
 export default function FavouritesPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
+  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
   const router = useRouter();
   const [activeFilter, setActiveFilter] = useState('All');
   const [favourites, setFavourites] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const filters = ['All', 'Vets', 'Clinics', 'Products', 'Stores', 'Shelters', 'Animals'];
+  const filters = [
+    'All', 'Vets', 'Clinics',
+    marketplaceEnabled && 'Products',
+    marketplaceEnabled && 'Stores',
+    sheltersEnabled && 'Shelters',
+    sheltersEnabled && 'Animals',
+  ].filter(Boolean);
 
   useEffect(() => {
     if (!authLoading && !isLoggedIn) { router.push('/login'); return; }
@@ -69,7 +79,11 @@ export default function FavouritesPage() {
   };
 
   const filterTypeMap = { Vets: 'vet', Clinics: 'clinic', Products: 'product', Stores: 'store', Shelters: 'shelter', Animals: 'animal' };
-  const filtered = activeFilter === 'All' ? favourites : favourites.filter(f => f.target_type === filterTypeMap[activeFilter]);
+  const visibleFavourites = favourites.filter(f =>
+    (marketplaceEnabled || !marketplaceTypes.includes(f.target_type)) &&
+    (sheltersEnabled || !shelterTypes.includes(f.target_type))
+  );
+  const filtered = activeFilter === 'All' ? visibleFavourites : visibleFavourites.filter(f => f.target_type === filterTypeMap[activeFilter]);
 
   if (authLoading || loading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;

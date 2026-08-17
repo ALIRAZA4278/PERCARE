@@ -4,9 +4,12 @@ import { Heart, MapPin, Clock, ChevronRight, AlertTriangle, PawPrint } from 'luc
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import FeatureDisabled from '@/components/FeatureDisabled';
 import RescueRequestModal from '@/components/RescueRequestModal';
 
 export default function SheltersPage() {
+  const { sheltersEnabled, loading: flagsLoading } = useFeatureFlags();
   const [isRescueModalOpen, setIsRescueModalOpen] = useState(false);
   const [shelters, setShelters] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,6 +28,10 @@ export default function SheltersPage() {
   };
 
   const getEmoji = (index) => ['🐕', '🐾', '🐱', '🐰', '🦜'][index % 5];
+
+  if (!flagsLoading && !sheltersEnabled) {
+    return <FeatureDisabled title="Shelters" />;
+  }
 
   if (loading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;

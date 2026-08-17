@@ -2,14 +2,17 @@
 
 import { Stethoscope, ShoppingBag, Heart, AlertTriangle } from 'lucide-react';
 import Link from 'next/link';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function Features() {
+  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
+
   const features = [
     { icon: Stethoscope, title: 'Find Vets', description: 'Discover trusted veterinarians and clinics near you', color: 'blue', href: '/vets' },
-    { icon: ShoppingBag, title: 'Pet Shop', description: 'Quality pet products from verified sellers', color: 'green', href: '/marketplace' },
-    { icon: Heart, title: 'Shelters', description: 'Adopt, donate, and support animal welfare', color: 'red', href: '/shelters' },
+    marketplaceEnabled && { icon: ShoppingBag, title: 'Pet Shop', description: 'Quality pet products from verified sellers', color: 'green', href: '/marketplace' },
+    sheltersEnabled && { icon: Heart, title: 'Shelters', description: 'Adopt, donate, and support animal welfare', color: 'red', href: '/shelters' },
     { icon: AlertTriangle, title: 'Lost & Found', description: 'Report lost pets or help reunite found animals', color: 'yellow', href: '/lost-found' },
-  ];
+  ].filter(Boolean);
 
   const bgColors = { blue: 'bg-blue-50', green: 'bg-green-50', red: 'bg-red-50', yellow: 'bg-yellow-50' };
   const iconColors = { blue: 'text-blue-600', green: 'text-green-600', red: 'text-red-600', yellow: 'text-yellow-600' };

@@ -17,14 +17,22 @@ export default function AdminLayout({ children }) {
     if (loading) return;
     if (isPublicPage) return;
 
-    // Not logged in or not admin → login
-    if (!isLoggedIn || profile?.role !== 'admin') {
+    // Not logged in → login
+    if (!isLoggedIn) {
+      router.replace('/admin/login');
+      return;
+    }
+
+    // Logged in but profile hasn't arrived yet (async fetch still in flight) → wait, don't redirect
+    if (!profile) return;
+
+    if (profile.role !== 'admin') {
       router.replace('/admin/login');
       return;
     }
 
     // Logged-in admin but no admin_role yet (legacy) → treat as super_admin, allow everything
-    const adminRole = profile?.admin_role;
+    const adminRole = profile.admin_role;
     if (!adminRole) return;
 
     // Has a role — check page-level permission
@@ -35,10 +43,10 @@ export default function AdminLayout({ children }) {
 
   if (isPublicPage) return <>{children}</>;
   if (loading) return null;
-  if (!isLoggedIn || profile?.role !== 'admin') return null;
+  if (!isLoggedIn || !profile || profile.role !== 'admin') return null;
 
   // Check access for roles that have admin_role set
-  const adminRole = profile?.admin_role;
+  const adminRole = profile.admin_role;
   if (adminRole && !canAccess(adminRole, pathname) && pathname !== '/admin') return null;
 
   return (

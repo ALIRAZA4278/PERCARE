@@ -5,19 +5,21 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function Sidebar() {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isLoggedIn, profile } = useAuth();
+  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
 
   const mainNav = [
     { name: 'Home', icon: Home, href: '/' },
     { name: 'Discover Vets', icon: Search, href: '/vets' },
-    { name: 'Marketplace', icon: ShoppingBag, href: '/marketplace' },
-    { name: 'Shelters', icon: Heart, href: '/shelters' },
+    marketplaceEnabled && { name: 'Marketplace', icon: ShoppingBag, href: '/marketplace' },
+    sheltersEnabled && { name: 'Shelters', icon: Heart, href: '/shelters' },
     { name: 'Lost & Found', icon: AlertTriangle, href: '/lost-found' },
-  ];
+  ].filter(Boolean);
 
   const accountNav = [
     { name: 'My Pets', icon: Waves, href: '/my-pets' },
@@ -91,13 +93,13 @@ export default function Sidebar() {
                     <LayoutDashboard size={18} /><span>Vet Dashboard</span>
                   </Link>
                 )}
-                {profile?.role === 'seller' && (
+                {profile?.role === 'seller' && marketplaceEnabled && (
                   <Link href="/seller-dashboard" onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors font-medium bg-gradient-to-r from-green-50 to-green-100 text-green-700 hover:from-green-100 hover:to-green-200 border border-green-200`}>
                     <LayoutDashboard size={18} /><span>Seller Dashboard</span>
                   </Link>
                 )}
-                {profile?.role === 'shelter' && (
+                {profile?.role === 'shelter' && sheltersEnabled && (
                   <Link href="/shelter-dashboard" onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors font-medium bg-gradient-to-r from-pink-50 to-pink-100 text-pink-700 hover:from-pink-100 hover:to-pink-200 border border-pink-200`}>
                     <LayoutDashboard size={18} /><span>Shelter Dashboard</span>

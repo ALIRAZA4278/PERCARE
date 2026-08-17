@@ -5,12 +5,19 @@ import { useState } from 'react';
 import Link from 'next/link';
 import CheckoutModal from '@/components/CheckoutModal';
 import { useCart } from '@/context/CartContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import FeatureDisabled from '@/components/FeatureDisabled';
 
 export default function CartPage() {
+  const { marketplaceEnabled, loading: flagsLoading } = useFeatureFlags();
   const { cartItems, removeFromCart, updateQuantity, getCartTotal } = useCart();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const subtotal = getCartTotal();
   const total = subtotal;
+
+  if (!flagsLoading && !marketplaceEnabled) {
+    return <FeatureDisabled title="Marketplace" />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

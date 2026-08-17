@@ -24,15 +24,18 @@ export const PAGE_PERMISSIONS = {
   '/admin/approvals':  ['super_admin', 'operations', 'commerce', 'vet_admin'],
   '/admin/users':      ['super_admin', 'operations', 'moderator', 'support'],
   '/admin/vets':       ['super_admin', 'operations', 'vet_admin'],
+  '/admin/clinics':    ['super_admin', 'operations', 'vet_admin'],
   '/admin/stores':     ['super_admin', 'commerce'],
   '/admin/shelters':   ['super_admin', 'operations'],
   '/admin/products':   ['super_admin', 'commerce'],
   '/admin/pets':       ['super_admin', 'operations'],
+  '/admin/lost-found': ['super_admin', 'operations', 'moderator'],
   '/admin/orders':     ['super_admin', 'operations', 'commerce'],
   '/admin/reports':    ['super_admin', 'moderator'],
   '/admin/reviews':    ['super_admin', 'moderator'],
   '/admin/tickets':    ['super_admin', 'support', 'operations'],
   '/admin/audit':      ['super_admin', 'operations'],
+  '/admin/settings':   ['super_admin'],
 };
 
 // Returns true if this admin_role can access the given pathname

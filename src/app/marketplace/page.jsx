@@ -5,9 +5,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import FilterModal from '@/components/FilterModal';
 import { useCart } from '@/context/CartContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import FeatureDisabled from '@/components/FeatureDisabled';
 import { supabase } from '@/lib/supabase';
 
 export default function MarketplacePage() {
+  const { marketplaceEnabled, loading: flagsLoading } = useFeatureFlags();
   const { addToCart, getCartCount } = useCart();
   const [activeCategory, setActiveCategory] = useState('All');
   const cartCount = getCartCount();
@@ -78,6 +81,10 @@ export default function MarketplacePage() {
   };
 
   const displayProducts = getFilteredProducts();
+
+  if (!flagsLoading && !marketplaceEnabled) {
+    return <FeatureDisabled title="Marketplace" />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

@@ -3,8 +3,10 @@
 import { Stethoscope, Building2, Package, Home } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function Stats() {
+  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
   const [counts, setCounts] = useState({ vets: 0, clinics: 0, products: 0, shelters: 0 });
 
   useEffect(() => {
@@ -28,9 +30,9 @@ export default function Stats() {
   const stats = [
     { number: counts.vets > 0 ? `${counts.vets}+` : '—', label: 'Verified Vets', color: 'blue', icon: Stethoscope },
     { number: counts.clinics > 0 ? `${counts.clinics}+` : '—', label: 'Clinics', color: 'green', icon: Building2 },
-    { number: counts.products > 0 ? `${counts.products}+` : '—', label: 'Products', color: 'yellow', icon: Package },
-    { number: counts.shelters > 0 ? `${counts.shelters}+` : '—', label: 'Shelters', color: 'red', icon: Home },
-  ];
+    marketplaceEnabled && { number: counts.products > 0 ? `${counts.products}+` : '—', label: 'Products', color: 'yellow', icon: Package },
+    sheltersEnabled && { number: counts.shelters > 0 ? `${counts.shelters}+` : '—', label: 'Shelters', color: 'red', icon: Home },
+  ].filter(Boolean);
 
   const bgColors = { blue: 'bg-blue-50', green: 'bg-green-50', red: 'bg-red-50', yellow: 'bg-yellow-50' };
   const iconColors = { blue: 'text-blue-200', green: 'text-green-200', red: 'text-red-200', yellow: 'text-yellow-200' };

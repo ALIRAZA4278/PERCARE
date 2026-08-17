@@ -3,7 +3,7 @@
 import {
   LayoutDashboard, CheckSquare, Users, ShoppingBag, Flag, Star,
   Ticket, ScrollText, LogOut, Shield, Menu, X, Stethoscope,
-  Store, Home, Package, PawPrint
+  Store, Home, Package, PawPrint, Building2, AlertTriangle, Settings
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -16,15 +16,18 @@ const ALL_NAV = [
   { name: 'Approvals',  icon: CheckSquare,     href: '/admin/approvals' },
   { name: 'Users',      icon: Users,           href: '/admin/users' },
   { name: 'Vets',       icon: Stethoscope,     href: '/admin/vets' },
+  { name: 'Clinics',    icon: Building2,       href: '/admin/clinics' },
   { name: 'Stores',     icon: Store,           href: '/admin/stores' },
   { name: 'Shelters',   icon: Home,            href: '/admin/shelters' },
   { name: 'Products',   icon: Package,         href: '/admin/products' },
   { name: 'Pets',       icon: PawPrint,        href: '/admin/pets' },
+  { name: 'Lost & Found', icon: AlertTriangle, href: '/admin/lost-found' },
   { name: 'Orders',     icon: ShoppingBag,     href: '/admin/orders' },
   { name: 'Reports',    icon: Flag,            href: '/admin/reports' },
   { name: 'Reviews',    icon: Star,            href: '/admin/reviews' },
   { name: 'Tickets',    icon: Ticket,          href: '/admin/tickets' },
   { name: 'Audit Log',  icon: ScrollText,      href: '/admin/audit' },
+  { name: 'Settings',   icon: Settings,        href: '/admin/settings' },
 ];
 
 export default function AdminSidebar() {

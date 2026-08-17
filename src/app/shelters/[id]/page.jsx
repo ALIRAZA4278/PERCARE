@@ -5,10 +5,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import FeatureDisabled from '@/components/FeatureDisabled';
 import AdoptModal from '@/components/AdoptModal';
 
 export default function ShelterDetailPage() {
   const { id } = useParams();
+  const { sheltersEnabled, loading: flagsLoading } = useFeatureFlags();
   const [isAdoptModalOpen, setIsAdoptModalOpen] = useState(false);
   const [selectedAnimal, setSelectedAnimal] = useState(null);
   const [liked, setLiked] = useState(false);
@@ -45,6 +48,10 @@ export default function ShelterDetailPage() {
     const timeStr = open && close ? `${open} – ${close}` : '';
     return [days, timeStr].filter(Boolean).join(': ');
   };
+
+  if (!flagsLoading && !sheltersEnabled) {
+    return <FeatureDisabled title="Shelters" />;
+  }
 
   if (loading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;

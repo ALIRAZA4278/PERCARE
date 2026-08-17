@@ -5,16 +5,17 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 
-const TABS = ['Vets', 'Stores', 'Shelters', 'Products'];
+const TABS = ['Vets', 'Clinics', 'Stores', 'Shelters', 'Products'];
 
 export default function ApprovalsPage() {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('Vets');
   const [vets, setVets] = useState([]);
+  const [clinics, setClinics] = useState([]);
   const [stores, setStores] = useState([]);
   const [shelters, setShelters] = useState([]);
   const [products, setProducts] = useState([]);
-  const [counts, setCounts] = useState({ Vets: 0, Stores: 0, Shelters: 0, Products: 0 });
+  const [counts, setCounts] = useState({ Vets: 0, Clinics: 0, Stores: 0, Shelters: 0, Products: 0 });
   const [loading, setLoading] = useState(true);
   const [rejectModal, setRejectModal] = useState(null);
   const [rejectReason, setRejectReason] = useState('');
@@ -24,17 +25,19 @@ export default function ApprovalsPage() {
 
   const fetchAll = async () => {
     setLoading(true);
-    const [vetsRes, storesRes, sheltersRes, productsRes] = await Promise.all([
+    const [vetsRes, clinicsRes, storesRes, sheltersRes, productsRes] = await Promise.all([
       supabase.from('vet_profiles').select('*, user:profiles(full_name, email)').eq('is_approved', false),
+      supabase.from('clinics').select('*, owner:profiles(full_name, email)').eq('is_approved', false),
       supabase.from('stores').select('*, owner:profiles(full_name, email)').eq('is_approved', false),
       supabase.from('shelters').select('*').eq('is_verified', false),
       supabase.from('products').select('*, store:stores(name)').eq('is_approved', false).eq('is_active', true),
     ]);
     setVets(vetsRes.data || []);
+    setClinics(clinicsRes.data || []);
     setStores(storesRes.data || []);
     setShelters(sheltersRes.data || []);
     setProducts(productsRes.data || []);
-    setCounts({ Vets: (vetsRes.data||[]).length, Stores: (storesRes.data||[]).length, Shelters: (sheltersRes.data||[]).length, Products: (productsRes.data||[]).length });
+    setCounts({ Vets: (vetsRes.data||[]).length, Clinics: (clinicsRes.data||[]).length, Stores: (storesRes.data||[]).length, Shelters: (sheltersRes.data||[]).length, Products: (productsRes.data||[]).length });
     setLoading(false);
   };
 
@@ -61,6 +64,16 @@ export default function ApprovalsPage() {
     if (store.owner_id) await notify(store.owner_id, `Your store "${store.name}" is now live!`);
     setStores(p => p.filter(s => s.id !== store.id));
     setCounts(c => ({ ...c, Stores: c.Stores - 1 }));
+    setProcessing(false);
+  };
+
+  const approveClinic = async (clinic) => {
+    setProcessing(true);
+    await supabase.from('clinics').update({ is_approved: true }).eq('id', clinic.id);
+    await logAudit('approve_clinic', 'clinic', clinic.id, `Approved: ${clinic.name}`);
+    if (clinic.owner_id) await notify(clinic.owner_id, `${clinic.name} has been approved!`);
+    setClinics(p => p.filter(c => c.id !== clinic.id));
+    setCounts(c => ({ ...c, Clinics: c.Clinics - 1 }));
     setProcessing(false);
   };
 
@@ -93,6 +106,12 @@ export default function ApprovalsPage() {
       await logAudit('reject_vet', 'vet', id, rejectReason);
       setVets(p => p.filter(v => v.id !== id));
       setCounts(c => ({ ...c, Vets: c.Vets - 1 }));
+    } else if (type === 'clinic') {
+      const clinic = clinics.find(c => c.id === id);
+      if (clinic?.owner_id) await notify(clinic.owner_id, `${clinic.name} listing rejected. Reason: ${rejectReason}`);
+      await logAudit('reject_clinic', 'clinic', id, rejectReason);
+      setClinics(p => p.filter(c => c.id !== id));
+      setCounts(c => ({ ...c, Clinics: c.Clinics - 1 }));
     } else if (type === 'store') {
       const store = stores.find(s => s.id === id);
       if (store?.owner_id) await notify(store.owner_id, `Store rejected. Reason: ${rejectReason}`);
@@ -157,6 +176,20 @@ export default function ApprovalsPage() {
               {vet.qualification && <Tag label={vet.qualification} />}
             </div>
             {vet.certificate_url && <a href={vet.certificate_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-blue-400 hover:underline mt-2"><ExternalLink size={12} /> View Certificate</a>}
+          </Card>
+        )))}
+
+        {activeTab === 'Clinics' && (clinics.length === 0 ? <Empty /> : clinics.map(clinic => (
+          <Card key={clinic.id} actions={[
+            <button key="a" onClick={() => approveClinic(clinic)} disabled={processing} className={btnA}><CheckCircle size={14} /> Approve</button>,
+            <button key="r" onClick={() => setRejectModal({ id: clinic.id, type: 'clinic' })} disabled={processing} className={btnR}><XCircle size={14} /> Reject</button>,
+          ]}>
+            <p className="font-bold text-white">{clinic.name}</p>
+            <p className="text-xs text-gray-500 mb-2">Owner: {clinic.owner?.full_name || '—'} · {clinic.owner?.email || '—'}</p>
+            <div className="flex flex-wrap gap-1.5">
+              {clinic.city && <Tag label={clinic.city} />}
+              {clinic.is_emergency_available && <Tag label="24/7 Emergency" />}
+            </div>
           </Card>
         )))}
 

@@ -5,10 +5,12 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 import { supabase } from '@/lib/supabase';
 
 export default function MyOrdersPage() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
+  const { marketplaceEnabled } = useFeatureFlags();
   const router = useRouter();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -100,9 +102,11 @@ export default function MyOrdersPage() {
             <div className="text-6xl mb-4">📦</div>
             <h3 className="text-xl font-bold text-gray-900 mb-2">No orders yet</h3>
             <p className="text-gray-600 mb-6">Start shopping to see your orders here.</p>
-            <Link href="/marketplace" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
-              Browse Products
-            </Link>
+            {marketplaceEnabled && (
+              <Link href="/marketplace" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
+                Browse Products
+              </Link>
+            )}
           </div>
         )}
       </div>

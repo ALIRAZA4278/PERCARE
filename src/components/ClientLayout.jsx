@@ -3,6 +3,7 @@
 import Sidebar from "@/components/Sidebar";
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { FeatureFlagsProvider } from "@/context/FeatureFlagsContext";
 import { usePathname } from "next/navigation";
 
 const authRoutes = ['/login', '/signup'];
@@ -15,19 +16,23 @@ export default function ClientLayout({ children }) {
   if (isAuthPage || isDashboardPage) {
     return (
       <AuthProvider>
-        <CartProvider>{children}</CartProvider>
+        <FeatureFlagsProvider>
+          <CartProvider>{children}</CartProvider>
+        </FeatureFlagsProvider>
       </AuthProvider>
     );
   }
 
   return (
     <AuthProvider>
-      <CartProvider>
-        <Sidebar />
-        <main className="lg:ml-64 pt-16 lg:pt-0">
-          {children}
-        </main>
-      </CartProvider>
+      <FeatureFlagsProvider>
+        <CartProvider>
+          <Sidebar />
+          <main className="lg:ml-64 pt-16 lg:pt-0">
+            {children}
+          </main>
+        </CartProvider>
+      </FeatureFlagsProvider>
     </AuthProvider>
   );
 }
