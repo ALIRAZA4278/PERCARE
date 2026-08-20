@@ -3,6 +3,8 @@
 import { Search, Plus, Eye, Edit, Trash2, X, ImagePlus, ShoppingBag } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import FeatureDisabled from '@/components/FeatureDisabled';
 import { supabase } from '@/lib/supabase';
 import { uploadImage } from '@/lib/upload';
 
@@ -10,6 +12,7 @@ const categoryOptions = ['Medicine', 'Supplements', 'First Aid', 'Food', 'Access
 
 export default function VetStorePage() {
   const { user } = useAuth();
+  const { marketplaceEnabled, loading: flagsLoading } = useFeatureFlags();
   const fileRef = useRef(null);
   const [store, setStore] = useState(null);
   const [products, setProducts] = useState([]);
@@ -102,6 +105,10 @@ export default function VetStorePage() {
   const filtered = products.filter(p => !searchQuery.trim() || p.name.toLowerCase().includes(searchQuery.toLowerCase()));
   const lowStock = products.filter(p => p.stock_quantity > 0 && p.stock_quantity <= 10).length;
   const outOfStock = products.filter(p => p.stock_quantity === 0).length;
+
+  if (!flagsLoading && !marketplaceEnabled) {
+    return <FeatureDisabled title="Marketplace" />;
+  }
 
   if (loading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;

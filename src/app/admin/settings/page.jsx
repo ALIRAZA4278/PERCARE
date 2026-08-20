@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ShoppingBag, Home, ShieldAlert } from 'lucide-react';
+import { ShoppingBag, Home, ShieldAlert, PawPrint } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 import { supabase } from '@/lib/supabase';
@@ -14,7 +14,7 @@ function Toggle({ checked, onChange, disabled }) {
       aria-checked={checked}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-7 w-13 shrink-0 items-center rounded-full transition-colors disabled:opacity-50 ${checked ? 'bg-green-600' : 'bg-gray-700'}`}
+      className={`relative inline-flex h-7 w-13 shrink-0 items-center rounded-full transition-colors disabled:opacity-50 ${checked ? 'bg-green-600' : 'bg-gray-300'}`}
       style={{ width: '3.25rem' }}
     >
       <span className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${checked ? 'translate-x-7' : 'translate-x-1'}`} />
@@ -34,7 +34,7 @@ export default function SettingsPage() {
   const fetchSettings = async () => {
     setLoading(true);
     const { data } = await supabase.from('site_settings').select('*').eq('id', true).single();
-    setSettings(data || { marketplace_enabled: false, shelters_enabled: false });
+    setSettings(data || { marketplace_enabled: false, shelters_enabled: false, pet_delivery_enabled: false });
     setLoading(false);
   };
 
@@ -50,7 +50,7 @@ export default function SettingsPage() {
     setSaving(null);
   };
 
-  if (loading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center"><p className="text-gray-500 text-sm">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500 text-sm">Loading...</p></div>;
 
   const modules = [
     {
@@ -65,18 +65,24 @@ export default function SettingsPage() {
       title: 'Shelters',
       description: 'Shelter profiles, adoption listings, donations, and the shelter dashboard.',
     },
+    {
+      key: 'pet_delivery_enabled',
+      icon: PawPrint,
+      title: 'Pet Delivery',
+      description: '"Bring Home Happiness" — buying a pet from a company with delivery, vaccination, and guarantee.',
+    },
   ];
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">Settings</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Settings</h1>
         <p className="text-sm text-gray-500 mt-1">Site-wide feature toggles for Phase 1 launch</p>
       </div>
 
-      <div className="bg-orange-950/30 border border-orange-900/50 rounded-xl p-4 mb-6 flex items-start gap-3">
-        <ShieldAlert size={18} className="text-orange-400 shrink-0 mt-0.5" />
-        <p className="text-sm text-orange-300">
+      <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 mb-6 flex items-start gap-3">
+        <ShieldAlert size={18} className="text-orange-600 shrink-0 mt-0.5" />
+        <p className="text-sm text-orange-700">
           Turning a module off hides it everywhere on the site — nav, homepage, search, and direct links — without deleting any data. Turn it back on any time.
         </p>
       </div>
@@ -85,14 +91,14 @@ export default function SettingsPage() {
         {modules.map(({ key, icon: Icon, title, description }) => {
           const enabled = !!settings[key];
           return (
-            <div key={key} className="bg-gray-900 rounded-xl border border-gray-800 p-5 flex items-center gap-4">
-              <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${enabled ? 'bg-green-950' : 'bg-gray-800'}`}>
-                <Icon size={20} className={enabled ? 'text-green-400' : 'text-gray-500'} />
+            <div key={key} className="bg-white rounded-xl border border-gray-200 p-5 flex items-center gap-4">
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${enabled ? 'bg-green-50' : 'bg-gray-100'}`}>
+                <Icon size={20} className={enabled ? 'text-green-600' : 'text-gray-500'} />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-white">{title}</h3>
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${enabled ? 'bg-green-950 text-green-400' : 'bg-gray-800 text-gray-500'}`}>
+                  <h3 className="font-bold text-gray-900">{title}</h3>
+                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
                     {enabled ? 'LIVE' : 'DISABLED'}
                   </span>
                 </div>

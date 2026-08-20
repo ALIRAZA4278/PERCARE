@@ -5,12 +5,15 @@ CREATE TABLE IF NOT EXISTS site_settings (
   id BOOLEAN PRIMARY KEY DEFAULT TRUE CHECK (id = TRUE), -- singleton row
   marketplace_enabled BOOLEAN DEFAULT FALSE,
   shelters_enabled BOOLEAN DEFAULT FALSE,
+  pet_delivery_enabled BOOLEAN DEFAULT FALSE,
   updated_by UUID REFERENCES profiles(id) ON DELETE SET NULL,
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-INSERT INTO site_settings (id, marketplace_enabled, shelters_enabled)
-VALUES (TRUE, FALSE, FALSE)
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS pet_delivery_enabled BOOLEAN DEFAULT FALSE;
+
+INSERT INTO site_settings (id, marketplace_enabled, shelters_enabled, pet_delivery_enabled)
+VALUES (TRUE, FALSE, FALSE, FALSE)
 ON CONFLICT (id) DO NOTHING;
 
 ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;

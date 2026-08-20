@@ -1,13 +1,15 @@
 'use client';
 
-import { User, Stethoscope, ShoppingBag, Heart, Eye, EyeOff, UserPlus } from 'lucide-react';
+import { User, Stethoscope, ShoppingBag, Heart, Eye, EyeOff, UserPlus, MailCheck } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function SignupPage() {
   const { signup } = useAuth();
+  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
   const router = useRouter();
   const [selectedRole, setSelectedRole] = useState('pet_owner');
   const [fullName, setFullName] = useState('');
@@ -16,13 +18,15 @@ export default function SignupPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [needsConfirmation, setNeedsConfirmation] = useState(false);
 
-  const roles = [
+  const allRoles = [
     { id: 'pet_owner', icon: User, label: 'Pet Owner', approval: false },
     { id: 'veterinarian', icon: Stethoscope, label: 'Veterinarian', approval: true },
-    { id: 'seller', icon: ShoppingBag, label: 'Seller / Company', approval: true },
-    { id: 'shelter', icon: Heart, label: 'Shelter', approval: true },
+    marketplaceEnabled && { id: 'seller', icon: ShoppingBag, label: 'Seller / Company', approval: true },
+    sheltersEnabled && { id: 'shelter', icon: Heart, label: 'Shelter', approval: true },
   ];
+  const roles = allRoles.filter(Boolean);
 
   const roleRedirect = { veterinarian: '/vet-dashboard', seller: '/seller-dashboard', shelter: '/shelter-dashboard' };
 
@@ -31,14 +35,38 @@ export default function SignupPage() {
     setError('');
     setIsLoading(true);
     try {
-      await signup(email, password, fullName, selectedRole);
-      router.push(roleRedirect[selectedRole] || '/');
+      const data = await signup(email, password, fullName, selectedRole);
+      if (data.session) {
+        router.push(roleRedirect[selectedRole] || '/');
+      } else {
+        // Email confirmation required — no active session yet, don't pretend the user is logged in
+        setNeedsConfirmation(true);
+      }
     } catch (err) {
       setError(err.message);
     } finally {
       setIsLoading(false);
     }
   };
+
+  if (needsConfirmation) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-10">
+        <div className="w-full max-w-lg text-center bg-white rounded-2xl border border-gray-200 p-8">
+          <div className="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <MailCheck size={28} className="text-green-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Check your email</h1>
+          <p className="text-sm text-gray-600 mb-6">
+            We&apos;ve sent a confirmation link to <span className="font-semibold text-gray-900">{email}</span>. Click it to activate your account, then sign in.
+          </p>
+          <Link href="/login" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
+            Go to Sign In
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-10">

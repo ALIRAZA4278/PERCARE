@@ -1,8 +1,23 @@
 'use client';
 
 import { Search, MapPin } from 'lucide-react';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function Hero() {
+  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
+
+  const taglineParts = [
+    'Discover veterinarians',
+    marketplaceEnabled && 'shop for pet products',
+    sheltersEnabled && 'adopt from shelters',
+    "manage your pet's health",
+  ].filter(Boolean);
+  const tagline = taglineParts.length > 2
+    ? `${taglineParts.slice(0, -1).join(', ')}, and ${taglineParts[taglineParts.length - 1]} — all in one place.`
+    : `${taglineParts.join(' and ')} — all in one place.`;
+
+  const searchPlaceholder = marketplaceEnabled ? 'Search vets, clinics, products...' : 'Search vets and clinics...';
+
   return (
     <div className="text-center mb-8 sm:mb-12 px-4">
       <p className="text-blue-600 text-xs sm:text-sm font-semibold mb-2 sm:mb-3 uppercase tracking-wide">
@@ -12,8 +27,7 @@ export default function Hero() {
         Better care for your best friend.
       </h1>
       <p className="text-gray-600 text-sm sm:text-base lg:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
-        Discover veterinarians, shop for pet products, adopt from shelters,
-        and manage your pet's health — all in one place.
+        {tagline}
       </p>
 
       <div className="flex items-center justify-center gap-4 mb-4 sm:mb-6">
@@ -28,7 +42,7 @@ export default function Hero() {
           <Search size={18} className="text-gray-400 flex-shrink-0" />
           <input
             type="text"
-            placeholder="Search vets, clinics, products..."
+            placeholder={searchPlaceholder}
             className="flex-1 outline-none text-gray-700 text-xs sm:text-sm"
           />
           <button className="bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-medium px-3 sm:px-5 py-1.5 sm:py-2 rounded-full flex items-center gap-1.5 sm:gap-2 transition-colors flex-shrink-0">

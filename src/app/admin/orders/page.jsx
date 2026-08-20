@@ -9,13 +9,13 @@ const STATUS_TABS = ['All', 'pending', 'confirmed', 'processing', 'shipped', 'de
 const ORDER_STATUSES = ['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled', 'refunded'];
 
 const statusBadge = {
-  pending: 'bg-orange-950 text-orange-400',
-  confirmed: 'bg-blue-900 text-blue-400',
-  processing: 'bg-purple-950 text-purple-400',
-  shipped: 'bg-indigo-900 text-indigo-400',
-  delivered: 'bg-green-950 text-green-400',
-  cancelled: 'bg-red-900 text-red-400',
-  refunded: 'bg-gray-800 text-gray-400',
+  pending: 'bg-orange-100 text-orange-700',
+  confirmed: 'bg-blue-100 text-blue-700',
+  processing: 'bg-purple-100 text-purple-700',
+  shipped: 'bg-indigo-100 text-indigo-700',
+  delivered: 'bg-green-100 text-green-700',
+  cancelled: 'bg-red-100 text-red-700',
+  refunded: 'bg-gray-100 text-gray-600',
 };
 
 export default function OrdersPage() {
@@ -84,13 +84,13 @@ export default function OrdersPage() {
 
   const totalRevenue = orders.filter(o => o.status === 'delivered').reduce((s, o) => s + Number(o.total_amount || 0), 0);
 
-  if (loading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">Orders</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Orders</h1>
           <p className="text-sm text-gray-500 mt-1">{orders.length} total · Rs. {totalRevenue.toLocaleString()} delivered revenue</p>
         </div>
       </div>
@@ -99,24 +99,24 @@ export default function OrdersPage() {
         <div className="relative flex-1 max-w-sm">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search buyer, order ID..."
-            className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-gray-600" />
+            className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
         </div>
         <div className="flex gap-2 overflow-x-auto pb-1">
           {STATUS_TABS.map(s => (
             <button key={s} onClick={() => setTab(s)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${tab === s ? 'bg-red-600 text-white' : 'bg-gray-900 text-gray-400 border border-gray-800 hover:border-gray-600'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${tab === s ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {s.charAt(0).toUpperCase() + s.slice(1)}
-              {counts[s] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tab === s ? 'bg-white/20' : 'bg-gray-800 text-gray-400'}`}>{counts[s]}</span>}
+              {counts[s] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tab === s ? 'bg-white/20' : 'bg-gray-100 text-gray-600'}`}>{counts[s]}</span>}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800">
+              <tr className="border-b border-gray-200">
                 <th className="w-8 px-4 py-3" />
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Order ID</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Buyer</th>
@@ -134,24 +134,24 @@ export default function OrdersPage() {
                 return (
                   <>
                     <tr key={order.id}
-                      className="border-b border-gray-800 hover:bg-gray-800/30 transition-colors cursor-pointer"
+                      className="border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer"
                       onClick={() => setExpanded(expanded === order.id ? null : order.id)}>
                       <td className="px-4 py-3 text-gray-500">
                         {expanded === order.id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                       </td>
-                      <td className="px-4 py-3 font-mono text-xs text-gray-400">{order.id?.slice(0, 8)}…</td>
+                      <td className="px-4 py-3 font-mono text-xs text-gray-500">{order.id?.slice(0, 8)}…</td>
                       <td className="px-4 py-3">
-                        <p className="text-white font-medium text-xs">{order.buyer?.full_name || '—'}</p>
+                        <p className="text-gray-900 font-medium text-xs">{order.buyer?.full_name || '—'}</p>
                         <p className="text-gray-500 text-[10px] hidden sm:block">{order.buyer?.email}</p>
                       </td>
                       <td className="px-4 py-3 text-gray-300 text-xs hidden sm:table-cell">Rs. {Number(order.total_amount || 0).toLocaleString()}</td>
                       <td className="px-4 py-3 hidden md:table-cell">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${order.payment_status === 'paid' ? 'bg-green-950 text-green-400' : 'bg-orange-950 text-orange-400'}`}>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${order.payment_status === 'paid' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
                           {order.payment_status || 'pending'}
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${statusBadge[order.status] || 'bg-gray-800 text-gray-400'}`}>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${statusBadge[order.status] || 'bg-gray-100 text-gray-600'}`}>
                           {order.status}
                         </span>
                       </td>
@@ -160,7 +160,7 @@ export default function OrdersPage() {
                       </td>
                     </tr>
                     {expanded === order.id && (
-                      <tr key={`${order.id}-detail`} className="border-b border-gray-800 bg-gray-950/60">
+                      <tr key={`${order.id}-detail`} className="border-b border-gray-200 bg-gray-50">
                         <td colSpan={7} className="px-6 py-5" onClick={e => e.stopPropagation()}>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                             {/* Items */}
@@ -172,11 +172,11 @@ export default function OrdersPage() {
                                 <div className="space-y-2">
                                   {order.items.map((item, i) => (
                                     <div key={i} className="flex items-center gap-2.5">
-                                      <div className="w-7 h-7 bg-gray-800 rounded shrink-0 overflow-hidden">
+                                      <div className="w-7 h-7 bg-gray-100 rounded shrink-0 overflow-hidden">
                                         {item.product?.image_url ? <img src={item.product.image_url} alt="" className="w-full h-full object-cover" /> : <span className="flex items-center justify-center h-full text-xs">📦</span>}
                                       </div>
                                       <div className="flex-1 min-w-0">
-                                        <p className="text-xs text-white truncate">{item.product?.name || 'Unknown'}</p>
+                                        <p className="text-xs text-gray-900 truncate">{item.product?.name || 'Unknown'}</p>
                                         <p className="text-[10px] text-gray-500">×{item.quantity} · Rs. {Number(item.unit_price || 0).toLocaleString()}</p>
                                       </div>
                                     </div>
@@ -184,9 +184,9 @@ export default function OrdersPage() {
                                 </div>
                               )}
                               {order.shipping_address && (
-                                <div className="mt-3 pt-3 border-t border-gray-800">
+                                <div className="mt-3 pt-3 border-t border-gray-200">
                                   <p className="text-[10px] font-semibold text-gray-500 uppercase mb-1">Delivery</p>
-                                  <p className="text-xs text-gray-400">{order.shipping_address}{order.shipping_city ? `, ${order.shipping_city}` : ''}</p>
+                                  <p className="text-xs text-gray-500">{order.shipping_address}{order.shipping_city ? `, ${order.shipping_city}` : ''}</p>
                                   {order.phone && <p className="text-xs text-gray-500 mt-0.5">{order.phone}</p>}
                                 </div>
                               )}
@@ -198,13 +198,13 @@ export default function OrdersPage() {
                               <select
                                 value={statusEdits[order.id] ?? order.status}
                                 onChange={e => setStatusEdits(prev => ({ ...prev, [order.id]: e.target.value }))}
-                                className="w-full px-3 py-2.5 rounded-lg bg-gray-800 border border-gray-700 outline-none focus:border-red-500 text-white text-sm mb-3">
+                                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm mb-3">
                                 {ORDER_STATUSES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
                               </select>
                               <button
                                 onClick={() => handleStatusSave(order)}
                                 disabled={saving === order.id || !isDirty}
-                                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-800 disabled:text-gray-600 text-white text-xs font-semibold rounded-lg transition-colors">
+                                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white text-xs font-semibold rounded-lg transition-colors">
                                 <Save size={13} />
                                 {saving === order.id ? 'Saving...' : 'Save Status'}
                               </button>

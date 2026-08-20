@@ -16,9 +16,10 @@ export default function Features() {
 
   const bgColors = { blue: 'bg-blue-50', green: 'bg-green-50', red: 'bg-red-50', yellow: 'bg-yellow-50' };
   const iconColors = { blue: 'text-blue-600', green: 'text-green-600', red: 'text-red-600', yellow: 'text-yellow-600' };
+  const gridColsClass = { 1: 'lg:grid-cols-1', 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' }[features.length] || 'lg:grid-cols-4';
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-6 sm:mb-8 px-4">
+    <div className={`grid grid-cols-2 ${gridColsClass} gap-3 sm:gap-5 mb-6 sm:mb-8 px-4`}>
       {features.map((feature) => {
         const Icon = feature.icon;
         return (

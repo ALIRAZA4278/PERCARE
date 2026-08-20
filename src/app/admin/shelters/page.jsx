@@ -144,13 +144,13 @@ export default function SheltersPage() {
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const counts = { all: shelters.length, verified: shelters.filter(s => s.is_verified).length, unverified: shelters.filter(s => !s.is_verified).length };
 
-  if (loading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center"><p className="text-gray-500 text-sm">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500 text-sm">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">Shelters</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Shelters</h1>
           <p className="text-sm text-gray-500 mt-1">{shelters.length} total · {counts.verified} verified · {counts.unverified} unverified</p>
         </div>
         <button onClick={openAdd}
@@ -163,23 +163,23 @@ export default function SheltersPage() {
         <div className="relative flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search shelter name, city, email, owner..."
-            className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-gray-600" />
+            className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
         </div>
         <div className="flex gap-2">
           {['all', 'verified', 'unverified'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-red-600 text-white' : 'bg-gray-900 text-gray-400 border border-gray-800 hover:border-gray-600'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {f} <span className="opacity-70">({counts[f]})</span>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800">
+              <tr className="border-b border-gray-200">
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Shelter</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden sm:table-cell">Owner</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden md:table-cell">City</th>
@@ -193,56 +193,56 @@ export default function SheltersPage() {
               {paged.length === 0 ? (
                 <tr><td colSpan={7} className="text-center text-gray-600 py-12 text-sm">No shelters found</td></tr>
               ) : paged.map(shelter => (
-                <tr key={shelter.id} className="border-b border-gray-800 last:border-0 hover:bg-gray-800/30 transition-colors">
+                <tr key={shelter.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 bg-gray-800 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                      <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
                         {shelter.image_url
                           ? <img src={shelter.image_url} alt="" className="w-full h-full object-cover" />
                           : <span className="text-sm">🏠</span>}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-white font-medium text-xs truncate max-w-[130px]">{shelter.name}</p>
+                        <p className="text-gray-900 font-medium text-xs truncate max-w-[130px]">{shelter.name}</p>
                         <p className="text-gray-600 text-[10px]">{shelter.created_at ? new Date(shelter.created_at).toLocaleDateString() : ''}</p>
                       </div>
                     </div>
                   </td>
                   <td className="px-4 py-3 hidden sm:table-cell">
-                    <p className="text-xs text-white truncate max-w-[110px]">{shelter.owner?.full_name || '—'}</p>
+                    <p className="text-xs text-gray-900 truncate max-w-[110px]">{shelter.owner?.full_name || '—'}</p>
                     <p className="text-[10px] text-gray-500 truncate max-w-[110px]">{shelter.owner?.email}</p>
                   </td>
                   <td className="px-4 py-3 hidden md:table-cell">
-                    <p className="text-xs text-white">{shelter.city || '—'}</p>
+                    <p className="text-xs text-gray-900">{shelter.city || '—'}</p>
                     {shelter.country && <p className="text-[10px] text-gray-500">{shelter.country}</p>}
                   </td>
                   <td className="px-4 py-3 hidden lg:table-cell">
-                    <p className="text-xs text-gray-400">{shelter.phone || '—'}</p>
+                    <p className="text-xs text-gray-500">{shelter.phone || '—'}</p>
                     {shelter.email && <p className="text-[10px] text-gray-500 truncate max-w-[130px]">{shelter.email}</p>}
                   </td>
                   <td className="px-4 py-3 hidden lg:table-cell">
                     {shelter.website
-                      ? <a href={shelter.website} target="_blank" rel="noreferrer" className="text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 text-xs"><ExternalLink size={12} /> Visit</a>
+                      ? <a href={shelter.website} target="_blank" rel="noreferrer" className="text-blue-600 hover:text-blue-700 inline-flex items-center gap-1 text-xs"><ExternalLink size={12} /> Visit</a>
                       : <span className="text-gray-600 text-xs">—</span>}
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${shelter.is_verified ? 'bg-green-950 text-green-400' : 'bg-orange-950 text-orange-400'}`}>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${shelter.is_verified ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
                       {shelter.is_verified ? 'Verified' : 'Unverified'}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-1.5">
                       <button onClick={() => openEdit(shelter)} disabled={processing === shelter.id}
-                        className="flex items-center gap-1 px-2.5 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-semibold rounded-lg transition-colors border border-gray-700">
+                        className="flex items-center gap-1 px-2.5 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg transition-colors border border-gray-200">
                         <Pencil size={12} /> Edit
                       </button>
                       {shelter.is_verified ? (
                         <button onClick={() => handleUnverify(shelter)} disabled={processing === shelter.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 bg-gray-800 hover:bg-red-950 text-red-400 text-xs font-semibold rounded-lg transition-colors border border-gray-700 disabled:opacity-40">
+                          className="flex items-center gap-1 px-2.5 py-1.5 bg-gray-100 hover:bg-red-50 text-red-600 text-xs font-semibold rounded-lg transition-colors border border-gray-200 disabled:opacity-40">
                           <XCircle size={12} /> Unverify
                         </button>
                       ) : (
                         <button onClick={() => handleVerify(shelter)} disabled={processing === shelter.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 bg-green-900/40 hover:bg-green-800/40 text-green-400 text-xs font-semibold rounded-lg transition-colors border border-green-900 disabled:opacity-40">
+                          className="flex items-center gap-1 px-2.5 py-1.5 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-semibold rounded-lg transition-colors border border-green-200 disabled:opacity-40">
                           <CheckCircle size={12} /> Verify
                         </button>
                       )}
@@ -259,8 +259,8 @@ export default function SheltersPage() {
         <div className="flex items-center justify-between mt-4">
           <p className="text-xs text-gray-500">Page {page + 1} of {totalPages}</p>
           <div className="flex gap-2">
-            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-2 bg-gray-900 border border-gray-800 rounded-lg text-gray-400 disabled:opacity-30 hover:border-gray-600"><ChevronLeft size={16} /></button>
-            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} className="p-2 bg-gray-900 border border-gray-800 rounded-lg text-gray-400 disabled:opacity-30 hover:border-gray-600"><ChevronRight size={16} /></button>
+            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-2 bg-white border border-gray-200 rounded-lg text-gray-500 disabled:opacity-30 hover:border-gray-300"><ChevronLeft size={16} /></button>
+            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} className="p-2 bg-white border border-gray-200 rounded-lg text-gray-500 disabled:opacity-30 hover:border-gray-300"><ChevronRight size={16} /></button>
           </div>
         </div>
       )}
@@ -270,27 +270,27 @@ export default function SheltersPage() {
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => setModal(null)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-gray-900 rounded-2xl w-full max-w-lg border border-gray-800 p-6 max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-2xl w-full max-w-lg border border-gray-200 p-6 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="text-lg font-bold text-white">{modal.mode === 'edit' ? 'Edit Shelter' : 'Add Shelter'}</h3>
-                <button onClick={() => setModal(null)} className="p-1 hover:bg-gray-800 rounded-lg text-gray-400"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-gray-900">{modal.mode === 'edit' ? 'Edit Shelter' : 'Add Shelter'}</h3>
+                <button onClick={() => setModal(null)} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
               </div>
 
               <div className="space-y-3">
                 {modal.mode === 'add' && (
                   <div>
-                    <label className="block text-xs font-semibold text-gray-400 mb-1.5">Search Owner (User)</label>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1.5">Search Owner (User)</label>
                     <input value={userSearch} onChange={e => searchUsers(e.target.value)} placeholder="Type user name..."
-                      className="w-full px-3 py-2.5 rounded-xl bg-gray-800 border border-gray-700 outline-none focus:border-red-500 text-white text-sm placeholder-gray-600" />
+                      className="w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm placeholder-gray-400" />
                     {userResults.length > 0 && (
-                      <div className="mt-1 bg-gray-800 border border-gray-700 rounded-xl overflow-hidden">
+                      <div className="mt-1 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-lg">
                         {userResults.map(u => (
                           <button key={u.id} onClick={() => { setForm(f => ({ ...f, user_id: u.id })); setUserSearch(u.full_name); setUserResults([]); }}
-                            className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-gray-700 transition-colors text-left">
-                            <div className="w-7 h-7 bg-gray-600 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0">{u.full_name?.charAt(0)}</div>
+                            className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-gray-50 transition-colors text-left">
+                            <div className="w-7 h-7 bg-gray-500 rounded-full flex items-center justify-center text-xs font-bold text-white shrink-0">{u.full_name?.charAt(0)}</div>
                             <div>
-                              <p className="text-sm text-white font-medium">{u.full_name}</p>
-                              <p className="text-xs text-gray-400">{u.email}</p>
+                              <p className="text-sm text-gray-900 font-medium">{u.full_name}</p>
+                              <p className="text-xs text-gray-500">{u.email}</p>
                             </div>
                           </button>
                         ))}
@@ -300,15 +300,15 @@ export default function SheltersPage() {
                 )}
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5">Shelter Name</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1.5">Shelter Name</label>
                   <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-800 border border-gray-700 outline-none focus:border-red-500 text-white text-sm" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5">Description</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1.5">Description</label>
                   <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-800 border border-gray-700 outline-none focus:border-red-500 text-white text-sm resize-none" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -321,9 +321,9 @@ export default function SheltersPage() {
                     { key: 'website', label: 'Website' },
                   ].map(({ key, label }) => (
                     <div key={key}>
-                      <label className="block text-xs font-semibold text-gray-400 mb-1.5">{label}</label>
+                      <label className="block text-xs font-semibold text-gray-500 mb-1.5">{label}</label>
                       <input value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                        className="w-full px-3 py-2 rounded-xl bg-gray-800 border border-gray-700 outline-none focus:border-red-500 text-white text-sm" />
+                        className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
                     </div>
                   ))}
                 </div>
@@ -334,10 +334,10 @@ export default function SheltersPage() {
                     { key: 'accepts_donations', label: 'Accepts Donations', accent: 'accent-blue-500' },
                     { key: 'accepts_surrender', label: 'Accepts Surrender', accent: 'accent-orange-500' },
                   ].map(({ key, label, accent }) => (
-                    <div key={key} className="flex items-center gap-2 p-2.5 bg-gray-800 rounded-xl">
+                    <div key={key} className="flex items-center gap-2 p-2.5 bg-gray-50 rounded-xl">
                       <input type="checkbox" id={key} checked={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.checked }))}
                         className={`w-4 h-4 ${accent}`} />
-                      <label htmlFor={key} className="text-xs font-medium text-white cursor-pointer leading-tight">{label}</label>
+                      <label htmlFor={key} className="text-xs font-medium text-gray-900 cursor-pointer leading-tight">{label}</label>
                     </div>
                   ))}
                 </div>
@@ -345,10 +345,10 @@ export default function SheltersPage() {
 
               <div className="flex gap-2 mt-5">
                 <button onClick={handleSave} disabled={saving || (modal.mode === 'add' && (!form.user_id || !form.name))}
-                  className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-800 disabled:text-gray-600 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   <Save size={15} /> {saving ? 'Saving...' : 'Save'}
                 </button>
-                <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-sm">Cancel</button>
+                <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>

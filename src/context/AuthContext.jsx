@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [profileLoading, setProfileLoading] = useState(false);
 
   useEffect(() => {
     // Get initial session
@@ -17,6 +18,7 @@ export function AuthProvider({ children }) {
       if (session?.user) {
         setUser(session.user);
         setIsLoggedIn(true);
+        setProfileLoading(true);
         fetchProfile(session.user.id);
       }
       setLoading(false);
@@ -27,11 +29,13 @@ export function AuthProvider({ children }) {
       if (session?.user) {
         setUser(session.user);
         setIsLoggedIn(true);
+        setProfileLoading(true);
         fetchProfile(session.user.id);
       } else {
         setUser(null);
         setProfile(null);
         setIsLoggedIn(false);
+        setProfileLoading(false);
       }
     });
 
@@ -45,6 +49,7 @@ export function AuthProvider({ children }) {
       .eq('id', userId)
       .single();
     if (data) setProfile(data);
+    setProfileLoading(false);
   };
 
   const signup = async (email, password, fullName, role) => {
@@ -76,7 +81,7 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, profile, isLoggedIn, loading, signup, login, logout, fetchProfile }}>
+    <AuthContext.Provider value={{ user, profile, isLoggedIn, loading, profileLoading, signup, login, logout, fetchProfile }}>
       {children}
     </AuthContext.Provider>
   );

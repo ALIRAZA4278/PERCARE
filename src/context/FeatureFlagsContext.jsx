@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabase';
 
 const FeatureFlagsContext = createContext();
 
-const DEFAULT_FLAGS = { marketplaceEnabled: false, sheltersEnabled: false };
+const DEFAULT_FLAGS = { marketplaceEnabled: false, sheltersEnabled: false, petDeliveryEnabled: false };
 
 export function FeatureFlagsProvider({ children }) {
   const [flags, setFlags] = useState(DEFAULT_FLAGS);
@@ -14,13 +14,14 @@ export function FeatureFlagsProvider({ children }) {
   const fetchFlags = async () => {
     const { data } = await supabase
       .from('site_settings')
-      .select('marketplace_enabled, shelters_enabled')
+      .select('marketplace_enabled, shelters_enabled, pet_delivery_enabled')
       .eq('id', true)
       .single();
     if (data) {
       setFlags({
         marketplaceEnabled: !!data.marketplace_enabled,
         sheltersEnabled: !!data.shelters_enabled,
+        petDeliveryEnabled: !!data.pet_delivery_enabled,
       });
     }
     setLoading(false);

@@ -4,11 +4,14 @@ import { ArrowLeft, ArrowRight, Stethoscope, Shield, Utensils, Home, RefreshCw, 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import FeatureDisabled from '@/components/FeatureDisabled';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 export default function BrowsePetsPage() {
   const { isLoggedIn } = useAuth();
+  const { petDeliveryEnabled, loading: flagsLoading } = useFeatureFlags();
   const router = useRouter();
   const [activeCategory, setActiveCategory] = useState('All Pets');
   const [searchQuery, setSearchQuery] = useState('');
@@ -73,6 +76,10 @@ export default function BrowsePetsPage() {
     { name: 'Sara M.', rating: 5, text: '"The 100-day guarantee gave me peace of mind. My Persian kitten is thriving and the vet support has been amazing."' },
     { name: 'Usman R.', rating: 4, text: '"Ordered a pair of Betta fish — they arrived in perfect condition. The tank setup was a bonus I didn\'t expect!"' },
   ];
+
+  if (!flagsLoading && !petDeliveryEnabled) {
+    return <FeatureDisabled title="Browse Pets" />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

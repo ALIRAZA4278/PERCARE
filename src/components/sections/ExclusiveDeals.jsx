@@ -1,11 +1,19 @@
+'use client';
+
 import { Tag } from 'lucide-react';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function ExclusiveDeals() {
+  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
+
   const deals = [
     { badge: '🩺 VET DEALS', badgeColor: 'bg-green-100 text-green-700', bgColor: 'bg-green-50', borderColor: 'border-green-100', title: 'Up to 30% Off', description: 'On consultations & checkups at partner clinics' },
-    { badge: '📦 PRODUCT DEALS', badgeColor: 'bg-blue-100 text-blue-700', bgColor: 'bg-blue-50', borderColor: 'border-blue-100', title: 'Up to 40% Off', description: 'Premium food, toys & accessories' },
-    { badge: '🐕 SHELTER IMPACT', badgeColor: 'bg-orange-100 text-orange-700', bgColor: 'bg-orange-50', borderColor: 'border-orange-100', title: 'Rs. 3.2M+', description: 'Raised for shelters through our platform' },
-  ];
+    marketplaceEnabled && { badge: '📦 PRODUCT DEALS', badgeColor: 'bg-blue-100 text-blue-700', bgColor: 'bg-blue-50', borderColor: 'border-blue-100', title: 'Up to 40% Off', description: 'Premium food, toys & accessories' },
+    sheltersEnabled && { badge: '🐕 SHELTER IMPACT', badgeColor: 'bg-orange-100 text-orange-700', bgColor: 'bg-orange-50', borderColor: 'border-orange-100', title: 'Rs. 3.2M+', description: 'Raised for shelters through our platform' },
+    !sheltersEnabled && { badge: '⚠️ LOST & FOUND', badgeColor: 'bg-orange-100 text-orange-700', bgColor: 'bg-orange-50', borderColor: 'border-orange-100', title: 'Free Alerts', description: 'Community-wide alerts to help reunite pets fast' },
+  ].filter(Boolean);
+
+  const gridColsClass = { 1: 'lg:grid-cols-1', 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' }[deals.length] || 'lg:grid-cols-3';
 
   return (
     <div className="mb-6 sm:mb-8 px-4">
@@ -13,7 +21,7 @@ export default function ExclusiveDeals() {
         <Tag className="text-blue-600" size={20} />
         <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Exclusive Deals — Only on PetCare</h2>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+      <div className={`grid grid-cols-1 sm:grid-cols-2 ${gridColsClass} gap-3 sm:gap-5`}>
         {deals.map((deal, index) => (
           <div key={index} className={`${deal.bgColor} ${deal.borderColor} rounded-xl sm:rounded-2xl p-5 sm:p-6 border hover:shadow-lg transition-shadow`}>
             <div className={`inline-block ${deal.badgeColor} text-xs font-semibold px-3 py-1.5 rounded-full mb-3`}>

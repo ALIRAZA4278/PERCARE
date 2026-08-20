@@ -5,10 +5,12 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 import { supabase } from '@/lib/supabase';
 
 export default function LoginPage() {
   const { login } = useAuth();
+  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
   const router = useRouter();
   const [selectedRole, setSelectedRole] = useState('pet_owner');
   const [email, setEmail] = useState('');
@@ -17,14 +19,15 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const roles = [
+  const allRoles = [
     { id: 'pet_owner', icon: User, label: 'Pet Owner', description: 'Manage pets, book vets, shop' },
     { id: 'veterinarian', icon: Stethoscope, label: 'Veterinarian', description: 'Manage clinic & patients' },
-    { id: 'seller', icon: ShoppingBag, label: 'Seller / Company', description: 'Sell products & manage store' },
-    { id: 'shelter', icon: Heart, label: 'Shelter', description: 'Manage shelter & adoptions' },
+    marketplaceEnabled && { id: 'seller', icon: ShoppingBag, label: 'Seller / Company', description: 'Sell products & manage store' },
+    sheltersEnabled && { id: 'shelter', icon: Heart, label: 'Shelter', description: 'Manage shelter & adoptions' },
   ];
+  const roles = allRoles.filter(Boolean);
 
-  const roleRedirect = { veterinarian: '/vet-dashboard', seller: '/seller-dashboard', company: '/seller-dashboard', shelter: '/shelter-dashboard', admin: '/admin-dashboard' };
+  const roleRedirect = { veterinarian: '/vet-dashboard', seller: '/seller-dashboard', company: '/seller-dashboard', shelter: '/shelter-dashboard', admin: '/admin' };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,6 +36,18 @@ export default function LoginPage() {
     try {
       const { user } = await login(email, password);
       const { data: p } = await supabase.from('profiles').select('role').eq('id', user.id).single();
+
+      if ((p?.role === 'seller' || p?.role === 'company') && !marketplaceEnabled) {
+        await supabase.auth.signOut();
+        setError('Seller accounts are temporarily unavailable while the marketplace is in beta. Check back soon.');
+        return;
+      }
+      if (p?.role === 'shelter' && !sheltersEnabled) {
+        await supabase.auth.signOut();
+        setError('Shelter accounts are temporarily unavailable while shelters are in beta. Check back soon.');
+        return;
+      }
+
       router.push(roleRedirect[p?.role] || '/');
     } catch (err) {
       setError(err.message);

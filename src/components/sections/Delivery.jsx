@@ -1,11 +1,17 @@
+'use client';
+
 import { Truck, Shield, Headphones } from 'lucide-react';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function Delivery() {
+  const { marketplaceEnabled } = useFeatureFlags();
   const deliveryFeatures = [
     { icon: Truck, label: 'Free Delivery' },
     { icon: Shield, label: 'Tamper-Proof' },
     { icon: Headphones, label: 'On-Spot Help' },
   ];
+
+  if (!marketplaceEnabled) return null;
 
   return (
     <div className="bg-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 mb-6 sm:mb-8 mx-4">

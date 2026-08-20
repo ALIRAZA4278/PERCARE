@@ -1,27 +1,31 @@
 'use client';
 
-import { Stethoscope, Building2, Package, Home } from 'lucide-react';
+import { Stethoscope, Building2, Package, Home, PawPrint, AlertTriangle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function Stats() {
   const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
-  const [counts, setCounts] = useState({ vets: 0, clinics: 0, products: 0, shelters: 0 });
+  const [counts, setCounts] = useState({ vets: 0, clinics: 0, products: 0, shelters: 0, petsRegistered: 0, petsReunited: 0 });
 
   useEffect(() => {
     const fetchCounts = async () => {
-      const [vetsRes, clinicsRes, productsRes, sheltersRes] = await Promise.all([
+      const [vetsRes, clinicsRes, productsRes, sheltersRes, petsRes, reunitedRes] = await Promise.all([
         supabase.from('vet_profiles').select('id', { count: 'exact', head: true }),
         supabase.from('clinics').select('id', { count: 'exact', head: true }).eq('is_approved', true),
         supabase.from('products').select('id', { count: 'exact', head: true }).eq('is_active', true).eq('is_approved', true),
         supabase.from('shelters').select('id', { count: 'exact', head: true }),
+        supabase.from('pets').select('id', { count: 'exact', head: true }),
+        supabase.from('lost_found_pets').select('id', { count: 'exact', head: true }).eq('status', 'reunited'),
       ]);
       setCounts({
         vets: vetsRes.count || 0,
         clinics: clinicsRes.count || 0,
         products: productsRes.count || 0,
         shelters: sheltersRes.count || 0,
+        petsRegistered: petsRes.count || 0,
+        petsReunited: reunitedRes.count || 0,
       });
     };
     fetchCounts();
@@ -32,6 +36,8 @@ export default function Stats() {
     { number: counts.clinics > 0 ? `${counts.clinics}+` : '—', label: 'Clinics', color: 'green', icon: Building2 },
     marketplaceEnabled && { number: counts.products > 0 ? `${counts.products}+` : '—', label: 'Products', color: 'yellow', icon: Package },
     sheltersEnabled && { number: counts.shelters > 0 ? `${counts.shelters}+` : '—', label: 'Shelters', color: 'red', icon: Home },
+    !marketplaceEnabled && { number: counts.petsRegistered > 0 ? `${counts.petsRegistered}+` : '—', label: 'Pets Registered', color: 'yellow', icon: PawPrint },
+    !sheltersEnabled && { number: counts.petsReunited > 0 ? `${counts.petsReunited}+` : '—', label: 'Pets Reunited', color: 'red', icon: AlertTriangle },
   ].filter(Boolean);
 
   const bgColors = { blue: 'bg-blue-50', green: 'bg-green-50', red: 'bg-red-50', yellow: 'bg-yellow-50' };

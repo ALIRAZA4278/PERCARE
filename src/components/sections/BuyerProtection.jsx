@@ -1,7 +1,13 @@
+'use client';
+
 import { CheckCircle } from 'lucide-react';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function BuyerProtection() {
+  const { marketplaceEnabled } = useFeatureFlags();
   const features = ['Verified Sellers Only', 'Full Accountability', 'Easy Returns'];
+
+  if (!marketplaceEnabled) return null;
 
   return (
     <div className="bg-green-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-5 sm:mb-6 border border-green-100 mx-4">

@@ -1,7 +1,11 @@
+'use client';
+
 import { CheckCircle, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function BringHomeHappiness() {
+  const { petDeliveryEnabled } = useFeatureFlags();
   const features = [
     { text: 'Vet-Checked & Healthy' },
     { text: '100-Day Guarantee' },
@@ -10,6 +14,8 @@ export default function BringHomeHappiness() {
     { text: '24/7 Vet Support' },
     { text: 'Free Vaccination' },
   ];
+
+  if (!petDeliveryEnabled) return null;
 
   return (
     <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-8 mb-6 sm:mb-8 overflow-hidden relative border border-gray-200 mx-4">

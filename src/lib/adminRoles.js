@@ -10,12 +10,12 @@ export const ROLE_LABELS = {
 };
 
 export const ROLE_COLORS = {
-  super_admin: 'bg-red-900 text-red-300 border-red-800',
-  operations: 'bg-blue-900 text-blue-300 border-blue-800',
-  commerce: 'bg-orange-900 text-orange-300 border-orange-800',
-  vet_admin: 'bg-teal-900 text-teal-300 border-teal-800',
-  moderator: 'bg-purple-900 text-purple-300 border-purple-800',
-  support: 'bg-gray-800 text-gray-300 border-gray-700',
+  super_admin: 'bg-red-100 text-red-700 border-red-200',
+  operations: 'bg-blue-100 text-blue-700 border-blue-200',
+  commerce: 'bg-orange-100 text-orange-700 border-orange-200',
+  vet_admin: 'bg-teal-100 text-teal-700 border-teal-200',
+  moderator: 'bg-purple-100 text-purple-700 border-purple-200',
+  support: 'bg-gray-100 text-gray-600 border-gray-200',
 };
 
 // Which admin_roles can access each page (by path key)

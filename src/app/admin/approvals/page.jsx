@@ -131,33 +131,33 @@ export default function ApprovalsPage() {
     setRejectModal(null); setRejectReason(''); setProcessing(false);
   };
 
-  const btnA = "flex items-center gap-1.5 px-3 py-1.5 bg-green-700 hover:bg-green-600 text-white text-xs font-semibold rounded-lg transition-colors";
-  const btnR = "flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 hover:bg-red-950 text-red-400 text-xs font-semibold rounded-lg transition-colors border border-gray-700";
+  const btnA = "flex items-center gap-1.5 px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-xs font-semibold rounded-lg transition-colors";
+  const btnR = "flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-red-50 text-red-600 text-xs font-semibold rounded-lg transition-colors border border-gray-200";
 
   const Card = ({ children, actions }) => (
-    <div className="bg-gray-900 rounded-xl p-4 sm:p-5 border border-gray-800 flex flex-col sm:flex-row sm:items-center gap-4">
+    <div className="bg-white rounded-xl p-4 sm:p-5 border border-gray-200 flex flex-col sm:flex-row sm:items-center gap-4">
       <div className="flex-1 min-w-0">{children}</div>
       <div className="flex gap-2 shrink-0">{actions}</div>
     </div>
   );
 
-  const Tag = ({ label }) => <span className="text-[10px] font-medium px-2 py-0.5 bg-gray-800 text-gray-400 rounded-full">{label}</span>;
+  const Tag = ({ label }) => <span className="text-[10px] font-medium px-2 py-0.5 bg-gray-100 text-gray-600 rounded-full">{label}</span>;
 
-  if (loading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">Approvals</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Approvals</h1>
         <p className="text-sm text-gray-500 mt-1">Review and approve pending applications</p>
       </div>
 
       <div className="flex gap-2 mb-6 overflow-x-auto">
         {TABS.map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap flex items-center gap-2 transition-colors ${activeTab === tab ? 'bg-red-600 text-white' : 'bg-gray-900 text-gray-400 border border-gray-800 hover:border-gray-600'}`}>
+            className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap flex items-center gap-2 transition-colors ${activeTab === tab ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
             {tab}
-            {counts[tab] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${activeTab === tab ? 'bg-white/20' : 'bg-red-900 text-red-400'}`}>{counts[tab]}</span>}
+            {counts[tab] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${activeTab === tab ? 'bg-white/20' : 'bg-red-100 text-red-700'}`}>{counts[tab]}</span>}
           </button>
         ))}
       </div>
@@ -168,14 +168,14 @@ export default function ApprovalsPage() {
             <button key="a" onClick={() => approveVet(vet)} disabled={processing} className={btnA}><CheckCircle size={14} /> Approve</button>,
             <button key="r" onClick={() => setRejectModal({ id: vet.id, type: 'vet' })} disabled={processing} className={btnR}><XCircle size={14} /> Reject</button>,
           ]}>
-            <p className="font-bold text-white">{vet.user?.full_name || 'Unknown'}</p>
+            <p className="font-bold text-gray-900">{vet.user?.full_name || 'Unknown'}</p>
             <p className="text-xs text-gray-500 mb-2">{vet.user?.email}</p>
             <div className="flex flex-wrap gap-1.5">
               {vet.license_number && <Tag label={`License: ${vet.license_number}`} />}
               {vet.specialization && <Tag label={vet.specialization} />}
               {vet.qualification && <Tag label={vet.qualification} />}
             </div>
-            {vet.certificate_url && <a href={vet.certificate_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-blue-400 hover:underline mt-2"><ExternalLink size={12} /> View Certificate</a>}
+            {vet.certificate_url && <a href={vet.certificate_url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-xs text-blue-600 hover:underline mt-2"><ExternalLink size={12} /> View Certificate</a>}
           </Card>
         )))}
 
@@ -184,7 +184,7 @@ export default function ApprovalsPage() {
             <button key="a" onClick={() => approveClinic(clinic)} disabled={processing} className={btnA}><CheckCircle size={14} /> Approve</button>,
             <button key="r" onClick={() => setRejectModal({ id: clinic.id, type: 'clinic' })} disabled={processing} className={btnR}><XCircle size={14} /> Reject</button>,
           ]}>
-            <p className="font-bold text-white">{clinic.name}</p>
+            <p className="font-bold text-gray-900">{clinic.name}</p>
             <p className="text-xs text-gray-500 mb-2">Owner: {clinic.owner?.full_name || '—'} · {clinic.owner?.email || '—'}</p>
             <div className="flex flex-wrap gap-1.5">
               {clinic.city && <Tag label={clinic.city} />}
@@ -198,7 +198,7 @@ export default function ApprovalsPage() {
             <button key="a" onClick={() => approveStore(store)} disabled={processing} className={btnA}><CheckCircle size={14} /> Approve</button>,
             <button key="r" onClick={() => setRejectModal({ id: store.id, type: 'store' })} disabled={processing} className={btnR}><XCircle size={14} /> Reject</button>,
           ]}>
-            <p className="font-bold text-white">{store.name}</p>
+            <p className="font-bold text-gray-900">{store.name}</p>
             <p className="text-xs text-gray-500 mb-2">Owner: {store.owner?.full_name} · {store.owner?.email}</p>
             <div className="flex flex-wrap gap-1.5">
               {store.store_category && <Tag label={store.store_category} />}
@@ -213,7 +213,7 @@ export default function ApprovalsPage() {
             <button key="a" onClick={() => verifyShelter(shelter)} disabled={processing} className={btnA}><CheckCircle size={14} /> Verify</button>,
             <button key="r" onClick={() => setRejectModal({ id: shelter.id, type: 'shelter' })} disabled={processing} className={btnR}><XCircle size={14} /> Reject</button>,
           ]}>
-            <p className="font-bold text-white">{shelter.name}</p>
+            <p className="font-bold text-gray-900">{shelter.name}</p>
             <p className="text-xs text-gray-500 mb-2">{shelter.city}{shelter.address ? ` · ${shelter.address}` : ''}</p>
             <div className="flex flex-wrap gap-1.5">
               {shelter.phone && <Tag label={shelter.phone} />}
@@ -228,11 +228,11 @@ export default function ApprovalsPage() {
             <button key="r" onClick={() => setRejectModal({ id: product.id, type: 'product' })} disabled={processing} className={btnR}><XCircle size={14} /> Reject</button>,
           ]}>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+              <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
                 {product.image_url ? <img src={product.image_url} alt="" className="w-full h-full object-cover rounded-lg" /> : <span>📦</span>}
               </div>
               <div>
-                <p className="font-bold text-white">{product.name}</p>
+                <p className="font-bold text-gray-900">{product.name}</p>
                 <p className="text-xs text-gray-500">Store: {product.store?.name} · Rs. {Number(product.price).toLocaleString()}</p>
               </div>
             </div>
@@ -244,20 +244,20 @@ export default function ApprovalsPage() {
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => { setRejectModal(null); setRejectReason(''); }} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-gray-900 rounded-2xl w-full max-w-sm border border-gray-800 p-6">
+            <div className="bg-white rounded-2xl w-full max-w-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-white">Reject — Add Reason</h3>
-                <button onClick={() => { setRejectModal(null); setRejectReason(''); }} className="p-1 hover:bg-gray-800 rounded-lg text-gray-400"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-gray-900">Reject — Add Reason</h3>
+                <button onClick={() => { setRejectModal(null); setRejectReason(''); }} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
               </div>
               <textarea value={rejectReason} onChange={e => setRejectReason(e.target.value)} placeholder="Explain why..." rows={4}
-                className="w-full px-3 py-2.5 rounded-lg bg-gray-800 border border-gray-700 outline-none focus:border-red-500 text-white text-sm resize-none mb-4 placeholder-gray-600" />
+                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none mb-4 placeholder-gray-400" />
               <div className="flex gap-2">
                 <button onClick={handleReject} disabled={processing}
-                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-900 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
+                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
                   {processing ? 'Processing...' : 'Confirm Reject'}
                 </button>
                 <button onClick={() => { setRejectModal(null); setRejectReason(''); }}
-                  className="px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -269,7 +269,7 @@ export default function ApprovalsPage() {
 
 function Empty() {
   return (
-    <div className="text-center py-16 bg-gray-900 rounded-xl border border-gray-800">
+    <div className="text-center py-16 bg-white rounded-xl border border-gray-200">
       <div className="text-4xl mb-3">✅</div>
       <p className="text-gray-500 text-sm">All clear — nothing pending</p>
     </div>

@@ -11,18 +11,18 @@ function StarRating({ rating }) {
   return (
     <div className="flex gap-0.5">
       {[1, 2, 3, 4, 5].map(i => (
-        <Star key={i} size={13} className={i <= rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-700 fill-gray-700'} />
+        <Star key={i} size={13} className={i <= rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-200 fill-gray-200'} />
       ))}
     </div>
   );
 }
 
 const targetColor = {
-  vet: 'bg-blue-950 text-blue-400',
-  clinic: 'bg-teal-950 text-teal-400',
-  product: 'bg-orange-950 text-orange-400',
-  store: 'bg-purple-950 text-purple-400',
-  shelter: 'bg-green-950 text-green-400',
+  vet: 'bg-blue-100 text-blue-700',
+  clinic: 'bg-teal-100 text-teal-700',
+  product: 'bg-orange-100 text-orange-700',
+  store: 'bg-purple-100 text-purple-700',
+  shelter: 'bg-green-100 text-green-700',
 };
 
 export default function ReviewsPage() {
@@ -81,12 +81,12 @@ export default function ReviewsPage() {
 
   const avgRating = reviews.length ? (reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length).toFixed(1) : '—';
 
-  if (loading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-white">Reviews</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Reviews</h1>
         <p className="text-sm text-gray-500 mt-1">{reviews.length} total · Avg rating: {avgRating} ★</p>
       </div>
 
@@ -94,23 +94,23 @@ export default function ReviewsPage() {
         <div className="relative flex-1">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search reviewer, comment..."
-            className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-gray-600" />
+            className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
         </div>
         <div className="flex gap-2 overflow-x-auto pb-1">
           {TARGET_TYPES.map(t => (
             <button key={t} onClick={() => setTargetFilter(t)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap flex items-center gap-1.5 transition-colors ${targetFilter === t ? 'bg-red-600 text-white' : 'bg-gray-900 text-gray-400 border border-gray-800 hover:border-gray-600'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap flex items-center gap-1.5 transition-colors ${targetFilter === t ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {t} <span className="opacity-70">({counts[t]})</span>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800">
+              <tr className="border-b border-gray-200">
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Reviewer</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Rating</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden sm:table-cell">Comment</th>
@@ -123,25 +123,25 @@ export default function ReviewsPage() {
               {filtered.length === 0 ? (
                 <tr><td colSpan={6} className="text-center text-gray-600 py-12">No reviews found</td></tr>
               ) : filtered.map(review => (
-                <tr key={review.id} className="border-b border-gray-800 last:border-0 hover:bg-gray-800/30 transition-colors">
+                <tr key={review.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 font-bold text-xs shrink-0">
+                      <div className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 font-bold text-xs shrink-0">
                         {review.reviewer?.full_name?.charAt(0) || '?'}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-white text-xs font-medium truncate max-w-[100px]">{review.reviewer?.full_name || 'Unknown'}</p>
+                        <p className="text-gray-900 text-xs font-medium truncate max-w-[100px]">{review.reviewer?.full_name || 'Unknown'}</p>
                         <p className="text-gray-600 text-[10px] truncate max-w-[100px]">{review.reviewer?.email}</p>
                       </div>
                     </div>
                   </td>
                   <td className="px-4 py-3"><StarRating rating={review.rating || 0} /></td>
-                  <td className="px-4 py-3 text-gray-400 text-xs hidden sm:table-cell max-w-[200px]">
+                  <td className="px-4 py-3 text-gray-500 text-xs hidden sm:table-cell max-w-[200px]">
                     <p className="truncate">{review.comment || <span className="text-gray-600 italic">No comment</span>}</p>
-                    {review.reply && <p className="text-[10px] text-blue-400 truncate mt-0.5">Reply: {review.reply}</p>}
+                    {review.reply && <p className="text-[10px] text-blue-600 truncate mt-0.5">Reply: {review.reply}</p>}
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full capitalize ${targetColor[review.target_type] || 'bg-gray-800 text-gray-400'}`}>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full capitalize ${targetColor[review.target_type] || 'bg-gray-100 text-gray-600'}`}>
                       {review.target_type || '—'}
                     </span>
                   </td>
@@ -150,7 +150,7 @@ export default function ReviewsPage() {
                   </td>
                   <td className="px-4 py-3 text-right">
                     <button onClick={() => setDeleteModal(review)} disabled={processing === review.id}
-                      className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 hover:bg-red-950 text-red-400 text-xs font-semibold rounded-lg transition-colors border border-gray-700 ml-auto disabled:opacity-50">
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-red-50 text-red-600 text-xs font-semibold rounded-lg transition-colors border border-gray-200 ml-auto disabled:opacity-50">
                       <Trash2 size={13} /> Delete
                     </button>
                   </td>
@@ -165,22 +165,22 @@ export default function ReviewsPage() {
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => setDeleteModal(null)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-gray-900 rounded-2xl w-full max-w-sm border border-gray-800 p-6">
+            <div className="bg-white rounded-2xl w-full max-w-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-white">Delete Review</h3>
-                <button onClick={() => setDeleteModal(null)} className="p-1 hover:bg-gray-800 rounded-lg text-gray-400"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-gray-900">Delete Review</h3>
+                <button onClick={() => setDeleteModal(null)} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
               </div>
-              <p className="text-sm text-gray-400 mb-1">By: <span className="text-white">{deleteModal.reviewer?.full_name || 'Unknown'}</span></p>
+              <p className="text-sm text-gray-500 mb-1">By: <span className="text-gray-900">{deleteModal.reviewer?.full_name || 'Unknown'}</span></p>
               <div className="mb-2"><StarRating rating={deleteModal.rating || 0} /></div>
-              {deleteModal.comment && <p className="text-xs text-gray-500 mb-4 bg-gray-800 px-3 py-2 rounded-lg line-clamp-3">{deleteModal.comment}</p>}
-              <p className="text-xs text-red-400 mb-4">This cannot be undone.</p>
+              {deleteModal.comment && <p className="text-xs text-gray-600 bg-gray-50 mb-4 px-3 py-2 rounded-lg line-clamp-3">{deleteModal.comment}</p>}
+              <p className="text-xs text-red-600 mb-4">This cannot be undone.</p>
               <div className="flex gap-2">
                 <button onClick={handleDelete} disabled={processing === deleteModal.id}
-                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-900 text-white font-semibold py-2.5 rounded-lg text-sm">
+                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white font-semibold py-2.5 rounded-lg text-sm">
                   {processing === deleteModal.id ? 'Deleting...' : 'Delete Review'}
                 </button>
                 <button onClick={() => setDeleteModal(null)}
-                  className="px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>

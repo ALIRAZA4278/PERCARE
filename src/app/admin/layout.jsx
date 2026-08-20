@@ -7,7 +7,7 @@ import AdminSidebar from '@/components/AdminSidebar';
 import { canAccess } from '@/lib/adminRoles';
 
 export default function AdminLayout({ children }) {
-  const { profile, isLoggedIn, loading } = useAuth();
+  const { profile, isLoggedIn, loading, profileLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
@@ -23,10 +23,11 @@ export default function AdminLayout({ children }) {
       return;
     }
 
-    // Logged in but profile hasn't arrived yet (async fetch still in flight) → wait, don't redirect
-    if (!profile) return;
+    // Profile fetch still in flight → wait, don't decide yet
+    if (profileLoading) return;
 
-    if (profile.role !== 'admin') {
+    // Logged in, fetch settled, but no profile row (e.g. deleted/orphaned account) → login
+    if (!profile || profile.role !== 'admin') {
       router.replace('/admin/login');
       return;
     }
@@ -39,20 +40,21 @@ export default function AdminLayout({ children }) {
     if (!canAccess(adminRole, pathname)) {
       router.replace('/admin'); // redirect to overview
     }
-  }, [loading, isLoggedIn, profile, isPublicPage, pathname]);
+  }, [loading, isLoggedIn, profile, profileLoading, isPublicPage, pathname]);
 
   if (isPublicPage) return <>{children}</>;
   if (loading) return null;
-  if (!isLoggedIn || !profile || profile.role !== 'admin') return null;
+  if (!isLoggedIn || profileLoading) return null;
+  if (!profile || profile.role !== 'admin') return null;
 
   // Check access for roles that have admin_role set
   const adminRole = profile.admin_role;
   if (adminRole && !canAccess(adminRole, pathname) && pathname !== '/admin') return null;
 
   return (
-    <div className="bg-gray-950 min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       <AdminSidebar />
-      <main className="lg:ml-64 pt-14 lg:pt-0 min-h-screen bg-gray-950">
+      <main className="lg:ml-64 pt-14 lg:pt-0 min-h-screen bg-gray-50">
         {children}
       </main>
     </div>

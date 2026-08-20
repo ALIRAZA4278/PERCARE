@@ -5,11 +5,13 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function VetSidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const { profile, logout } = useAuth();
+  const { marketplaceEnabled } = useFeatureFlags();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navItems = [
@@ -17,11 +19,11 @@ export default function VetSidebar() {
     { name: 'Appointments', icon: Calendar, href: '/vet-dashboard/appointments' },
     { name: 'Patients', icon: Users, href: '/vet-dashboard/patients' },
     { name: 'My Clinic', icon: Building2, href: '/vet-dashboard/clinic' },
-    { name: 'My Store', icon: Store, href: '/vet-dashboard/store' },
+    marketplaceEnabled && { name: 'My Store', icon: Store, href: '/vet-dashboard/store' },
     { name: 'Notifications', icon: Bell, href: '/vet-dashboard/notifications' },
     { name: 'Profile', icon: User, href: '/vet-dashboard/profile' },
     { name: 'Settings', icon: Settings, href: '/vet-dashboard/settings' },
-  ];
+  ].filter(Boolean);
 
   const handleLogout = async () => {
     await logout();

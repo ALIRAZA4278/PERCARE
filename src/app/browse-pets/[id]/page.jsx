@@ -5,12 +5,15 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
+import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import FeatureDisabled from '@/components/FeatureDisabled';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 export default function PetDetailPage() {
   const { id } = useParams();
   const { isLoggedIn } = useAuth();
+  const { petDeliveryEnabled, loading: flagsLoading } = useFeatureFlags();
   const router = useRouter();
   const [liked, setLiked] = useState(false);
   const [pet, setPet] = useState(null);
@@ -47,6 +50,10 @@ export default function PetDetailPage() {
     if (!isLoggedIn) { router.push('/login'); return; }
     alert('Order placed! Our team will contact you shortly.');
   };
+
+  if (!flagsLoading && !petDeliveryEnabled) {
+    return <FeatureDisabled title="Browse Pets" />;
+  }
 
   if (loading) {
     return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;

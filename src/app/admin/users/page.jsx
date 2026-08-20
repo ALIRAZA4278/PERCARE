@@ -13,11 +13,11 @@ const PAGE_SIZE = 20;
 const EMPTY_FORM = { full_name: '', email: '', password: '', role: 'pet_owner', admin_role: 'operations' };
 
 const roleBadge = {
-  admin: 'bg-red-900 text-red-400',
-  veterinarian: 'bg-blue-900 text-blue-400',
-  seller: 'bg-orange-900 text-orange-400',
-  shelter: 'bg-green-900 text-green-400',
-  pet_owner: 'bg-gray-800 text-gray-400',
+  admin: 'bg-red-100 text-red-700',
+  veterinarian: 'bg-blue-100 text-blue-700',
+  seller: 'bg-orange-100 text-orange-700',
+  shelter: 'bg-green-100 text-green-700',
+  pet_owner: 'bg-gray-100 text-gray-600',
 };
 
 export default function UsersPage() {
@@ -149,13 +149,13 @@ export default function UsersPage() {
   const paged = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
-  if (loading) return <div className="min-h-screen bg-gray-950 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">Users</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Users</h1>
           <p className="text-sm text-gray-500 mt-1">{filtered.length} users</p>
         </div>
         {isSuperAdmin && (
@@ -170,23 +170,23 @@ export default function UsersPage() {
         <div className="relative flex-1">
           <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search name or email..."
-            className="w-full pl-9 pr-4 py-2.5 bg-gray-900 border border-gray-800 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-gray-600" />
+            className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
         </div>
         <div className="flex gap-2 overflow-x-auto">
           {ALL_ROLES.map(r => (
             <button key={r} onClick={() => setRoleFilter(r)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${roleFilter === r ? 'bg-red-600 text-white' : 'bg-gray-900 text-gray-400 border border-gray-800 hover:border-gray-600'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${roleFilter === r ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {r}
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-gray-900 rounded-xl border border-gray-800 overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800">
+              <tr className="border-b border-gray-200">
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Name</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden sm:table-cell">Email</th>
                 <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Role</th>
@@ -198,14 +198,14 @@ export default function UsersPage() {
               {paged.length === 0 ? (
                 <tr><td colSpan={5} className="text-center text-gray-600 py-12">No users found</td></tr>
               ) : paged.map(u => (
-                <tr key={u.id} className="border-b border-gray-800 last:border-0 hover:bg-gray-800/30 transition-colors">
+                <tr key={u.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 font-bold text-xs shrink-0">
+                      <div className="w-7 h-7 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 font-bold text-xs shrink-0">
                         {u.full_name?.charAt(0) || '?'}
                       </div>
                       <div className="min-w-0">
-                        <span className="text-white font-medium truncate max-w-[120px] block text-xs">{u.full_name || 'Unknown'}</span>
+                        <span className="text-gray-900 font-medium truncate max-w-[120px] block text-xs">{u.full_name || 'Unknown'}</span>
                         {u.role === 'admin' && u.admin_role && (
                           <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${ROLE_COLORS[u.admin_role] || ''}`}>
                             {ROLE_LABELS[u.admin_role]}
@@ -214,9 +214,9 @@ export default function UsersPage() {
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-gray-400 hidden sm:table-cell text-xs">{u.email}</td>
+                  <td className="px-4 py-3 text-gray-500 hidden sm:table-cell text-xs">{u.email}</td>
                   <td className="px-4 py-3">
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${roleBadge[u.role] || 'bg-gray-800 text-gray-400'}`}>{u.role}</span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${roleBadge[u.role] || 'bg-gray-100 text-gray-600'}`}>{u.role}</span>
                   </td>
                   <td className="px-4 py-3 text-gray-500 text-xs hidden md:table-cell">
                     {u.created_at ? new Date(u.created_at).toLocaleDateString() : '—'}
@@ -225,24 +225,24 @@ export default function UsersPage() {
                     <div className="flex items-center justify-end gap-1.5 flex-wrap">
                       {isSuperAdmin && u.role === 'admin' && u.id !== user?.id && (
                         <button onClick={() => openAdminRoleModal(u)} disabled={processing === u.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 bg-gray-800 hover:bg-red-950 text-red-300 text-xs font-semibold rounded-lg transition-colors border border-gray-700 disabled:opacity-30">
+                          className="flex items-center gap-1 px-2.5 py-1.5 bg-gray-100 hover:bg-red-50 text-red-600 text-xs font-semibold rounded-lg transition-colors border border-gray-200 disabled:opacity-30">
                           <Shield size={12} /> Role
                         </button>
                       )}
                       {isSuperAdmin && (
                         <button onClick={() => openRoleModal(u)} disabled={processing === u.id}
-                          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-gray-800 hover:bg-blue-950 text-blue-400 text-xs font-semibold rounded-lg transition-colors border border-gray-700 disabled:opacity-30">
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-gray-100 hover:bg-blue-50 text-blue-600 text-xs font-semibold rounded-lg transition-colors border border-gray-200 disabled:opacity-30">
                           <UserCog size={12} /> Type
                         </button>
                       )}
                       {u.is_banned ? (
                         <button onClick={() => handleUnban(u)} disabled={processing === u.id}
-                          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-green-900/40 hover:bg-green-800/40 text-green-400 text-xs font-semibold rounded-lg transition-colors border border-green-900 disabled:opacity-50">
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-semibold rounded-lg transition-colors border border-green-200 disabled:opacity-50">
                           <CheckCircle size={12} /> Unban
                         </button>
                       ) : (
                         <button onClick={() => setBanModal(u)} disabled={u.role === 'admin' || processing === u.id}
-                          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-gray-800 hover:bg-red-950 text-red-400 text-xs font-semibold rounded-lg transition-colors border border-gray-700 disabled:opacity-30">
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-gray-100 hover:bg-red-50 text-red-600 text-xs font-semibold rounded-lg transition-colors border border-gray-200 disabled:opacity-30">
                           <Ban size={12} /> Ban
                         </button>
                       )}
@@ -260,9 +260,9 @@ export default function UsersPage() {
           <p className="text-xs text-gray-500">Page {page + 1} of {totalPages}</p>
           <div className="flex gap-2">
             <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}
-              className="p-2 bg-gray-900 border border-gray-800 rounded-lg text-gray-400 disabled:opacity-30 hover:border-gray-600 transition-colors"><ChevronLeft size={16} /></button>
+              className="p-2 bg-white border border-gray-200 rounded-lg text-gray-500 disabled:opacity-30 hover:border-gray-300 transition-colors"><ChevronLeft size={16} /></button>
             <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1}
-              className="p-2 bg-gray-900 border border-gray-800 rounded-lg text-gray-400 disabled:opacity-30 hover:border-gray-600 transition-colors"><ChevronRight size={16} /></button>
+              className="p-2 bg-white border border-gray-200 rounded-lg text-gray-500 disabled:opacity-30 hover:border-gray-300 transition-colors"><ChevronRight size={16} /></button>
           </div>
         </div>
       )}
@@ -272,40 +272,40 @@ export default function UsersPage() {
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => setAddModal(false)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-gray-900 rounded-2xl w-full max-w-md border border-gray-800 p-6 overflow-y-auto max-h-[90vh]">
+            <div className="bg-white rounded-2xl w-full max-w-md border border-gray-200 p-6 overflow-y-auto max-h-[90vh]">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="text-lg font-bold text-white">Add New User</h3>
-                <button onClick={() => setAddModal(false)} className="p-1 hover:bg-gray-800 rounded-lg text-gray-400"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-gray-900">Add New User</h3>
+                <button onClick={() => setAddModal(false)} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
               </div>
 
               <div className="space-y-3 mb-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5">Full Name</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1.5">Full Name</label>
                   <input value={addForm.full_name} onChange={e => setAddForm(f => ({ ...f, full_name: e.target.value }))}
-                    placeholder="Ali Raza" className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-gray-500" />
+                    placeholder="Ali Raza" className="w-full px-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5">Email</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1.5">Email</label>
                   <input type="email" value={addForm.email} onChange={e => setAddForm(f => ({ ...f, email: e.target.value }))}
-                    placeholder="ali@example.com" className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-gray-500" />
+                    placeholder="ali@example.com" className="w-full px-3 py-2.5 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5">Password</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1.5">Password</label>
                   <div className="relative">
                     <input type={showPass ? 'text' : 'password'} value={addForm.password}
                       onChange={e => setAddForm(f => ({ ...f, password: e.target.value }))}
-                      placeholder="Min 6 characters" className="w-full px-3 py-2.5 pr-10 bg-gray-800 border border-gray-700 rounded-lg text-sm text-white placeholder-gray-600 outline-none focus:border-gray-500" />
-                    <button type="button" onClick={() => setShowPass(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300">
+                      placeholder="Min 6 characters" className="w-full px-3 py-2.5 pr-10 bg-gray-50 border border-gray-300 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
+                    <button type="button" onClick={() => setShowPass(s => !s)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700">
                       {showPass ? <EyeOff size={15} /> : <Eye size={15} />}
                     </button>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-400 mb-1.5">User Type</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-1.5">User Type</label>
                   <div className="grid grid-cols-2 gap-2">
                     {ASSIGNABLE_ROLES.map(r => (
                       <button key={r} onClick={() => setAddForm(f => ({ ...f, role: r }))}
-                        className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors border ${addForm.role === r ? 'bg-red-600 border-red-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-400 hover:border-gray-500'}`}>
+                        className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors border ${addForm.role === r ? 'bg-red-600 border-red-500 text-white' : 'bg-white border-gray-300 text-gray-600 hover:border-gray-400'}`}>
                         {r.replace(/_/g, ' ')}
                       </button>
                     ))}
@@ -315,16 +315,16 @@ export default function UsersPage() {
                 {/* Admin Sub-Role — sirf jab admin select ho */}
                 {addForm.role === 'admin' && (
                   <div>
-                    <label className="block text-xs font-semibold text-gray-400 mb-1.5">Admin Sub-Role</label>
+                    <label className="block text-xs font-semibold text-gray-500 mb-1.5">Admin Sub-Role</label>
                     <div className="space-y-1.5">
                       {ADMIN_ROLES.map(r => (
                         <button key={r} onClick={() => setAddForm(f => ({ ...f, admin_role: r }))}
-                          className={`w-full flex items-start justify-between px-3 py-2.5 rounded-xl text-sm transition-colors border ${addForm.admin_role === r ? 'bg-red-600/20 border-red-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-gray-500'}`}>
+                          className={`w-full flex items-start justify-between px-3 py-2.5 rounded-xl text-sm transition-colors border ${addForm.admin_role === r ? 'bg-red-50 border-red-500 text-red-700' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}>
                           <div className="text-left">
                             <p className="font-semibold text-xs">{ROLE_LABELS[r]}</p>
                             <p className="text-[10px] text-gray-500 mt-0.5">{ROLE_DESCRIPTIONS[r]}</p>
                           </div>
-                          {addForm.admin_role === r && <span className="text-[10px] text-red-400 font-bold shrink-0 ml-2 mt-0.5">Selected</span>}
+                          {addForm.admin_role === r && <span className="text-[10px] text-red-600 font-bold shrink-0 ml-2 mt-0.5">Selected</span>}
                         </button>
                       ))}
                     </div>
@@ -332,14 +332,14 @@ export default function UsersPage() {
                 )}
               </div>
 
-              {addError && <p className="text-xs text-red-400 mb-3 bg-red-900/20 px-3 py-2 rounded-lg">{addError}</p>}
+              {addError && <p className="text-xs text-red-700 mb-3 bg-red-50 px-3 py-2 rounded-lg">{addError}</p>}
 
               <div className="flex gap-2">
                 <button onClick={handleAddUser} disabled={addLoading}
-                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-800 disabled:text-gray-600 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   {addLoading ? 'Creating...' : 'Create User'}
                 </button>
-                <button onClick={() => setAddModal(false)} className="px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-sm">Cancel</button>
+                <button onClick={() => setAddModal(false)} className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -351,40 +351,40 @@ export default function UsersPage() {
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => setAdminRoleModal(null)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-gray-900 rounded-2xl w-full max-w-sm border border-gray-800 p-6">
+            <div className="bg-white rounded-2xl w-full max-w-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-white">Admin Sub-Role</h3>
-                <button onClick={() => setAdminRoleModal(null)} className="p-1 hover:bg-gray-800 rounded-lg text-gray-400"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-gray-900">Admin Sub-Role</h3>
+                <button onClick={() => setAdminRoleModal(null)} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
               </div>
-              <div className="flex items-center gap-3 mb-4 p-3 bg-gray-800 rounded-xl">
-                <div className="w-8 h-8 bg-red-900 rounded-full flex items-center justify-center text-red-300 font-bold text-sm shrink-0">
+              <div className="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded-xl">
+                <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center text-red-600 font-bold text-sm shrink-0">
                   {adminRoleModal.full_name?.charAt(0) || '?'}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">{adminRoleModal.full_name}</p>
+                  <p className="text-sm font-semibold text-gray-900 truncate">{adminRoleModal.full_name}</p>
                   <p className="text-xs text-gray-500 truncate">{adminRoleModal.email}</p>
                 </div>
               </div>
-              <label className="block text-xs font-semibold text-gray-400 mb-2">Select Admin Role</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-2">Select Admin Role</label>
               <div className="space-y-2 mb-4">
                 {ADMIN_ROLES.map(r => (
                   <button key={r} onClick={() => setNewAdminRole(r)}
-                    className={`w-full flex items-start justify-between px-3 py-2.5 rounded-xl text-sm transition-colors border ${newAdminRole === r ? 'bg-red-600/20 border-red-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-gray-500'}`}>
+                    className={`w-full flex items-start justify-between px-3 py-2.5 rounded-xl text-sm transition-colors border ${newAdminRole === r ? 'bg-red-50 border-red-500 text-red-700' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}>
                     <div className="text-left">
                       <p className="font-semibold text-xs">{ROLE_LABELS[r]}</p>
                       <p className="text-[10px] text-gray-500 mt-0.5">{ROLE_DESCRIPTIONS[r]}</p>
                     </div>
-                    {newAdminRole === r && <span className="text-[10px] text-red-400 font-bold shrink-0 ml-2 mt-0.5">Selected</span>}
+                    {newAdminRole === r && <span className="text-[10px] text-red-600 font-bold shrink-0 ml-2 mt-0.5">Selected</span>}
                   </button>
                 ))}
               </div>
               <div className="flex gap-2">
                 <button onClick={handleAdminRoleChange} disabled={processing === adminRoleModal.id}
-                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-800 disabled:text-gray-600 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   {processing === adminRoleModal.id ? 'Saving...' : 'Assign Role'}
                 </button>
                 <button onClick={() => setAdminRoleModal(null)}
-                  className="px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -396,42 +396,42 @@ export default function UsersPage() {
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => setRoleModal(null)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-gray-900 rounded-2xl w-full max-w-sm border border-gray-800 p-6">
+            <div className="bg-white rounded-2xl w-full max-w-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-white">Change User Type</h3>
-                <button onClick={() => setRoleModal(null)} className="p-1 hover:bg-gray-800 rounded-lg text-gray-400"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-gray-900">Change User Type</h3>
+                <button onClick={() => setRoleModal(null)} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
               </div>
-              <div className="flex items-center gap-3 mb-4 p-3 bg-gray-800 rounded-xl">
-                <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-gray-400 font-bold text-sm shrink-0">
+              <div className="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded-xl">
+                <div className="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm shrink-0">
                   {roleModal.full_name?.charAt(0) || '?'}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-semibold text-white truncate">{roleModal.full_name}</p>
+                  <p className="text-sm font-semibold text-gray-900 truncate">{roleModal.full_name}</p>
                   <p className="text-xs text-gray-500 truncate">{roleModal.email}</p>
                 </div>
               </div>
-              <label className="block text-xs font-semibold text-gray-400 mb-2">Select User Type</label>
+              <label className="block text-xs font-semibold text-gray-500 mb-2">Select User Type</label>
               <div className="grid grid-cols-1 gap-2 mb-3">
                 {ASSIGNABLE_ROLES.map(r => (
                   <button key={r} onClick={() => setNewRole(r)}
-                    className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-colors border ${newRole === r ? 'bg-blue-600 border-blue-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-gray-500'}`}>
+                    className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-colors border ${newRole === r ? 'bg-blue-600 border-blue-500 text-white' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}>
                     <span className="capitalize">{r.replace(/_/g, ' ')}</span>
-                    {newRole === r && <span className="text-xs text-blue-200">Selected</span>}
+                    {newRole === r && <span className="text-xs text-blue-100">Selected</span>}
                   </button>
                 ))}
               </div>
               {newRole === 'admin' && (
                 <div className="mb-4">
-                  <label className="block text-xs font-semibold text-gray-400 mb-2">Admin Sub-Role</label>
+                  <label className="block text-xs font-semibold text-gray-500 mb-2">Admin Sub-Role</label>
                   <div className="space-y-1.5">
                     {ADMIN_ROLES.map(r => (
                       <button key={r} onClick={() => setNewRoleAdminRole(r)}
-                        className={`w-full flex items-start justify-between px-3 py-2.5 rounded-xl text-sm transition-colors border ${newRoleAdminRole === r ? 'bg-red-600/20 border-red-500 text-white' : 'bg-gray-800 border-gray-700 text-gray-300 hover:border-gray-500'}`}>
+                        className={`w-full flex items-start justify-between px-3 py-2.5 rounded-xl text-sm transition-colors border ${newRoleAdminRole === r ? 'bg-red-50 border-red-500 text-red-700' : 'bg-white border-gray-300 text-gray-700 hover:border-gray-400'}`}>
                         <div className="text-left">
                           <p className="font-semibold text-xs">{ROLE_LABELS[r]}</p>
                           <p className="text-[10px] text-gray-500 mt-0.5">{ROLE_DESCRIPTIONS[r]}</p>
                         </div>
-                        {newRoleAdminRole === r && <span className="text-[10px] text-red-400 font-bold shrink-0 ml-2 mt-0.5">Selected</span>}
+                        {newRoleAdminRole === r && <span className="text-[10px] text-red-600 font-bold shrink-0 ml-2 mt-0.5">Selected</span>}
                       </button>
                     ))}
                   </div>
@@ -439,11 +439,11 @@ export default function UsersPage() {
               )}
               <div className="flex gap-2">
                 <button onClick={handleRoleChange} disabled={processing === roleModal.id || (newRole === roleModal.role && (newRole !== 'admin' || newRoleAdminRole === (roleModal.admin_role || 'operations')))}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-800 disabled:text-gray-600 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   {processing === roleModal.id ? 'Saving...' : 'Save Type'}
                 </button>
                 <button onClick={() => setRoleModal(null)}
-                  className="px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-xl text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -455,21 +455,21 @@ export default function UsersPage() {
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => { setBanModal(null); setBanReason(''); }} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-gray-900 rounded-2xl w-full max-w-sm border border-gray-800 p-6">
+            <div className="bg-white rounded-2xl w-full max-w-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-white">Ban {banModal.full_name}</h3>
-                <button onClick={() => { setBanModal(null); setBanReason(''); }} className="p-1 hover:bg-gray-800 rounded-lg text-gray-400"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-gray-900">Ban {banModal.full_name}</h3>
+                <button onClick={() => { setBanModal(null); setBanReason(''); }} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
               </div>
               <p className="text-xs text-gray-500 mb-3">This will prevent the user from logging in.</p>
               <textarea value={banReason} onChange={e => setBanReason(e.target.value)} placeholder="Reason for ban (optional)..." rows={3}
-                className="w-full px-3 py-2.5 rounded-lg bg-gray-800 border border-gray-700 outline-none focus:border-red-500 text-white text-sm resize-none mb-4 placeholder-gray-600" />
+                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none mb-4 placeholder-gray-400" />
               <div className="flex gap-2">
                 <button onClick={handleBan} disabled={processing === banModal.id}
-                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-900 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
+                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
                   {processing === banModal.id ? 'Processing...' : 'Confirm Ban'}
                 </button>
                 <button onClick={() => { setBanModal(null); setBanReason(''); }}
-                  className="px-4 py-2.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>
