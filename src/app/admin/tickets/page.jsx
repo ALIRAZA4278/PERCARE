@@ -85,7 +85,7 @@ export default function TicketsPage() {
       <div className="flex gap-2 mb-5 overflow-x-auto pb-1">
         {STATUS_TABS.map(s => (
           <button key={s} onClick={() => setTab(s)}
-            className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${tab === s ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+            className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${tab === s ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
             {s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
             {counts[s] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tab === s ? 'bg-white/20' : 'bg-gray-100 text-gray-600'}`}>{counts[s]}</span>}
           </button>

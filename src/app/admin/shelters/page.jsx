@@ -154,7 +154,7 @@ export default function SheltersPage() {
           <p className="text-sm text-gray-500 mt-1">{shelters.length} total · {counts.verified} verified · {counts.unverified} unverified</p>
         </div>
         <button onClick={openAdd}
-          className="flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl transition-colors">
+          className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors">
           <Plus size={16} /> Add Shelter
         </button>
       </div>
@@ -168,7 +168,7 @@ export default function SheltersPage() {
         <div className="flex gap-2">
           {['all', 'verified', 'unverified'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {f} <span className="opacity-70">({counts[f]})</span>
             </button>
           ))}
@@ -281,7 +281,7 @@ export default function SheltersPage() {
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Search Owner (User)</label>
                     <input value={userSearch} onChange={e => searchUsers(e.target.value)} placeholder="Type user name..."
-                      className="w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm placeholder-gray-400" />
+                      className="w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm placeholder-gray-400" />
                     {userResults.length > 0 && (
                       <div className="mt-1 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-lg">
                         {userResults.map(u => (
@@ -302,13 +302,13 @@ export default function SheltersPage() {
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1.5">Shelter Name</label>
                   <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1.5">Description</label>
                   <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm resize-none" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
@@ -323,7 +323,7 @@ export default function SheltersPage() {
                     <div key={key}>
                       <label className="block text-xs font-semibold text-gray-500 mb-1.5">{label}</label>
                       <input value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                        className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                        className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                     </div>
                   ))}
                 </div>
@@ -345,7 +345,7 @@ export default function SheltersPage() {
 
               <div className="flex gap-2 mt-5">
                 <button onClick={handleSave} disabled={saving || (modal.mode === 'add' && (!form.user_id || !form.name))}
-                  className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   <Save size={15} /> {saving ? 'Saving...' : 'Save'}
                 </button>
                 <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>

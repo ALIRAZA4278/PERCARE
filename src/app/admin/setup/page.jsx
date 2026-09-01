@@ -71,7 +71,7 @@ ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Shield size={32} className="text-white" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">Admin Setup</h1>
@@ -87,21 +87,21 @@ ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
               <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-1.5">Admin Email</label>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                  className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                  className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
               </div>
               <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-1.5">Password</label>
                 <div className="relative">
                   <input type={showPw ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} required minLength={6}
                     placeholder="Min 6 characters"
-                    className="w-full px-4 py-2.5 pr-10 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm placeholder-gray-400" />
+                    className="w-full px-4 py-2.5 pr-10 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm placeholder-gray-400" />
                   <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                     {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
               </div>
               <button type="submit"
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl text-sm transition-colors">
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-colors">
                 Create Admin Account
               </button>
             </form>
@@ -110,7 +110,7 @@ ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
           ) : status === 'success' ? (
             <div className="space-y-3">
               <div className="p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700">✓ {message}</div>
-              <a href="/admin/login" className="block w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl text-sm text-center">
+              <a href="/admin/login" className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm text-center">
                 Go to Admin Login
               </a>
             </div>
@@ -121,7 +121,7 @@ ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
                 <p className="text-xs text-gray-500 mb-2">Run this SQL in Supabase SQL Editor:</p>
                 <pre className="bg-gray-100 border border-gray-300 rounded-lg p-3 text-xs text-green-700 overflow-x-auto whitespace-pre-wrap">{sqlFix}</pre>
               </div>
-              <a href="/admin/login" className="block w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl text-sm text-center">
+              <a href="/admin/login" className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm text-center">
                 Try Admin Login
               </a>
             </div>

@@ -101,7 +101,7 @@ export default function LostFoundAdminPage() {
         <div className="flex gap-2 flex-wrap">
           {STATUS_TABS.map(s => (
             <button key={s} onClick={() => setTab(s)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors flex items-center gap-1.5 ${tab === s ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors flex items-center gap-1.5 ${tab === s ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {s} <span className="opacity-70">({counts[s]})</span>
             </button>
           ))}

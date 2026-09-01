@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Search, ChevronLeft, ChevronRight, CheckCircle, XCircle, Pencil, Plus, X, Save } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 
@@ -16,9 +17,10 @@ const EMPTY_FORM = {
 
 export default function StoresPage() {
   const { user } = useAuth();
+  const searchParams = useSearchParams();
   const [stores, setStores] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(searchParams.get('q') || '');
   const [filter, setFilter] = useState('all');
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -164,7 +166,7 @@ export default function StoresPage() {
           <p className="text-sm text-gray-500 mt-1">{stores.length} total · {counts.approved} approved · {counts.pending} pending</p>
         </div>
         <button onClick={openAdd}
-          className="flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl transition-colors">
+          className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors">
           <Plus size={16} /> Add Store
         </button>
       </div>
@@ -178,7 +180,7 @@ export default function StoresPage() {
         <div className="flex gap-2 overflow-x-auto">
           {['all', 'approved', 'pending', 'inactive'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {f} <span className="opacity-70">({counts[f]})</span>
             </button>
           ))}
@@ -286,7 +288,7 @@ export default function StoresPage() {
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Search Owner (User)</label>
                     <input value={userSearch} onChange={e => searchUsers(e.target.value)} placeholder="Type user name..."
-                      className="w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm placeholder-gray-400" />
+                      className="w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm placeholder-gray-400" />
                     {userResults.length > 0 && (
                       <div className="mt-1 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-lg">
                         {userResults.map(u => (
@@ -307,27 +309,27 @@ export default function StoresPage() {
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1.5">Store Name</label>
                   <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1.5">Description</label>
                   <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm resize-none" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Store Type</label>
                     <select value={form.store_type} onChange={e => setForm(f => ({ ...f, store_type: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm">
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm">
                       {STORE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Location Type</label>
                     <select value={form.location_type} onChange={e => setForm(f => ({ ...f, location_type: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm">
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm">
                       {LOCATION_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                     </select>
                   </div>
@@ -343,7 +345,7 @@ export default function StoresPage() {
                     <div key={key}>
                       <label className="block text-xs font-semibold text-gray-500 mb-1.5">{label}</label>
                       <input value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                        className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                        className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                     </div>
                   ))}
                 </div>
@@ -351,7 +353,7 @@ export default function StoresPage() {
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1.5">Address</label>
                   <input value={form.address} onChange={e => setForm(f => ({ ...f, address: e.target.value }))}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                 </div>
 
                 <div className="grid grid-cols-2 gap-2">
@@ -370,7 +372,7 @@ export default function StoresPage() {
 
               <div className="flex gap-2 mt-5">
                 <button onClick={handleSave} disabled={saving || (modal.mode === 'add' && (!form.owner_id || !form.name))}
-                  className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   <Save size={15} /> {saving ? 'Saving...' : 'Save'}
                 </button>
                 <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>

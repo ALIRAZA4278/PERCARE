@@ -1,10 +1,35 @@
 'use client';
 
-import { Users, CheckSquare, ShoppingBag, Flag, Ticket, TrendingUp, AlertCircle, Stethoscope, Store, Home, Package, PawPrint, Star, Activity } from 'lucide-react';
+import { Users, CheckSquare, ShoppingBag, Flag, Ticket, TrendingUp, AlertCircle, Stethoscope, Store, Home, Package, PawPrint, Star, Activity, UserPlus, ShoppingCart } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
+import { useAdminAlerts } from '@/lib/useAdminAlerts';
+
+const DAY_MS = 24 * 60 * 60 * 1000;
+const DAY_LABELS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+function last7Days() {
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(Date.now() - i * DAY_MS);
+    days.push({ key: d.toISOString().slice(0, 10), label: DAY_LABELS[d.getDay()] });
+  }
+  return days;
+}
+
+function bucketByDay(rows, dateField, days, valueField) {
+  const buckets = Object.fromEntries(days.map(d => [d.key, 0]));
+  rows.forEach(row => {
+    const key = row[dateField]?.slice(0, 10);
+    if (key in buckets) buckets[key] += valueField ? Number(row[valueField] || 0) : 1;
+  });
+  return days.map(d => ({ day: d.label, value: buckets[d.key] }));
+}
+
+const severityDot = { danger: 'bg-red-500', warning: 'bg-orange-500', info: 'bg-blue-500' };
 
 const roleBadge = {
   admin: 'bg-red-100 text-red-700',
@@ -23,15 +48,22 @@ export default function AdminOverviewPage() {
     totalProducts: 0, pendingProducts: 0, totalPets: 0,
     totalOrders: 0, pendingOrders: 0, totalRevenue: 0,
     openReports: 0, openTickets: 0, totalReviews: 0,
+    newUsersToday: 0, ordersToday: 0,
   });
   const [recentUsers, setRecentUsers] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
   const [recentReports, setRecentReports] = useState([]);
+  const [charts, setCharts] = useState({ signups: [], orders: [], revenue: [], approvals: [] });
   const [loading, setLoading] = useState(true);
+  const { alerts } = useAdminAlerts();
 
   useEffect(() => { fetchData(); }, []);
 
   const fetchData = async () => {
+    const todayStart = new Date().toISOString().slice(0, 10) + 'T00:00:00.000Z';
+    const sevenDaysAgo = new Date(Date.now() - 7 * DAY_MS).toISOString();
+    const days = last7Days();
+
     const [
       usersRes, vetsRes, pendingVetsRes,
       storesRes, pendingStoresRes, sheltersRes,
@@ -39,6 +71,8 @@ export default function AdminOverviewPage() {
       ordersRes, pendingOrdersRes, revenueRes,
       openReportsRes, openTicketsRes, reviewsRes,
       recentUsersRes, recentOrdersRes, recentReportsRes,
+      newUsersTodayRes, ordersTodayRes,
+      signupsWeekRes, ordersWeekRes, approvalsWeekRes,
     ] = await Promise.all([
       supabase.from('profiles').select('id', { count: 'exact', head: true }),
       supabase.from('vet_profiles').select('id', { count: 'exact', head: true }).eq('is_approved', true),
@@ -58,6 +92,15 @@ export default function AdminOverviewPage() {
       supabase.from('profiles').select('id, full_name, email, role, created_at').order('created_at', { ascending: false }).limit(5),
       supabase.from('orders').select('id, total_amount, status, created_at, buyer:profiles!buyer_id(full_name)').order('created_at', { ascending: false }).limit(5),
       supabase.from('reports').select('id, reason, target_type, status, created_at').order('created_at', { ascending: false }).limit(5),
+      supabase.from('profiles').select('id', { count: 'exact', head: true }).gte('created_at', todayStart),
+      supabase.from('orders').select('id', { count: 'exact', head: true }).gte('created_at', todayStart),
+      supabase.from('profiles').select('created_at').gte('created_at', sevenDaysAgo),
+      supabase.from('orders').select('created_at, total_amount').gte('created_at', sevenDaysAgo),
+      Promise.all([
+        supabase.from('vet_profiles').select('created_at').eq('is_approved', false).gte('created_at', sevenDaysAgo),
+        supabase.from('stores').select('created_at').eq('is_approved', false).gte('created_at', sevenDaysAgo),
+        supabase.from('products').select('created_at').eq('is_approved', false).gte('created_at', sevenDaysAgo),
+      ]),
     ]);
 
     const revenue = (revenueRes.data || []).reduce((sum, o) => sum + Number(o.total_amount || 0), 0);
@@ -74,15 +117,27 @@ export default function AdminOverviewPage() {
       openReports: openReportsRes.count || 0,
       openTickets: openTicketsRes.count || 0,
       totalReviews: reviewsRes.count || 0,
+      newUsersToday: newUsersTodayRes.count || 0,
+      ordersToday: ordersTodayRes.count || 0,
     });
     setRecentUsers(recentUsersRes.data || []);
     setRecentOrders(recentOrdersRes.data || []);
     setRecentReports(recentReportsRes.data || []);
+
+    const approvalRows = approvalsWeekRes.flatMap(r => r.data || []);
+    setCharts({
+      signups: bucketByDay(signupsWeekRes.data || [], 'created_at', days),
+      orders: bucketByDay(ordersWeekRes.data || [], 'created_at', days),
+      revenue: bucketByDay(ordersWeekRes.data || [], 'created_at', days, 'total_amount'),
+      approvals: bucketByDay(approvalRows, 'created_at', days),
+    });
     setLoading(false);
   };
 
   const kpi1 = [
     { label: 'Total Users', value: stats.totalUsers, icon: Users, color: 'text-blue-600', bg: 'bg-blue-50', href: '/admin/users' },
+    { label: 'New Users Today', value: stats.newUsersToday, icon: UserPlus, color: 'text-indigo-600', bg: 'bg-indigo-50', href: '/admin/users' },
+    { label: 'Orders Today', value: stats.ordersToday, icon: ShoppingCart, color: 'text-teal-600', bg: 'bg-teal-50', href: '/admin/orders' },
     { label: 'Active Vets', value: stats.totalVets, icon: Stethoscope, color: 'text-cyan-600', bg: 'bg-cyan-50', href: '/admin/vets', sub: stats.pendingVets > 0 ? `${stats.pendingVets} pending approval` : null },
     { label: 'Active Stores', value: stats.totalStores, icon: Store, color: 'text-orange-600', bg: 'bg-orange-50', href: '/admin/stores', sub: stats.pendingStores > 0 ? `${stats.pendingStores} pending approval` : null },
     { label: 'Shelters', value: stats.totalShelters, icon: Home, color: 'text-green-600', bg: 'bg-green-50', href: '/admin/shelters' },
@@ -118,7 +173,7 @@ export default function AdminOverviewPage() {
       </div>
 
       <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Platform</p>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-7">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-7">
         {kpi1.map(({ label, value, icon: Icon, color, bg, href, sub }) => (
           <Link key={label} href={href}
             className="bg-white rounded-xl p-4 sm:p-5 border border-gray-200 hover:border-gray-300 transition-all">
@@ -133,7 +188,7 @@ export default function AdminOverviewPage() {
       </div>
 
       <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-3">Operations</p>
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
         {kpi2.map(({ label, value, icon: Icon, color, bg, href, sub }) => (
           <Link key={label} href={href}
             className="bg-white rounded-xl p-4 sm:p-5 border border-gray-200 hover:border-gray-300 transition-all">
@@ -147,11 +202,85 @@ export default function AdminOverviewPage() {
         ))}
       </div>
 
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-8">
+        <div className="bg-white rounded-xl p-5 border border-gray-200">
+          <h3 className="text-sm font-bold text-gray-900 mb-4">Daily Signups</h3>
+          <ResponsiveContainer width="100%" height={180}>
+            <AreaChart data={charts.signups}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+              <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} allowDecimals={false} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e5e7eb' }} />
+              <Area type="monotone" dataKey="value" stroke="#2563eb" fill="#dbeafe" strokeWidth={2} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-white rounded-xl p-5 border border-gray-200">
+          <h3 className="text-sm font-bold text-gray-900 mb-4">Orders Trend</h3>
+          <ResponsiveContainer width="100%" height={180}>
+            <LineChart data={charts.orders}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+              <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} allowDecimals={false} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e5e7eb' }} />
+              <Line type="monotone" dataKey="value" stroke="#d97706" strokeWidth={2} dot={{ r: 3 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-white rounded-xl p-5 border border-gray-200">
+          <h3 className="text-sm font-bold text-gray-900 mb-4">Revenue Trend (Rs)</h3>
+          <ResponsiveContainer width="100%" height={180}>
+            <AreaChart data={charts.revenue}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+              <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} allowDecimals={false} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e5e7eb' }} />
+              <Area type="monotone" dataKey="value" stroke="#059669" fill="#d1fae5" strokeWidth={2} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="bg-white rounded-xl p-5 border border-gray-200">
+          <h3 className="text-sm font-bold text-gray-900 mb-4">Approval Queue Trend</h3>
+          <ResponsiveContainer width="100%" height={180}>
+            <LineChart data={charts.approvals}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+              <XAxis dataKey="day" tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} allowDecimals={false} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #e5e7eb' }} />
+              <Line type="monotone" dataKey="value" stroke="#dc2626" strokeWidth={2} dot={{ r: 3 }} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-xl p-5 border border-gray-200 mb-8">
+        <div className="flex items-center gap-2 mb-4">
+          <AlertCircle size={16} className="text-orange-600" />
+          <h3 className="text-base font-bold text-gray-900">Alerts</h3>
+        </div>
+        {alerts.length === 0 ? (
+          <p className="text-sm text-gray-500 text-center py-4">All clear — no active alerts</p>
+        ) : (
+          <div className="space-y-2">
+            {alerts.map(a => (
+              <Link key={a.id} href={a.href}
+                className="flex items-start gap-2.5 px-3 py-2.5 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100">
+                <span className={`w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 ${severityDot[a.severity]}`} />
+                <p className="text-xs text-gray-700 leading-relaxed">{a.message}</p>
+              </Link>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="bg-white rounded-xl p-5 border border-gray-200">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-gray-900">Recent Signups</h3>
-            <Link href="/admin/users" className="text-xs text-red-500 hover:text-red-600 font-medium">View all</Link>
+            <Link href="/admin/users" className="text-xs text-blue-600 hover:text-blue-700 font-medium">View all</Link>
           </div>
           <div className="space-y-3">
             {recentUsers.length === 0
@@ -174,7 +303,7 @@ export default function AdminOverviewPage() {
         <div className="bg-white rounded-xl p-5 border border-gray-200">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-gray-900">Recent Orders</h3>
-            <Link href="/admin/orders" className="text-xs text-red-500 hover:text-red-600 font-medium">View all</Link>
+            <Link href="/admin/orders" className="text-xs text-blue-600 hover:text-blue-700 font-medium">View all</Link>
           </div>
           <div className="space-y-3">
             {recentOrders.length === 0
@@ -200,7 +329,7 @@ export default function AdminOverviewPage() {
               <AlertCircle size={15} className="text-orange-600" />
               <h3 className="text-base font-bold text-gray-900">Recent Reports</h3>
             </div>
-            <Link href="/admin/reports" className="text-xs text-red-500 hover:text-red-600 font-medium">View all</Link>
+            <Link href="/admin/reports" className="text-xs text-blue-600 hover:text-blue-700 font-medium">View all</Link>
           </div>
           <div className="space-y-3">
             {recentReports.length === 0

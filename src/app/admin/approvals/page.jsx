@@ -155,9 +155,9 @@ export default function ApprovalsPage() {
       <div className="flex gap-2 mb-6 overflow-x-auto">
         {TABS.map(tab => (
           <button key={tab} onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap flex items-center gap-2 transition-colors ${activeTab === tab ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+            className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap flex items-center gap-2 transition-colors ${activeTab === tab ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
             {tab}
-            {counts[tab] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${activeTab === tab ? 'bg-white/20' : 'bg-red-100 text-red-700'}`}>{counts[tab]}</span>}
+            {counts[tab] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${activeTab === tab ? 'bg-white/20' : 'bg-blue-100 text-blue-700'}`}>{counts[tab]}</span>}
           </button>
         ))}
       </div>
@@ -250,7 +250,7 @@ export default function ApprovalsPage() {
                 <button onClick={() => { setRejectModal(null); setRejectReason(''); }} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
               </div>
               <textarea value={rejectReason} onChange={e => setRejectReason(e.target.value)} placeholder="Explain why..." rows={4}
-                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none mb-4 placeholder-gray-400" />
+                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm resize-none mb-4 placeholder-gray-400" />
               <div className="flex gap-2">
                 <button onClick={handleReject} disabled={processing}
                   className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">

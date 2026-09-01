@@ -148,7 +148,7 @@ export default function PetsPage() {
         <div className="flex gap-2 overflow-x-auto pb-1">
           {species.map(s => (
             <button key={s} onClick={() => setFilter(s)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition-colors flex items-center gap-1.5 ${filter === s ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition-colors flex items-center gap-1.5 ${filter === s ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {s} <span className="text-[10px] opacity-70">({counts[s]})</span>
             </button>
           ))}
@@ -246,24 +246,24 @@ export default function PetsPage() {
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Name</label>
                     <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Species</label>
                     <select value={form.species} onChange={e => setForm(f => ({ ...f, species: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm">
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm">
                       {SPECIES_LIST.map(s => <option key={s} value={s}>{s}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Breed</label>
                     <input value={form.breed} onChange={e => setForm(f => ({ ...f, breed: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Gender</label>
                     <select value={form.gender} onChange={e => setForm(f => ({ ...f, gender: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm">
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm">
                       <option value="">—</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
@@ -272,47 +272,47 @@ export default function PetsPage() {
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Age (years)</label>
                     <input type="number" value={form.age_years} onChange={e => setForm(f => ({ ...f, age_years: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Age (months)</label>
                     <input type="number" value={form.age_months} onChange={e => setForm(f => ({ ...f, age_months: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Weight (kg)</label>
                     <input type="number" step="0.1" value={form.weight_kg} onChange={e => setForm(f => ({ ...f, weight_kg: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Color</label>
                     <input value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Vaccination Status</label>
                     <select value={form.vaccination_status} onChange={e => setForm(f => ({ ...f, vaccination_status: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm">
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm">
                       {VAX_STATUS.map(s => <option key={s} value={s}>{s.replace(/_/g, ' ')}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Microchip ID</label>
                     <input value={form.microchip_id} onChange={e => setForm(f => ({ ...f, microchip_id: e.target.value }))}
-                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                      className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1.5">Medical Notes</label>
                   <textarea value={form.medical_notes} onChange={e => setForm(f => ({ ...f, medical_notes: e.target.value }))} rows={2}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm resize-none" />
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-gray-500 mb-1.5">Description</label>
                   <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none" />
+                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm resize-none" />
                 </div>
 
                 <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-xl">
@@ -324,7 +324,7 @@ export default function PetsPage() {
 
               <div className="flex gap-2 mt-5">
                 <button onClick={handleSave} disabled={saving}
-                  className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   <Save size={15} /> {saving ? 'Saving...' : 'Save Changes'}
                 </button>
                 <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>

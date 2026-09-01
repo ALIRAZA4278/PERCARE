@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import AdminSidebar from '@/components/AdminSidebar';
+import AdminHeader from '@/components/AdminHeader';
 import { canAccess } from '@/lib/adminRoles';
 
 export default function AdminLayout({ children }) {
@@ -55,6 +56,7 @@ export default function AdminLayout({ children }) {
     <div className="bg-gray-50 min-h-screen">
       <AdminSidebar />
       <main className="lg:ml-64 pt-14 lg:pt-0 min-h-screen bg-gray-50">
+        <AdminHeader />
         {children}
       </main>
     </div>

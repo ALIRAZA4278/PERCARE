@@ -53,12 +53,12 @@ export default function AdminSidebar() {
       {/* Logo */}
       <div className="p-5 border-b border-gray-200 shrink-0">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 bg-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-red-600/20">
-            <Shield size={18} className="text-white" />
+          <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center shadow-sm">
+            <Shield size={16} className="text-white" />
           </div>
           <div>
             <h1 className="font-bold text-gray-900 text-sm">FluffyNest</h1>
-            <p className="text-[10px] text-red-500 uppercase tracking-widest font-bold">ADMIN PANEL</p>
+            <p className="text-[10px] text-blue-600 uppercase tracking-widest font-bold">ADMIN PANEL</p>
           </div>
         </div>
       </div>
@@ -66,7 +66,7 @@ export default function AdminSidebar() {
       {/* Admin info + role badge */}
       <div className="px-4 py-3 border-b border-gray-200 shrink-0">
         <div className="flex items-center gap-2.5 mb-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-red-700 to-red-900 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0">
+          <div className="w-8 h-8 bg-gradient-to-br from-blue-700 to-blue-900 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0">
             {profile?.full_name?.charAt(0)?.toUpperCase() || 'A'}
           </div>
           <div className="flex-1 min-w-0">
@@ -83,9 +83,9 @@ export default function AdminSidebar() {
       <nav className="flex-1 p-2 overflow-y-auto space-y-0.5">
         {NAV.map(({ name, icon: Icon, href }) => (
           <Link key={href} href={href} onClick={() => setMobileOpen(false)}
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
+            className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
               isActive(href)
-                ? 'bg-red-600 text-white shadow-sm'
+                ? 'bg-blue-600 text-white shadow-sm'
                 : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
             }`}>
             <Icon size={16} className="shrink-0" />
@@ -110,7 +110,7 @@ export default function AdminSidebar() {
       {/* Mobile top bar */}
       <div className="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-30 px-4 py-3 flex items-center justify-between shadow-sm">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-red-600 rounded-lg flex items-center justify-center">
+          <div className="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center">
             <Shield size={14} className="text-white" />
           </div>
           <span className="font-bold text-gray-900 text-sm">Admin Panel</span>

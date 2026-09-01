@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Ban, CheckCircle, Search, ChevronLeft, ChevronRight, X, UserCog, Shield, UserPlus, Eye, EyeOff } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { ADMIN_ROLES, ROLE_LABELS, ROLE_COLORS, ROLE_DESCRIPTIONS } from '@/lib/adminRoles';
@@ -24,9 +25,10 @@ export default function UsersPage() {
   const { user, profile } = useAuth();
   const isSuperAdmin = profile?.admin_role === 'super_admin' || !profile?.admin_role;
 
+  const searchParams = useSearchParams();
   const [users, setUsers] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(searchParams.get('q') || '');
   const [roleFilter, setRoleFilter] = useState('All');
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -160,7 +162,7 @@ export default function UsersPage() {
         </div>
         {isSuperAdmin && (
           <button onClick={openAdd}
-            className="flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl transition-colors">
+            className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors">
             <UserPlus size={16} /> Add User
           </button>
         )}
@@ -175,7 +177,7 @@ export default function UsersPage() {
         <div className="flex gap-2 overflow-x-auto">
           {ALL_ROLES.map(r => (
             <button key={r} onClick={() => setRoleFilter(r)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${roleFilter === r ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${roleFilter === r ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {r}
             </button>
           ))}
@@ -305,7 +307,7 @@ export default function UsersPage() {
                   <div className="grid grid-cols-2 gap-2">
                     {ASSIGNABLE_ROLES.map(r => (
                       <button key={r} onClick={() => setAddForm(f => ({ ...f, role: r }))}
-                        className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors border ${addForm.role === r ? 'bg-red-600 border-red-500 text-white' : 'bg-white border-gray-300 text-gray-600 hover:border-gray-400'}`}>
+                        className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors border ${addForm.role === r ? 'bg-blue-600 border-blue-500 text-white' : 'bg-white border-gray-300 text-gray-600 hover:border-gray-400'}`}>
                         {r.replace(/_/g, ' ')}
                       </button>
                     ))}
@@ -336,7 +338,7 @@ export default function UsersPage() {
 
               <div className="flex gap-2">
                 <button onClick={handleAddUser} disabled={addLoading}
-                  className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   {addLoading ? 'Creating...' : 'Create User'}
                 </button>
                 <button onClick={() => setAddModal(false)} className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>
@@ -462,7 +464,7 @@ export default function UsersPage() {
               </div>
               <p className="text-xs text-gray-500 mb-3">This will prevent the user from logging in.</p>
               <textarea value={banReason} onChange={e => setBanReason(e.target.value)} placeholder="Reason for ban (optional)..." rows={3}
-                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm resize-none mb-4 placeholder-gray-400" />
+                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm resize-none mb-4 placeholder-gray-400" />
               <div className="flex gap-2">
                 <button onClick={handleBan} disabled={processing === banModal.id}
                   className="flex-1 bg-red-600 hover:bg-red-700 disabled:bg-red-300 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Search, ChevronLeft, ChevronRight, ExternalLink, CheckCircle, XCircle, Pencil, Plus, X, Save } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 
@@ -10,9 +11,10 @@ const EMPTY_FORM = { user_id: '', license_number: '', specialization: '', qualif
 
 export default function VetsPage() {
   const { user } = useAuth();
+  const searchParams = useSearchParams();
   const [vets, setVets] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(searchParams.get('q') || '');
   const [filter, setFilter] = useState('all');
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -143,7 +145,7 @@ export default function VetsPage() {
           <p className="text-sm text-gray-500 mt-1">{vets.length} total · {counts.approved} approved · {counts.pending} pending</p>
         </div>
         <button onClick={openAdd}
-          className="flex items-center gap-2 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-xl transition-colors">
+          className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl transition-colors">
           <Plus size={16} /> Add Vet
         </button>
       </div>
@@ -157,7 +159,7 @@ export default function VetsPage() {
         <div className="flex gap-2">
           {['all', 'approved', 'pending'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {f} <span className="opacity-70">({counts[f]})</span>
             </button>
           ))}
@@ -259,7 +261,7 @@ export default function VetsPage() {
                   <div>
                     <label className="block text-xs font-semibold text-gray-500 mb-1.5">Search User</label>
                     <input value={userSearch} onChange={e => searchUsers(e.target.value)} placeholder="Type user name..."
-                      className="w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm placeholder-gray-400" />
+                      className="w-full px-3 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm placeholder-gray-400" />
                     {userResults.length > 0 && (
                       <div className="mt-1 bg-white border border-gray-200 rounded-xl overflow-hidden shadow-lg">
                         {userResults.map(u => (
@@ -290,7 +292,7 @@ export default function VetsPage() {
                     <div key={key}>
                       <label className="block text-xs font-semibold text-gray-500 mb-1.5">{label}</label>
                       <input type={type || 'text'} value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                        className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm" />
+                        className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
                     </div>
                   ))}
                 </div>
@@ -304,7 +306,7 @@ export default function VetsPage() {
 
               <div className="flex gap-2 mt-5">
                 <button onClick={handleSave} disabled={saving || (modal.mode === 'add' && !form.user_id)}
-                  className="flex-1 flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   <Save size={15} /> {saving ? 'Saving...' : 'Save'}
                 </button>
                 <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>

@@ -104,7 +104,7 @@ export default function OrdersPage() {
         <div className="flex gap-2 overflow-x-auto pb-1">
           {STATUS_TABS.map(s => (
             <button key={s} onClick={() => setTab(s)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${tab === s ? 'bg-red-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${tab === s ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
               {s.charAt(0).toUpperCase() + s.slice(1)}
               {counts[s] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tab === s ? 'bg-white/20' : 'bg-gray-100 text-gray-600'}`}>{counts[s]}</span>}
             </button>
@@ -198,13 +198,13 @@ export default function OrdersPage() {
                               <select
                                 value={statusEdits[order.id] ?? order.status}
                                 onChange={e => setStatusEdits(prev => ({ ...prev, [order.id]: e.target.value }))}
-                                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-red-500 text-gray-900 text-sm mb-3">
+                                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm mb-3">
                                 {ORDER_STATUSES.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
                               </select>
                               <button
                                 onClick={() => handleStatusSave(order)}
                                 disabled={saving === order.id || !isDirty}
-                                className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:bg-gray-100 disabled:text-gray-500 text-white text-xs font-semibold rounded-lg transition-colors">
+                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white text-xs font-semibold rounded-lg transition-colors">
                                 <Save size={13} />
                                 {saving === order.id ? 'Saving...' : 'Save Status'}
                               </button>
