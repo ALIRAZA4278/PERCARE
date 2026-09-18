@@ -15,8 +15,8 @@ export default function Footer() {
   ].filter(Boolean);
 
   const exploreLinks = [
-    { label: 'Find Vets', href: '/vets' },
-    marketplaceEnabled && { label: 'Marketplace', href: '/marketplace' },
+    { label: 'Find Vets', href: '/discover' },
+    marketplaceEnabled && { label: 'Marketplace', href: '/shop' },
     sheltersEnabled && { label: 'Shelters', href: '/shelters' },
     { label: 'Lost & Found', href: '/lost-found' },
   ].filter(Boolean);

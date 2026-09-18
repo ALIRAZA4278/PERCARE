@@ -27,7 +27,7 @@ export default function LoginPage() {
   ];
   const roles = allRoles.filter(Boolean);
 
-  const roleRedirect = { veterinarian: '/vet-dashboard', seller: '/seller-dashboard', company: '/seller-dashboard', shelter: '/shelter-dashboard', admin: '/admin' };
+  const roleRedirect = { veterinarian: '/dashboard/vet', seller: '/dashboard/seller', company: '/dashboard/seller', shelter: '/dashboard/shelter', admin: '/admin' };
 
   const handleSubmit = async (e) => {
     e.preventDefault();

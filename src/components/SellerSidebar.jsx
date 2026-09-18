@@ -13,14 +13,14 @@ export default function SellerSidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navItems = [
-    { name: 'Overview', icon: LayoutDashboard, href: '/seller-dashboard' },
-    { name: 'My Store', icon: Store, href: '/seller-dashboard/store' },
-    { name: 'Products', icon: Package, href: '/seller-dashboard/products' },
-    { name: 'Orders', icon: ClipboardList, href: '/seller-dashboard/orders' },
-    { name: 'Reviews', icon: Star, href: '/seller-dashboard/reviews' },
-    { name: 'Analytics', icon: TrendingUp, href: '/seller-dashboard/analytics' },
-    { name: 'Notifications', icon: Bell, href: '/seller-dashboard/notifications' },
-    { name: 'Settings', icon: Settings, href: '/seller-dashboard/settings' },
+    { name: 'Overview', icon: LayoutDashboard, href: '/dashboard/seller' },
+    { name: 'My Store', icon: Store, href: '/dashboard/seller/store' },
+    { name: 'Products', icon: Package, href: '/dashboard/seller/products' },
+    { name: 'Orders', icon: ClipboardList, href: '/dashboard/seller/orders' },
+    { name: 'Reviews', icon: Star, href: '/dashboard/seller/reviews' },
+    { name: 'Analytics', icon: TrendingUp, href: '/dashboard/seller/analytics' },
+    { name: 'Notifications', icon: Bell, href: '/dashboard/seller/notifications' },
+    { name: 'Settings', icon: Settings, href: '/dashboard/seller/settings' },
   ];
 
   const handleLogout = async () => {
@@ -29,7 +29,7 @@ export default function SellerSidebar() {
   };
 
   const isActive = (href) => {
-    if (href === '/seller-dashboard') return pathname === '/seller-dashboard';
+    if (href === '/dashboard/seller') return pathname === '/dashboard/seller';
     return pathname.startsWith(href);
   };
 

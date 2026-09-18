@@ -15,14 +15,14 @@ export default function VetSidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navItems = [
-    { name: 'Overview', icon: LayoutDashboard, href: '/vet-dashboard' },
-    { name: 'Appointments', icon: Calendar, href: '/vet-dashboard/appointments' },
-    { name: 'Patients', icon: Users, href: '/vet-dashboard/patients' },
-    { name: 'My Clinic', icon: Building2, href: '/vet-dashboard/clinic' },
-    marketplaceEnabled && { name: 'My Store', icon: Store, href: '/vet-dashboard/store' },
-    { name: 'Notifications', icon: Bell, href: '/vet-dashboard/notifications' },
-    { name: 'Profile', icon: User, href: '/vet-dashboard/profile' },
-    { name: 'Settings', icon: Settings, href: '/vet-dashboard/settings' },
+    { name: 'Overview', icon: LayoutDashboard, href: '/dashboard/vet' },
+    { name: 'Appointments', icon: Calendar, href: '/dashboard/vet/appointments' },
+    { name: 'Patients', icon: Users, href: '/dashboard/vet/patients' },
+    { name: 'My Clinic', icon: Building2, href: '/dashboard/vet/clinic' },
+    marketplaceEnabled && { name: 'My Store', icon: Store, href: '/dashboard/vet/store' },
+    { name: 'Notifications', icon: Bell, href: '/dashboard/vet/notifications' },
+    { name: 'Profile', icon: User, href: '/dashboard/vet/profile' },
+    { name: 'Settings', icon: Settings, href: '/dashboard/vet/settings' },
   ].filter(Boolean);
 
   const handleLogout = async () => {
@@ -31,7 +31,7 @@ export default function VetSidebar() {
   };
 
   const isActive = (href) => {
-    if (href === '/vet-dashboard') return pathname === '/vet-dashboard';
+    if (href === '/dashboard/vet') return pathname === '/dashboard/vet';
     return pathname.startsWith(href);
   };
 

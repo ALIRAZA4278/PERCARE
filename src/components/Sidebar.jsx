@@ -15,14 +15,14 @@ export default function Sidebar() {
 
   const mainNav = [
     { name: 'Home', icon: Home, href: '/' },
-    { name: 'Discover Vets', icon: Search, href: '/vets' },
-    marketplaceEnabled && { name: 'Marketplace', icon: ShoppingBag, href: '/marketplace' },
+    { name: 'Discover Vets', icon: Search, href: '/discover' },
+    marketplaceEnabled && { name: 'Marketplace', icon: ShoppingBag, href: '/shop' },
     sheltersEnabled && { name: 'Shelters', icon: Heart, href: '/shelters' },
     { name: 'Lost & Found', icon: AlertTriangle, href: '/lost-found' },
   ].filter(Boolean);
 
   const accountNav = [
-    { name: 'My Pets', icon: Waves, href: '/my-pets' },
+    { name: 'My Pets', icon: Waves, href: '/pets' },
     { name: 'Notifications', icon: Bell, href: '/notifications' },
     { name: 'Profile', icon: User, href: '/profile' },
   ];
@@ -88,19 +88,19 @@ export default function Sidebar() {
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 px-3">Account</p>
               <div className="space-y-1">
                 {profile?.role === 'veterinarian' && (
-                  <Link href="/vet-dashboard" onClick={() => setIsMobileMenuOpen(false)}
+                  <Link href="/dashboard/vet" onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors font-medium bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 hover:from-blue-100 hover:to-blue-200 border border-blue-200`}>
                     <LayoutDashboard size={18} /><span>Vet Dashboard</span>
                   </Link>
                 )}
                 {profile?.role === 'seller' && marketplaceEnabled && (
-                  <Link href="/seller-dashboard" onClick={() => setIsMobileMenuOpen(false)}
+                  <Link href="/dashboard/seller" onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors font-medium bg-gradient-to-r from-green-50 to-green-100 text-green-700 hover:from-green-100 hover:to-green-200 border border-green-200`}>
                     <LayoutDashboard size={18} /><span>Seller Dashboard</span>
                   </Link>
                 )}
                 {profile?.role === 'shelter' && sheltersEnabled && (
-                  <Link href="/shelter-dashboard" onClick={() => setIsMobileMenuOpen(false)}
+                  <Link href="/dashboard/shelter" onClick={() => setIsMobileMenuOpen(false)}
                     className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors font-medium bg-gradient-to-r from-pink-50 to-pink-100 text-pink-700 hover:from-pink-100 hover:to-pink-200 border border-pink-200`}>
                     <LayoutDashboard size={18} /><span>Shelter Dashboard</span>
                   </Link>

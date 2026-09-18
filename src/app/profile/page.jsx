@@ -61,7 +61,7 @@ export default function ProfilePage() {
   if (!isLoggedIn || !profile) return null;
 
   const menuItems = [
-    { icon: PawPrint, label: 'My Pets', description: 'View and manage your pets', href: '/my-pets' },
+    { icon: PawPrint, label: 'My Pets', description: 'View and manage your pets', href: '/pets' },
     { icon: Edit, label: 'Edit Profile', description: 'Update your personal details', href: '/profile/edit' },
     { icon: Heart, label: 'Favorites', description: 'Saved vets, clinics & products', href: '/profile/favourites' },
     { icon: ShoppingBag, label: 'My Orders', description: 'Track your purchases', href: '/profile/orders' },

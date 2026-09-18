@@ -47,7 +47,7 @@ export default function HospitalDetailPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
         <p className="text-xl font-bold text-gray-700 mb-4">Hospital not found</p>
-        <Link href="/vets" className="text-blue-600 hover:underline">Back to Vets</Link>
+        <Link href="/discover" className="text-blue-600 hover:underline">Back to Vets</Link>
       </div>
     );
   }
@@ -57,7 +57,7 @@ export default function HospitalDetailPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-4 sm:pt-6 pb-2">
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
-            <Link href="/vets" className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <Link href="/discover" className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
               <ArrowLeft size={20} className="text-gray-700" />
             </Link>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Hospital</h1>
@@ -146,7 +146,7 @@ export default function HospitalDetailPage() {
             <h3 className="text-lg font-bold text-gray-900 mb-3">Our Veterinarians</h3>
             <div className="space-y-2">
               {vets.map((vet) => (
-                <Link key={vet.id} href={`/vets/${vet.id}`} className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors group">
+                <Link key={vet.id} href={`/vet/${vet.id}`} className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors group">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center shrink-0">
                       <Stethoscope size={18} className="text-blue-600" />

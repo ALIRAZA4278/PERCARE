@@ -58,7 +58,7 @@ export default function SheltersPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {shelters.map((shelter, index) => (
-            <Link key={shelter.id} href={`/shelters/${shelter.id}`} className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all group">
+            <Link key={shelter.id} href={`/shelter/${shelter.id}`} className="bg-white rounded-xl sm:rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all group">
               <div className="h-40 sm:h-48 bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
                 {shelter.image_url ? (
                   <img src={shelter.image_url} alt={shelter.name} className="w-full h-full object-cover" />

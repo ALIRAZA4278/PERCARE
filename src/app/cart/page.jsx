@@ -24,7 +24,7 @@ export default function CartPage() {
       <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center gap-3 sm:gap-4">
-            <Link href="/marketplace" className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0">
+            <Link href="/shop" className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0">
               <ArrowLeft size={18} className="text-gray-700" />
             </Link>
             <div className="flex-1 min-w-0">
@@ -41,7 +41,7 @@ export default function CartPage() {
             <div className="text-6xl sm:text-8xl mb-4 sm:mb-6">🛒</div>
             <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2 sm:mb-3">Your cart is empty</h2>
             <p className="text-gray-600 mb-4 sm:mb-6 text-sm sm:text-base">Add some products to get started!</p>
-            <Link href="/marketplace" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg transition-colors text-sm sm:text-base">
+            <Link href="/shop" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg transition-colors text-sm sm:text-base">
               <ShoppingBag size={18} />
               Continue Shopping
             </Link>
@@ -110,7 +110,7 @@ export default function CartPage() {
                 <button onClick={() => setIsCheckoutOpen(true)} className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 sm:px-6 sm:py-4 rounded-lg transition-colors mb-3 sm:mb-4 shadow-sm text-sm sm:text-base">
                   Proceed to Checkout
                 </button>
-                <Link href="/marketplace" className="block text-center text-blue-600 font-medium hover:text-blue-700 transition-colors text-sm sm:text-base">Continue Shopping</Link>
+                <Link href="/shop" className="block text-center text-blue-600 font-medium hover:text-blue-700 transition-colors text-sm sm:text-base">Continue Shopping</Link>
                 <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200 space-y-2 sm:space-y-3">
                   {['Free delivery on all orders', '100% buyer protection', 'Easy returns within 7 days'].map((text) => (
                     <div key={text} className="flex items-start gap-2 sm:gap-3">

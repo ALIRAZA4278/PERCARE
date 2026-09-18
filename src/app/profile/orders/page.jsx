@@ -103,7 +103,7 @@ export default function MyOrdersPage() {
             <h3 className="text-xl font-bold text-gray-900 mb-2">No orders yet</h3>
             <p className="text-gray-600 mb-6">Start shopping to see your orders here.</p>
             {marketplaceEnabled && (
-              <Link href="/marketplace" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
+              <Link href="/shop" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2 text-sm">
                 Browse Products
               </Link>
             )}

@@ -13,14 +13,14 @@ export default function ShelterSidebar() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   const navItems = [
-    { name: 'Overview', icon: LayoutDashboard, href: '/shelter-dashboard' },
-    { name: 'Animals', icon: PawPrint, href: '/shelter-dashboard/animals' },
-    { name: 'Adoptions', icon: Heart, href: '/shelter-dashboard/adoptions' },
-    { name: 'Donations', icon: HandHeart, href: '/shelter-dashboard/donations' },
-    { name: 'Intake', icon: ClipboardPlus, href: '/shelter-dashboard/intake' },
-    { name: 'Financials', icon: DollarSign, href: '/shelter-dashboard/financials' },
-    { name: 'Notifications', icon: Bell, href: '/shelter-dashboard/notifications' },
-    { name: 'Settings', icon: Settings, href: '/shelter-dashboard/settings' },
+    { name: 'Overview', icon: LayoutDashboard, href: '/dashboard/shelter' },
+    { name: 'Animals', icon: PawPrint, href: '/dashboard/shelter/animals' },
+    { name: 'Adoptions', icon: Heart, href: '/dashboard/shelter/adoptions' },
+    { name: 'Donations', icon: HandHeart, href: '/dashboard/shelter/donations' },
+    { name: 'Intake', icon: ClipboardPlus, href: '/dashboard/shelter/intake' },
+    { name: 'Financials', icon: DollarSign, href: '/dashboard/shelter/financials' },
+    { name: 'Notifications', icon: Bell, href: '/dashboard/shelter/notifications' },
+    { name: 'Settings', icon: Settings, href: '/dashboard/shelter/settings' },
   ];
 
   const handleLogout = async () => {
@@ -29,7 +29,7 @@ export default function ShelterSidebar() {
   };
 
   const isActive = (href) => {
-    if (href === '/shelter-dashboard') return pathname === '/shelter-dashboard';
+    if (href === '/dashboard/shelter') return pathname === '/dashboard/shelter';
     return pathname.startsWith(href);
   };
 
