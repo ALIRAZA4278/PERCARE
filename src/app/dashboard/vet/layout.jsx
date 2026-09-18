@@ -1,6 +1,6 @@
 'use client';
 
-import VetSidebar from '@/components/VetSidebar';
+import DashboardShell from '@/components/DashboardShell';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
@@ -20,17 +20,14 @@ export default function VetDashboardLayout({ children }) {
   }, [loading, isLoggedIn, profile]);
 
   if (loading) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
+    );
   }
 
   if (!isLoggedIn || !profile || profile.role !== 'veterinarian') return null;
 
-  return (
-    <div>
-      <VetSidebar />
-      <main className="lg:ml-64 pt-14 lg:pt-0 min-h-screen bg-gray-50">
-        {children}
-      </main>
-    </div>
-  );
+  return <DashboardShell role="vet">{children}</DashboardShell>;
 }
