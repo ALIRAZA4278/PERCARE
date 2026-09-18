@@ -1,37 +1,43 @@
 'use client';
 
-import Sidebar from "@/components/Sidebar";
-import { CartProvider } from "@/context/CartContext";
-import { AuthProvider } from "@/context/AuthContext";
-import { FeatureFlagsProvider } from "@/context/FeatureFlagsContext";
-import { usePathname } from "next/navigation";
+import Sidebar from '@/components/Sidebar';
+import BottomNav from '@/components/BottomNav';
+import Footer from '@/components/sections/Footer';
+import { CartProvider } from '@/context/CartContext';
+import { AuthProvider } from '@/context/AuthContext';
+import { FeatureFlagsProvider } from '@/context/FeatureFlagsContext';
+import { usePathname } from 'next/navigation';
 
 const authRoutes = ['/login', '/signup'];
 
 export default function ClientLayout({ children }) {
   const pathname = usePathname();
   const isAuthPage = authRoutes.includes(pathname);
-  const isDashboardPage = pathname.startsWith('/dashboard/vet') || pathname.startsWith('/dashboard/seller') || pathname.startsWith('/dashboard/shelter') || pathname.startsWith('/admin-dashboard') || pathname.startsWith('/admin');
+  const isDashboardPage =
+    pathname.startsWith('/dashboard') || pathname.startsWith('/admin');
 
-  if (isAuthPage || isDashboardPage) {
-    return (
-      <AuthProvider>
-        <FeatureFlagsProvider>
-          <CartProvider>{children}</CartProvider>
-        </FeatureFlagsProvider>
-      </AuthProvider>
+  const content =
+    isAuthPage || isDashboardPage ? (
+      children
+    ) : (
+      // Public app shell — mirrors the reference layout: sticky desktop
+      // sidebar, content column with footer, and a fixed mobile bottom nav
+      // (the h-16 spacer keeps content clear of it).
+      <div className="flex min-h-screen w-full bg-background">
+        <Sidebar />
+        <div className="flex-1 flex flex-col min-w-0">
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <div className="h-16 md:hidden" />
+        </div>
+        <BottomNav />
+      </div>
     );
-  }
 
   return (
     <AuthProvider>
       <FeatureFlagsProvider>
-        <CartProvider>
-          <Sidebar />
-          <main className="lg:ml-64 pt-16 lg:pt-0">
-            {children}
-          </main>
-        </CartProvider>
+        <CartProvider>{content}</CartProvider>
       </FeatureFlagsProvider>
     </AuthProvider>
   );
