@@ -99,7 +99,7 @@ export default function AINameGenerator() {
             onChange={(e) => setDescription(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && generate()}
             placeholder="e.g. playful golden puppy, calm grey kitten..."
-            className="flex-1 h-11 px-4 rounded-xl bg-card border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+            className="flex-1 min-w-0 h-11 px-4 rounded-xl bg-card border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
           />
           <button
             onClick={generate}
