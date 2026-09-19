@@ -1,40 +1,46 @@
-import { BookOpen, ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
+import Link from 'next/link';
+
+const CARDS = [
+  { emoji: '🐾', title: 'What to Consider When Choosing a New Pet', category: 'Getting Started' },
+  { emoji: '🐱', title: 'Tips for Training Your Cat', category: 'Training' },
+  { emoji: '🐕', title: 'How to Keep Your Dog Healthy', category: 'Health' },
+  { emoji: '💉', title: 'Understanding Pet Vaccinations', category: 'Health' },
+];
 
 export default function PetInsider() {
-  const articles = [
-    { emoji: '🐾', badge: 'Getting Started', badgeColor: 'bg-purple-50 text-purple-700', title: 'What to Consider When Choosing a New Pet' },
-    { emoji: '🦁', badge: 'Training', badgeColor: 'bg-orange-50 text-orange-700', title: 'Tips for Training Your Cat' },
-    { emoji: '🐕', badge: 'Health', badgeColor: 'bg-green-50 text-green-700', title: 'How to Keep Your Dog Healthy' },
-    { emoji: '💉', badge: 'Health', badgeColor: 'bg-blue-50 text-blue-700', title: 'Understanding Pet Vaccinations' },
-  ];
-
   return (
-    <div className="mb-6 sm:mb-8 px-4">
-      <div className="flex items-center justify-between mb-4 sm:mb-5">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <BookOpen className="text-blue-600" size={20} />
-          <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Pet Insider</h2>
+    <section className="px-4 md:px-8 pb-12">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2.5">
+          <BookOpen className="h-5 w-5 text-primary" />
+          <h3 className="font-bold text-foreground text-base">Pet Insider</h3>
         </div>
-        <button className="text-blue-600 font-medium hover:text-blue-700 flex items-center gap-1 text-xs sm:text-sm transition-colors">
-          View All
-          <ArrowRight size={14} />
-        </button>
+        <Link
+          href="/pet-tips"
+          className="text-xs font-semibold text-primary inline-flex items-center gap-1 hover:underline"
+        >
+          View All <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-        {articles.map((article, index) => (
-          <div
-            key={index}
-            className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-200 hover:shadow-lg transition-all cursor-pointer group"
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        {CARDS.map((card) => (
+          <Link
+            key={card.title}
+            href="/pet-tips"
+            className="group p-4 rounded-2xl bg-card shadow-card hover:shadow-card-hover transition-all btn-press"
           >
-            <div className="text-4xl sm:text-5xl mb-3 sm:mb-4 group-hover:scale-110 transition-transform">{article.emoji}</div>
-            <div className={`inline-block ${article.badgeColor} text-xs font-semibold px-2.5 sm:px-3 py-1 rounded-full mb-2 sm:mb-3`}>
-              {article.badge}
-            </div>
-            <h3 className="font-semibold text-gray-900 text-xs sm:text-sm leading-snug">{article.title}</h3>
-          </div>
+            <div className="text-3xl mb-2">{card.emoji}</div>
+            <span className="inline-block px-2 py-0.5 rounded-full bg-primary/10 text-primary text-[10px] font-semibold mb-1.5">
+              {card.category}
+            </span>
+            <h4 className="text-xs font-semibold text-foreground leading-snug group-hover:text-primary transition-colors">
+              {card.title}
+            </h4>
+          </Link>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

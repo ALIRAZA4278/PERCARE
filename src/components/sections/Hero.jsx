@@ -1,57 +1,103 @@
 'use client';
 
-import { Search, MapPin } from 'lucide-react';
+import { MapPin, Search } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useFeatureFlags } from '@/context/FeatureFlagsContext';
 
 export default function Hero() {
-  const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
+  const router = useRouter();
+  const { marketplaceEnabled } = useFeatureFlags();
+  const [query, setQuery] = useState('');
+  const [scope, setScope] = useState('vets');
 
-  const taglineParts = [
-    'Discover veterinarians',
-    marketplaceEnabled && 'shop for pet products',
-    sheltersEnabled && 'adopt from shelters',
-    "manage your pet's health",
-  ].filter(Boolean);
-  const tagline = taglineParts.length > 2
-    ? `${taglineParts.slice(0, -1).join(', ')}, and ${taglineParts[taglineParts.length - 1]} — all in one place.`
-    : `${taglineParts.join(' and ')} — all in one place.`;
+  const tabs = [
+    { id: 'vets', label: 'Vets & Clinics' },
+    ...(marketplaceEnabled ? [{ id: 'products', label: 'Products' }] : []),
+  ];
+  const activeScope = marketplaceEnabled ? scope : 'vets';
 
-  const searchPlaceholder = marketplaceEnabled ? 'Search vets, clinics, products...' : 'Search vets and clinics...';
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const q = query.trim();
+    const base = activeScope === 'products' ? '/shop' : '/discover';
+    router.push(q ? `${base}?q=${encodeURIComponent(q)}` : base);
+  };
 
   return (
-    <div className="text-center mb-8 sm:mb-12 px-4">
-      <p className="text-blue-600 text-xs sm:text-sm font-semibold mb-2 sm:mb-3 uppercase tracking-wide">
-        Pakistan's Trusted Pet Ecosystem
-      </p>
-      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 text-gray-900 px-4">
-        Better care for your best friend.
-      </h1>
-      <p className="text-gray-600 text-sm sm:text-base lg:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
-        {tagline}
-      </p>
-
-      <div className="flex items-center justify-center gap-4 mb-4 sm:mb-6">
-        <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg flex items-center gap-2 transition-colors shadow-sm text-sm sm:text-base">
-          <Search size={18} />
-          Find a Vet
-        </button>
-      </div>
-
-      <div className="max-w-2xl mx-auto relative">
-        <div className="flex items-center gap-2 sm:gap-3 bg-white rounded-full border border-gray-200 px-4 sm:px-6 py-3 sm:py-3.5 shadow-sm hover:shadow-md transition-shadow">
-          <Search size={18} className="text-gray-400 flex-shrink-0" />
-          <input
-            type="text"
-            placeholder={searchPlaceholder}
-            className="flex-1 outline-none text-gray-700 text-xs sm:text-sm"
-          />
-          <button className="bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-medium px-3 sm:px-5 py-1.5 sm:py-2 rounded-full flex items-center gap-1.5 sm:gap-2 transition-colors flex-shrink-0">
-            <MapPin size={14} />
-            <span className="hidden sm:inline">Near me</span>
-            <span className="sm:hidden">Near</span>
-          </button>
+    <section className="relative px-4 pt-6 pb-10 md:px-8 md:pt-16 md:pb-20 overflow-hidden">
+      <div className="max-w-4xl mx-auto md:text-center">
+        <p className="text-xs font-semibold text-primary mb-2 tracking-wide uppercase">
+          Pakistan&apos;s Trusted Pet Ecosystem
+        </p>
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-foreground mb-3 break-words">
+          Better care for your best friend.
+        </h1>
+        <p className="text-sm sm:text-lg text-muted-foreground mb-6 max-w-lg md:mx-auto">
+          Discover veterinarians, manage your pet&apos;s health records, and reunite lost pets with
+          their families — all in one place.
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3 md:justify-center">
+          <Link
+            href="/discover"
+            className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-xl bg-primary text-primary-foreground font-semibold text-sm btn-press transition-expo hover:opacity-90"
+          >
+            <Search className="h-4 w-4" />
+            Find a Vet
+          </Link>
         </div>
       </div>
-    </div>
+
+      <div className="mt-8 max-w-xl mx-auto">
+        <form onSubmit={handleSubmit} role="search" className="space-y-2">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              aria-label="Search vets and clinics"
+              placeholder={
+                marketplaceEnabled
+                  ? 'Search vets, clinics, products...'
+                  : 'Search vets and clinics...'
+              }
+              className="w-full h-12 pl-11 pr-24 rounded-2xl bg-card shadow-card border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-expo"
+            />
+            <button
+              type="submit"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 px-3 rounded-xl bg-primary text-primary-foreground text-xs font-semibold btn-press transition-expo hover:opacity-90 flex items-center gap-1.5"
+            >
+              <Search className="h-3.5 w-3.5" />
+              Search
+            </button>
+          </div>
+
+          <div className="flex items-center gap-2 justify-center flex-wrap">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setScope(tab.id)}
+                className={`px-3 py-1.5 rounded-full text-[11px] font-semibold transition-expo btn-press ${
+                  activeScope === tab.id
+                    ? 'bg-primary/10 text-primary'
+                    : 'bg-card border border-border text-muted-foreground hover:text-foreground'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+            <Link
+              href="/discover"
+              className="px-3 py-1.5 rounded-full text-[11px] font-semibold bg-card border border-border text-muted-foreground hover:text-foreground transition-expo inline-flex items-center gap-1.5"
+            >
+              <MapPin className="h-3 w-3" /> Near me
+            </Link>
+          </div>
+        </form>
+      </div>
+    </section>
   );
 }

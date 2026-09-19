@@ -1,37 +1,82 @@
 'use client';
 
-import { Tag } from 'lucide-react';
+import { HandHeart, ShoppingBag, Stethoscope, Tag, TriangleAlert } from 'lucide-react';
 import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import { gridCols } from '@/lib/gridCols';
 
 export default function ExclusiveDeals() {
   const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
 
-  const deals = [
-    { badge: '🩺 VET DEALS', badgeColor: 'bg-green-100 text-green-700', bgColor: 'bg-green-50', borderColor: 'border-green-100', title: 'Up to 30% Off', description: 'On consultations & checkups at partner clinics' },
-    marketplaceEnabled && { badge: '📦 PRODUCT DEALS', badgeColor: 'bg-blue-100 text-blue-700', bgColor: 'bg-blue-50', borderColor: 'border-blue-100', title: 'Up to 40% Off', description: 'Premium food, toys & accessories' },
-    sheltersEnabled && { badge: '🐕 SHELTER IMPACT', badgeColor: 'bg-orange-100 text-orange-700', bgColor: 'bg-orange-50', borderColor: 'border-orange-100', title: 'Rs. 3.2M+', description: 'Raised for shelters through our platform' },
-    !sheltersEnabled && { badge: '⚠️ LOST & FOUND', badgeColor: 'bg-orange-100 text-orange-700', bgColor: 'bg-orange-50', borderColor: 'border-orange-100', title: 'Free Alerts', description: 'Community-wide alerts to help reunite pets fast' },
-  ].filter(Boolean);
-
-  const gridColsClass = { 1: 'lg:grid-cols-1', 2: 'lg:grid-cols-2', 3: 'lg:grid-cols-3', 4: 'lg:grid-cols-4' }[deals.length] || 'lg:grid-cols-3';
+  // The reference sizes this grid off the count of optional cards, not the
+  // rendered total — 2 fixed cards plus whichever flags are on.
+  const count = 2 + (marketplaceEnabled ? 1 : 0) + (sheltersEnabled ? 1 : 0);
 
   return (
-    <div className="mb-6 sm:mb-8 px-4">
-      <div className="flex items-center gap-2 mb-4 sm:mb-5">
-        <Tag className="text-blue-600" size={20} />
-        <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Exclusive Deals — Only on PetCare</h2>
+    <section className="px-4 md:px-8 pb-12 max-w-5xl mx-auto">
+      <div className="flex items-center gap-2.5 mb-4">
+        <Tag className="h-5 w-5 text-primary" />
+        <h3 className="font-bold text-foreground text-base">
+          Exclusive Deals — Only on PetCare
+        </h3>
       </div>
-      <div className={`grid grid-cols-1 sm:grid-cols-2 ${gridColsClass} gap-3 sm:gap-5`}>
-        {deals.map((deal, index) => (
-          <div key={index} className={`${deal.bgColor} ${deal.borderColor} rounded-xl sm:rounded-2xl p-5 sm:p-6 border hover:shadow-lg transition-shadow`}>
-            <div className={`inline-block ${deal.badgeColor} text-xs font-semibold px-3 py-1.5 rounded-full mb-3`}>
-              {deal.badge}
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{deal.title}</h3>
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{deal.description}</p>
+
+      <div className={`grid grid-cols-1 sm:grid-cols-2 ${gridCols(count)} gap-3`}>
+        <div className="p-4 rounded-2xl bg-vitality/5 border border-vitality/15">
+          <div className="flex items-center gap-2 mb-2">
+            <Stethoscope className="h-4 w-4 text-vitality" />
+            <span className="text-xs font-bold text-vitality uppercase tracking-wider">
+              Vet Deals
+            </span>
           </div>
-        ))}
+          <p className="text-xl font-extrabold text-foreground tabular-nums">Up to 30% Off</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5">
+            On consultations &amp; checkups at partner clinics
+          </p>
+        </div>
+
+        <div className="p-4 rounded-2xl bg-amber/5 border border-amber/15">
+          <div className="flex items-center gap-2 mb-2">
+            <TriangleAlert className="h-4 w-4 text-amber" />
+            <span className="text-xs font-bold text-amber uppercase tracking-wider">
+              Lost &amp; Found
+            </span>
+          </div>
+          <p className="text-xl font-extrabold text-foreground tabular-nums">Free Alerts</p>
+          <p className="text-[11px] text-muted-foreground mt-0.5">
+            Community-wide alerts to help reunite pets fast
+          </p>
+        </div>
+
+        {marketplaceEnabled && (
+          <div className="p-4 rounded-2xl bg-primary/5 border border-primary/15">
+            <div className="flex items-center gap-2 mb-2">
+              <ShoppingBag className="h-4 w-4 text-primary" />
+              <span className="text-xs font-bold text-primary uppercase tracking-wider">
+                Product Deals
+              </span>
+            </div>
+            <p className="text-xl font-extrabold text-foreground tabular-nums">Up to 40% Off</p>
+            <p className="text-[11px] text-muted-foreground mt-0.5">
+              Premium food, toys &amp; accessories
+            </p>
+          </div>
+        )}
+
+        {sheltersEnabled && (
+          <div className="p-4 rounded-2xl bg-amber/5 border border-amber/15">
+            <div className="flex items-center gap-2 mb-2">
+              <HandHeart className="h-4 w-4 text-amber" />
+              <span className="text-xs font-bold text-amber uppercase tracking-wider">
+                Shelter Impact
+              </span>
+            </div>
+            <p className="text-xl font-extrabold text-foreground tabular-nums">Rs. 3.2M+</p>
+            <p className="text-[11px] text-muted-foreground mt-0.5">
+              Raised for shelters through our platform
+            </p>
+          </div>
+        )}
       </div>
-    </div>
+    </section>
   );
 }

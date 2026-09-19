@@ -10,22 +10,22 @@ import PetInsider from '@/components/sections/PetInsider';
 import HelpUsImprove from '@/components/sections/HelpUsImprove';
 import QuickActions from '@/components/sections/QuickActions';
 
+// No page-level container: every section sets its own px-4 md:px-8 and
+// max-w-5xl, matching the reference. A wrapper here would double the gutters.
 export default function HomePage() {
   return (
     <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
-        <Hero />
-        <Features />
-        <Stats />
-        <BuyerProtection />
-        <Delivery />
-        <ExclusiveDeals />
-        <BringHomeHappiness />
-        <AINameGenerator />
-        <PetInsider />
-        <HelpUsImprove />
-        <QuickActions />
-      </div>
+      <Hero />
+      <Features />
+      <Stats />
+      <BuyerProtection />
+      <Delivery />
+      <ExclusiveDeals />
+      <BringHomeHappiness />
+      <AINameGenerator />
+      <PetInsider />
+      <HelpUsImprove />
+      <QuickActions />
     </div>
   );
 }
