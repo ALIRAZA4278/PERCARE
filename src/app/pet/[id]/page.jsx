@@ -201,7 +201,7 @@ export default function PetDetailPage({ params }) {
         <div className="px-4 md:px-8 max-w-3xl mx-auto py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-              <Link href="/pets" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
+              <Link href="/pets" className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center btn-press transition-expo hover:bg-muted-foreground/10 shrink-0">
                 <ArrowLeft size={18} className="text-foreground" />
               </Link>
               <h1 className="text-base sm:text-xl font-bold text-foreground truncate">{pet.name}</h1>
@@ -212,7 +212,7 @@ export default function PetDetailPage({ params }) {
                 <button onClick={saveEdit} className="px-3 py-1.5 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-lg transition-colors">Save</button>
               </div>
             ) : (
-              <button onClick={startEditing} className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
+              <button onClick={startEditing} className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center btn-press transition-expo hover:bg-muted-foreground/10 shrink-0">
                 <Edit size={18} className="text-muted-foreground" />
               </button>
             )}
@@ -222,7 +222,7 @@ export default function PetDetailPage({ params }) {
 
       <div className="px-4 md:px-8 max-w-3xl mx-auto py-6 sm:py-8">
         {/* Pet Profile Card */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-4 sm:mb-5">
           <div className="flex items-center gap-4 mb-5">
             <div className="relative">
               <input type="file" ref={fileInputRef} accept="image/*" onChange={handleImageUpload} className="hidden" />
@@ -284,19 +284,19 @@ export default function PetDetailPage({ params }) {
 
           {isEditing ? (
             <div className="grid grid-cols-3 gap-3">
-              <div className="bg-muted rounded-xl p-3 sm:p-4 text-center border border-border">
+              <div className="text-center p-3 rounded-xl bg-muted/50">
                 <div className="flex justify-center mb-1.5"><Weight size={18} className="text-primary" /></div>
                 <input type="number" value={editData.weight_kg} onChange={(e) => setEditData({ ...editData, weight_kg: e.target.value })}
                   placeholder="0" step="0.1" className="w-full text-center text-sm font-bold text-foreground border border-border rounded-lg px-1 py-1 outline-none focus:border-primary" />
                 <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">Weight (kg)</p>
               </div>
-              <div className="bg-muted rounded-xl p-3 sm:p-4 text-center border border-border">
+              <div className="text-center p-3 rounded-xl bg-muted/50">
                 <div className="flex justify-center mb-1.5"><Droplets size={18} className="text-primary" /></div>
                 <input type="text" value={editData.color} onChange={(e) => setEditData({ ...editData, color: e.target.value })}
                   placeholder="Color" className="w-full text-center text-sm font-bold text-foreground border border-border rounded-lg px-1 py-1 outline-none focus:border-primary" />
                 <p className="text-[10px] sm:text-xs text-muted-foreground mt-1">Color</p>
               </div>
-              <div className="bg-muted rounded-xl p-3 sm:p-4 text-center border border-border">
+              <div className="text-center p-3 rounded-xl bg-muted/50">
                 <div className="flex justify-center mb-1.5"><Heart size={18} className="text-primary" /></div>
                 <input type="text" value={editData.microchip_id} onChange={(e) => setEditData({ ...editData, microchip_id: e.target.value })}
                   placeholder="Microchip ID" className="w-full text-center text-sm font-bold text-foreground border border-border rounded-lg px-1 py-1 outline-none focus:border-primary" />
@@ -310,7 +310,7 @@ export default function PetDetailPage({ params }) {
                 { icon: Droplets, value: pet.color || '—', label: 'Color' },
                 { icon: Heart, value: pet.microchip_id || '—', label: 'Microchip' },
               ].map(({ icon: Icon, value, label }) => (
-                <div key={label} className="bg-muted rounded-xl p-3 sm:p-4 text-center border border-border">
+                <div key={label} className="text-center p-3 rounded-xl bg-muted/50">
                   <div className="flex justify-center mb-1.5"><Icon size={18} className="text-primary" /></div>
                   <p className="text-sm sm:text-base font-bold text-foreground truncate">{value}</p>
                   <p className="text-[10px] sm:text-xs text-muted-foreground">{label}</p>
@@ -321,7 +321,7 @@ export default function PetDetailPage({ params }) {
         </div>
 
         {/* Personality & Fun Facts */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-4 sm:mb-5">
           <div className="flex items-center gap-2 mb-4">
             <PawPrint size={18} className="text-primary" />
             <h3 className="text-lg font-bold text-foreground">Personality & Fun Facts</h3>
@@ -416,7 +416,7 @@ export default function PetDetailPage({ params }) {
         )}
 
         {/* Appointments */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-4 sm:mb-5">
           <div className="flex items-center gap-2 mb-4">
             <Calendar size={18} className="text-primary" />
             <h3 className="text-lg font-bold text-foreground">Appointments</h3>
@@ -441,7 +441,7 @@ export default function PetDetailPage({ params }) {
         </div>
 
         {/* Vaccination History */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-4 sm:mb-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Syringe size={18} className="text-primary" />
@@ -454,7 +454,7 @@ export default function PetDetailPage({ params }) {
           </div>
 
           {showAddVaccine && (
-            <div className="bg-muted rounded-xl p-4 mb-4 border border-border">
+            <div className="p-4 rounded-xl bg-muted/50 mb-4">
               <input type="text" placeholder="Vaccine name" value={newVaccine.vaccine_name}
                 onChange={(e) => setNewVaccine({ ...newVaccine, vaccine_name: e.target.value })}
                 className="w-full px-3 py-2 rounded-lg border border-border text-sm text-foreground placeholder:text-muted-foreground mb-2 outline-none focus:border-primary" />
@@ -508,7 +508,7 @@ export default function PetDetailPage({ params }) {
         </div>
 
         {/* Medical Notes */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-4 sm:mb-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <FileText size={18} className="text-primary" />
@@ -521,7 +521,7 @@ export default function PetDetailPage({ params }) {
           </div>
 
           {showAddNote && (
-            <div className="bg-muted rounded-xl p-4 mb-4 border border-border">
+            <div className="p-4 rounded-xl bg-muted/50 mb-4">
               <textarea value={newNote} onChange={(e) => setNewNote(e.target.value)}
                 placeholder="Enter medical note..." rows={3}
                 className="w-full px-3 py-2 rounded-lg border border-border text-sm text-foreground placeholder:text-muted-foreground mb-3 outline-none focus:border-primary resize-none" />

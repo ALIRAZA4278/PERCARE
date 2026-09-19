@@ -24,7 +24,7 @@ export default function SettingsPage() {
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="px-4 md:px-8 max-w-3xl mx-auto py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3">
-            <Link href="/profile" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
+            <Link href="/profile" className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center btn-press transition-expo hover:bg-muted-foreground/10 shrink-0">
               <ArrowLeft size={18} className="text-foreground" />
             </Link>
             <h1 className="text-base sm:text-xl font-bold text-foreground">Settings</h1>

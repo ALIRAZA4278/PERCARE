@@ -74,30 +74,31 @@ export default function ShelterDetailPage() {
         <div className="px-4 md:px-8 max-w-3xl mx-auto py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-              <Link href="/shelters" className="p-2 hover:bg-muted rounded-lg transition-colors shrink-0"><ArrowLeft size={18} className="text-foreground" /></Link>
+              <Link href="/shelters" className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center btn-press transition-expo hover:bg-muted-foreground/10 shrink-0"><ArrowLeft className="h-4 w-4 text-foreground" /></Link>
               <h1 className="text-base sm:text-xl font-bold text-foreground truncate">{shelter.name}</h1>
             </div>
-            <button onClick={() => setLiked(!liked)} className="p-2 hover:bg-muted rounded-lg transition-colors shrink-0">
-              <Heart size={20} className={liked ? 'text-emergency fill-emergency' : 'text-muted-foreground'} />
+            <button onClick={() => setLiked(!liked)} aria-label={liked ? 'Remove from favourites' : 'Add to favourites'} className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center btn-press transition-expo hover:bg-muted-foreground/10 shrink-0">
+              <Heart className={`h-4 w-4 ${liked ? 'text-emergency fill-emergency' : 'text-muted-foreground'}`} />
             </button>
           </div>
         </div>
       </div>
 
       <div className="px-4 md:px-8 max-w-3xl mx-auto py-6 sm:py-8">
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
-          {['🐕', '🐱', '🦜'].map((emoji, i) => (
-            <div key={i} className={`${i === 0 ? 'col-span-2 h-40 sm:h-56' : 'h-40 sm:h-56'} bg-muted rounded-xl sm:rounded-2xl flex items-center justify-center border border-border overflow-hidden`}>
-              {shelter.image_url && i === 0 ? (
-                <img src={shelter.image_url} alt={shelter.name} className="w-full h-full object-cover" />
-              ) : (
-                <span className={`${i === 0 ? 'text-6xl sm:text-8xl' : 'text-4xl sm:text-6xl'} opacity-80`}>{emoji}</span>
-              )}
-            </div>
-          ))}
+        <div className="flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 md:mx-0 md:px-0 mb-4">
+          {shelter.image_url ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={shelter.image_url} alt={shelter.name} className="w-48 h-32 rounded-2xl object-cover shrink-0" />
+          ) : (
+            ['🐕', '🐱', '🦜'].map((emoji, i) => (
+              <div key={i} className="w-48 h-32 rounded-2xl bg-muted flex items-center justify-center shrink-0">
+                <span className="text-4xl opacity-50">{emoji}</span>
+              </div>
+            ))
+          )}
         </div>
 
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-4">
           <div className="flex items-start justify-between gap-3 mb-2">
             <h2 className="text-xl sm:text-2xl font-bold text-foreground">{shelter.name}</h2>
             <div className="flex items-center gap-1 text-emergency shrink-0 bg-emergency/10 px-2.5 py-1 rounded-full">
@@ -117,7 +118,7 @@ export default function ShelterDetailPage() {
             ].map((stat) => {
               const Icon = stat.icon;
               return (
-                <div key={stat.label} className="bg-muted rounded-xl p-3 sm:p-4 text-center border border-border">
+                <div key={stat.label} className="text-center p-3 rounded-xl bg-muted/50">
                   <div className="flex justify-center mb-1.5"><Icon size={18} className="text-primary" /></div>
                   <p className="text-sm sm:text-base font-bold text-foreground">{stat.value}</p>
                   <p className="text-[10px] sm:text-xs text-muted-foreground">{stat.label}</p>
@@ -128,8 +129,8 @@ export default function ShelterDetailPage() {
         </div>
 
         {(shelter.phone || shelter.email || shelter.website || hours) && (
-          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
-            <h3 className="text-lg font-bold text-foreground mb-4">Contact & Hours</h3>
+          <div className="p-5 rounded-2xl bg-card shadow-card mb-4">
+            <h3 className="text-sm font-bold text-foreground mb-3">Contact & Hours</h3>
             <div className="space-y-3.5">
               {shelter.phone && (
                 <div className="flex items-center gap-3">
@@ -160,11 +161,11 @@ export default function ShelterDetailPage() {
         )}
 
         {animals.length > 0 && (
-          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
-            <h3 className="text-lg font-bold text-foreground mb-4">Animals Available for Adoption</h3>
+          <div className="p-5 rounded-2xl bg-card shadow-card mb-4">
+            <h3 className="text-sm font-bold text-foreground mb-3">Animals Available for Adoption</h3>
             <div className="space-y-3 sm:space-y-4">
               {animals.map((animal) => (
-                <div key={animal.id} className="rounded-xl p-4 border border-border hover:border-primary/20 hover:shadow-card-hover transition-all">
+                <div key={animal.id} className="rounded-xl p-4 bg-muted/50 hover:bg-muted transition-expo">
                   <div className="flex items-start justify-between gap-3 mb-2.5">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 bg-amber/10 rounded-xl flex items-center justify-center shrink-0 overflow-hidden">
@@ -199,11 +200,11 @@ export default function ShelterDetailPage() {
         )}
 
         {packages.length > 0 && (
-          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
-            <h3 className="text-lg font-bold text-foreground mb-4">Donation Packages</h3>
+          <div className="p-5 rounded-2xl bg-card shadow-card">
+            <h3 className="text-sm font-bold text-foreground mb-3">Donation Packages</h3>
             <div className="space-y-3">
               {packages.map((pkg) => (
-                <div key={pkg.id} className="flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all cursor-pointer group">
+                <div key={pkg.id} className="flex items-center justify-between gap-3 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-expo btn-press cursor-pointer group">
                   <div className="flex-1 min-w-0">
                     <h4 className="font-bold text-foreground text-sm sm:text-base">{pkg.name}</h4>
                     {pkg.description && <p className="text-xs sm:text-sm text-muted-foreground">{pkg.description}</p>}

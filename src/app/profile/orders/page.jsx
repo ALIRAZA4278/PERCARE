@@ -76,7 +76,7 @@ export default function MyOrdersPage() {
             return (
               <Link key={order.id} href={`/profile/orders/${order.id}`} className="flex items-center justify-between rounded-2xl bg-card shadow-card p-4 sm:p-5 hover:shadow-card-hover transition-all btn-press cursor-pointer group">
                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0 border border-border">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
                     <Package size={20} className="text-muted-foreground" />
                   </div>
                   <div className="flex-1 min-w-0">

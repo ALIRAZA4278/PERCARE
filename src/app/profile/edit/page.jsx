@@ -68,9 +68,9 @@ export default function EditProfilePage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-lg mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="px-4 md:px-8 max-w-lg mx-auto py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3">
-            <Link href="/profile" className="p-2 hover:bg-muted rounded-lg transition-colors shrink-0">
+            <Link href="/profile" className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center btn-press transition-expo hover:bg-muted-foreground/10 shrink-0">
               <ArrowLeft size={18} className="text-foreground" />
             </Link>
             <h1 className="text-base sm:text-xl font-bold text-foreground">Edit Profile</h1>
@@ -78,7 +78,7 @@ export default function EditProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-lg mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="px-4 md:px-8 max-w-lg mx-auto py-6 sm:py-8">
         {saved && (
           <div className="mb-4 p-3 bg-vitality/10 border border-vitality/20 rounded-xl flex items-center gap-2 text-vitality text-sm">
             <CheckCircle size={16} />Profile updated successfully!
