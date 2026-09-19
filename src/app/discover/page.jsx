@@ -112,12 +112,12 @@ function DiscoverList() {
             </button>
           </div>
 
-          <div className="flex gap-2 mt-3">
+          <div className="flex gap-2 mt-3 overflow-x-auto no-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
             {FILTERS.map((name) => (
               <button
                 key={name}
                 onClick={() => setFilter(name)}
-                className={`px-4 py-2 rounded-xl text-xs font-semibold btn-press transition-expo ${
+                className={`shrink-0 px-4 py-2 rounded-xl text-xs font-semibold btn-press transition-expo ${
                   filter === name
                     ? 'bg-primary text-primary-foreground'
                     : 'bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -128,7 +128,7 @@ function DiscoverList() {
             ))}
             <Link
               href="/lost-found"
-              className="ml-auto px-4 py-2 rounded-xl bg-emergency text-emergency-foreground text-xs font-semibold btn-press transition-expo hover:opacity-90 flex items-center gap-1.5"
+              className="ml-auto shrink-0 px-4 py-2 rounded-xl bg-emergency text-emergency-foreground text-xs font-semibold btn-press transition-expo hover:opacity-90 flex items-center gap-1.5"
             >
               <TriangleAlert className="h-3.5 w-3.5" /> Emergency
             </Link>
@@ -193,13 +193,13 @@ function DiscoverList() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 mt-2">
-                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                    <div className="flex items-center gap-3 mt-2 min-w-0">
+                      <span className="text-xs text-muted-foreground flex items-center gap-1 shrink-0">
                         <MapPin className="h-3 w-3" />
                         {item.location}
                       </span>
                       {item.clinic && (
-                        <span className="text-xs text-muted-foreground truncate">
+                        <span className="text-xs text-muted-foreground truncate min-w-0">
                           {item.clinic}
                         </span>
                       )}
