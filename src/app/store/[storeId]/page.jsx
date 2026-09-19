@@ -49,7 +49,7 @@ export default function SellerProfilePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-card border-b border-border sticky top-0 z-10">
+      <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
@@ -134,7 +134,7 @@ export default function SellerProfilePage() {
             <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {products.map((product) => (
                 <Link key={product.id} href={`/product/${product.id}`}
-                  className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-card-hover transition-all group"
+                  className="rounded-2xl bg-card shadow-card overflow-hidden hover:shadow-card-hover transition-all group"
                 >
                   <div className="aspect-square bg-muted flex items-center justify-center group-hover:bg-muted transition-colors overflow-hidden">
                     {product.image_url ? (

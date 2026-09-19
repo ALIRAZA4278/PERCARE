@@ -70,8 +70,8 @@ export default function ShelterDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-card border-b border-border sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+      <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="px-4 md:px-8 max-w-3xl mx-auto py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
               <Link href="/shelters" className="p-2 hover:bg-muted rounded-lg transition-colors shrink-0"><ArrowLeft size={18} className="text-foreground" /></Link>
@@ -84,7 +84,7 @@ export default function ShelterDetailPage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="px-4 md:px-8 max-w-3xl mx-auto py-6 sm:py-8">
         <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
           {['🐕', '🐱', '🦜'].map((emoji, i) => (
             <div key={i} className={`${i === 0 ? 'col-span-2 h-40 sm:h-56' : 'h-40 sm:h-56'} bg-muted rounded-xl sm:rounded-2xl flex items-center justify-center border border-border overflow-hidden`}>

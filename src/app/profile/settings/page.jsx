@@ -21,8 +21,8 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-card border-b border-border sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+      <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="px-4 md:px-8 max-w-3xl mx-auto py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/profile" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
               <ArrowLeft size={18} className="text-foreground" />
@@ -32,7 +32,7 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="px-4 md:px-8 max-w-3xl mx-auto py-6 sm:py-8">
         <div className="space-y-2 sm:space-y-3">
           {/* Toggle Items */}
           {toggleItems.map(({ icon: Icon, label, description, value, onChange }) => (

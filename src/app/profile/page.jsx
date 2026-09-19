@@ -71,8 +71,8 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-card border-b border-border sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
+      <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="px-4 md:px-8 max-w-3xl mx-auto py-4 sm:py-5">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Profile</h1>
             <button onClick={handleLogout} className="flex items-center gap-2 text-emergency hover:text-emergency text-sm font-medium">
@@ -82,7 +82,7 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="px-4 md:px-8 max-w-3xl mx-auto py-6 sm:py-8">
         <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
           <div className="flex items-center gap-4 mb-5">
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
