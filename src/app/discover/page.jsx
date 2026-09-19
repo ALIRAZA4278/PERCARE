@@ -1,125 +1,247 @@
 'use client';
 
-import { Search, MapPin, Star } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { Clock, MapPin, Search, Shield, SlidersHorizontal, Star, TriangleAlert } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 
-export default function VetsPage() {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [searchQuery, setSearchQuery] = useState('');
+const FILTERS = ['All', 'Vets', 'Clinics', 'Hospitals'];
+
+const FILTER_TYPE = {
+  Vets: 'vet',
+  Clinics: 'clinic',
+  Hospitals: 'hospital',
+};
+
+function initial(name) {
+  const last = name.trim().split(' ').filter(Boolean).slice(-1)[0];
+  return last ? last[0].toUpperCase() : '?';
+}
+
+function DiscoverList() {
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get('q') ?? '');
+  const [filter, setFilter] = useState('All');
   const [vets, setVets] = useState([]);
   const [clinics, setClinics] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const [vetsRes, clinicsRes] = await Promise.all([
+        supabase
+          .from('vet_profiles')
+          .select('*, user:profiles(full_name, avatar_url, city, is_verified)'),
+        supabase.from('clinics').select('*'),
+      ]);
+      setVets(vetsRes.data || []);
+      setClinics(clinicsRes.data || []);
+      setLoading(false);
+    };
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-    const [vetsRes, clinicsRes] = await Promise.all([
-      supabase.from('vet_profiles').select('*, user:profiles(full_name, avatar_url, city)'),
-      supabase.from('clinics').select('*'),
-    ]);
-    setVets(vetsRes.data || []);
-    setClinics(clinicsRes.data || []);
-    setLoading(false);
-  };
-
   const allItems = [
-    ...vets.map(v => ({
-      id: v.id, type: 'vet',
+    ...vets.map((v) => ({
+      id: v.id,
+      type: 'vet',
       name: v.user?.full_name || 'Veterinarian',
       specialization: v.specialization || 'General Veterinarian',
       location: v.user?.city || 'Unknown',
-      rating: v.rating || 0, reviews: v.total_reviews || 0,
-      available: v.is_available, emergency: false,
+      clinic: v.qualification || '',
+      rating: v.rating || 0,
+      reviews: v.total_reviews || 0,
+      available: v.is_available,
+      verified: !!v.user?.is_verified,
+      emergency: false,
       href: `/vet/${v.id}`,
     })),
-    ...clinics.map(c => ({
-      id: c.id, type: c.is_emergency_available ? 'hospital' : 'clinic',
+    ...clinics.map((c) => ({
+      id: c.id,
+      type: c.is_emergency_available ? 'hospital' : 'clinic',
       name: c.name,
-      specialization: c.is_emergency_available ? 'Emergency & General Care' : 'Veterinary Clinic',
+      specialization: c.is_emergency_available
+        ? 'Emergency & General Care'
+        : 'Veterinary Clinic',
       location: c.city || 'Unknown',
-      rating: c.rating || 0, reviews: c.total_reviews || 0,
-      available: true, emergency: c.is_emergency_available,
+      clinic: c.address || '',
+      rating: c.rating || 0,
+      reviews: c.total_reviews || 0,
+      available: true,
+      verified: !!c.is_approved,
+      emergency: c.is_emergency_available,
       href: `/clinic/${c.id}`,
     })),
   ];
 
-  const filtered = allItems.filter(item => {
-    const matchesFilter = activeFilter === 'all' || item.type === activeFilter ||
-      (activeFilter === 'emergency' && item.emergency);
-    const matchesSearch = !searchQuery ||
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.specialization.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesFilter && matchesSearch;
+  const filtered = allItems.filter((item) => {
+    const q = query.trim().toLowerCase();
+    const matchesSearch =
+      !q ||
+      item.name.toLowerCase().includes(q) ||
+      item.specialization.toLowerCase().includes(q) ||
+      item.clinic.toLowerCase().includes(q);
+    const matchesFilter = filter === 'All' || item.type === FILTER_TYPE[filter];
+    return matchesSearch && matchesFilter;
   });
 
-  if (loading) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Find Vets & Clinics</h1>
-          <div className="relative mb-4">
-            <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input type="text" placeholder="Search by name or specialization..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900" />
+    <div className="min-h-screen">
+      <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="px-4 md:px-8 py-4">
+          <h1 className="text-xl font-bold text-foreground mb-3">Discover Vets</h1>
+
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search by name, specialization..."
+                className="w-full h-11 pl-10 pr-4 rounded-xl bg-card border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-expo"
+              />
+            </div>
+            <button
+              type="button"
+              aria-label="Filters"
+              className="h-11 w-11 rounded-xl bg-card border border-border flex items-center justify-center btn-press transition-expo hover:bg-muted"
+            >
+              <SlidersHorizontal className="h-4 w-4 text-foreground" />
+            </button>
           </div>
-          <div className="flex items-center gap-2 overflow-x-auto pb-1">
-            {['all', 'vet', 'clinic', 'hospital', 'emergency'].map((f) => (
-              <button key={f} onClick={() => setActiveFilter(f)}
-                className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors capitalize whitespace-nowrap ${activeFilter === f ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
-                {f === 'all' ? 'All' : f}
+
+          <div className="flex gap-2 mt-3">
+            {FILTERS.map((name) => (
+              <button
+                key={name}
+                onClick={() => setFilter(name)}
+                className={`px-4 py-2 rounded-xl text-xs font-semibold btn-press transition-expo ${
+                  filter === name
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-card border border-border text-muted-foreground hover:text-foreground hover:bg-muted'
+                }`}
+              >
+                {name}
               </button>
             ))}
+            <Link
+              href="/lost-found"
+              className="ml-auto px-4 py-2 rounded-xl bg-emergency text-emergency-foreground text-xs font-semibold btn-press transition-expo hover:opacity-90 flex items-center gap-1.5"
+            >
+              <TriangleAlert className="h-3.5 w-3.5" /> Emergency
+            </Link>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {filtered.map((item) => (
-            <Link key={`${item.type}-${item.id}`} href={item.href}
-              className="bg-white rounded-xl sm:rounded-2xl p-5 border border-gray-200 hover:shadow-lg transition-all group">
-              <div className="flex items-start gap-3 mb-3">
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                  item.type === 'vet' ? 'bg-blue-50' : item.type === 'hospital' ? 'bg-red-50' : 'bg-green-50'
-                }`}>
-                  <span className="text-2xl">{item.type === 'vet' ? '👨‍⚕️' : item.type === 'hospital' ? '🏥' : '🏨'}</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-bold text-gray-900 text-sm sm:text-base truncate">{item.name}</h3>
-                  <p className="text-xs text-gray-500">{item.specialization}</p>
-                </div>
-                {item.emergency && (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700">24/7</span>
-                )}
-              </div>
-              <div className="flex items-center gap-3 text-xs text-gray-600 mb-3">
-                <div className="flex items-center gap-1"><MapPin size={12} className="text-gray-400" />{item.location}</div>
-                <div className="flex items-center gap-1"><Star size={12} className="text-yellow-500 fill-yellow-500" />{item.rating} ({item.reviews})</div>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className={`w-2 h-2 rounded-full ${item.available ? 'bg-green-500' : 'bg-gray-300'}`} />
-                <span className="text-xs font-medium text-gray-600">{item.available ? 'Available' : 'Unavailable'}</span>
-              </div>
-            </Link>
-          ))}
+      <div className="h-48 md:h-64 bg-muted flex items-center justify-center">
+        <div className="text-center">
+          <MapPin className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+          <p className="text-sm text-muted-foreground">Map view coming soon</p>
+        </div>
+      </div>
+
+      <div className="px-4 md:px-8 py-4">
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground">{filtered.length}</span> results found
+            near you
+          </p>
+          <button type="button" className="text-xs font-medium text-primary btn-press">
+            Sort by distance
+          </button>
         </div>
 
-        {filtered.length === 0 && (
+        {loading ? (
+          <p className="text-sm text-muted-foreground py-8 text-center">Loading...</p>
+        ) : filtered.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">🔍</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">No results found</h3>
-            <p className="text-gray-600">Try changing your search or filters.</p>
+            <h3 className="text-lg font-bold text-foreground mb-2">No results found</h3>
+            <p className="text-sm text-muted-foreground">Try changing your search or filters.</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {filtered.map((item) => (
+              <Link
+                key={`${item.type}-${item.id}`}
+                href={item.href}
+                className="group block p-4 rounded-2xl bg-card shadow-card hover:shadow-card-hover transition-all duration-300 btn-press cursor-pointer"
+              >
+                <div className="flex gap-3">
+                  <div className="w-14 h-14 rounded-xl bg-muted flex items-center justify-center shrink-0">
+                    <span className="text-lg font-bold text-muted-foreground">
+                      {initial(item.name)}
+                    </span>
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <h3 className="font-semibold text-sm text-foreground">{item.name}</h3>
+                          {item.verified && <Shield className="h-3.5 w-3.5 text-primary" />}
+                        </div>
+                        <p className="text-xs text-muted-foreground">{item.specialization}</p>
+                      </div>
+                      <div className="flex items-center gap-1 shrink-0">
+                        <Star className="h-3.5 w-3.5 text-amber fill-amber" />
+                        <span className="text-xs font-semibold text-foreground">{item.rating}</span>
+                        <span className="text-xs text-muted-foreground">({item.reviews})</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 mt-2">
+                      <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <MapPin className="h-3 w-3" />
+                        {item.location}
+                      </span>
+                      {item.clinic && (
+                        <span className="text-xs text-muted-foreground truncate">
+                          {item.clinic}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${
+                            item.available
+                              ? 'bg-vitality/10 text-vitality'
+                              : 'bg-muted text-muted-foreground'
+                          }`}
+                        >
+                          <Clock className="h-3 w-3" />
+                          {item.available ? 'Available' : 'Unavailable'}
+                        </span>
+                        {item.emergency && (
+                          <span className="inline-flex items-center text-xs font-medium px-2 py-0.5 rounded-full bg-emergency/10 text-emergency">
+                            24/7
+                          </span>
+                        )}
+                      </div>
+                      <span className="h-8 px-3 rounded-lg bg-primary text-primary-foreground text-xs font-semibold inline-flex items-center btn-press transition-expo hover:opacity-90">
+                        {item.type === 'vet' ? 'Book' : 'View'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         )}
       </div>
     </div>
+  );
+}
+
+export default function DiscoverPage() {
+  return (
+    <Suspense fallback={null}>
+      <DiscoverList />
+    </Suspense>
   );
 }
