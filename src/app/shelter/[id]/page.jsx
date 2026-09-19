@@ -54,14 +54,14 @@ export default function ShelterDetailPage() {
   }
 
   if (loading) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+    return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
   }
 
   if (!shelter) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-        <p className="text-xl font-bold text-gray-700 mb-4">Shelter not found</p>
-        <Link href="/shelters" className="text-blue-600 hover:underline">Back to Shelters</Link>
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center">
+        <p className="text-xl font-bold text-foreground mb-4">Shelter not found</p>
+        <Link href="/shelters" className="text-primary hover:underline">Back to Shelters</Link>
       </div>
     );
   }
@@ -69,16 +69,16 @@ export default function ShelterDetailPage() {
   const hours = formatHours(shelter);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+    <div className="min-h-screen bg-background">
+      <div className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-              <Link href="/shelters" className="p-2 hover:bg-gray-100 rounded-lg transition-colors shrink-0"><ArrowLeft size={18} className="text-gray-700" /></Link>
-              <h1 className="text-base sm:text-xl font-bold text-gray-900 truncate">{shelter.name}</h1>
+              <Link href="/shelters" className="p-2 hover:bg-muted rounded-lg transition-colors shrink-0"><ArrowLeft size={18} className="text-foreground" /></Link>
+              <h1 className="text-base sm:text-xl font-bold text-foreground truncate">{shelter.name}</h1>
             </div>
-            <button onClick={() => setLiked(!liked)} className="p-2 hover:bg-gray-100 rounded-lg transition-colors shrink-0">
-              <Heart size={20} className={liked ? 'text-red-500 fill-red-500' : 'text-gray-400'} />
+            <button onClick={() => setLiked(!liked)} className="p-2 hover:bg-muted rounded-lg transition-colors shrink-0">
+              <Heart size={20} className={liked ? 'text-emergency fill-emergency' : 'text-muted-foreground'} />
             </button>
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function ShelterDetailPage() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-6">
           {['🐕', '🐱', '🦜'].map((emoji, i) => (
-            <div key={i} className={`${i === 0 ? 'col-span-2 h-40 sm:h-56' : 'h-40 sm:h-56'} bg-gray-100 rounded-xl sm:rounded-2xl flex items-center justify-center border border-gray-200 overflow-hidden`}>
+            <div key={i} className={`${i === 0 ? 'col-span-2 h-40 sm:h-56' : 'h-40 sm:h-56'} bg-muted rounded-xl sm:rounded-2xl flex items-center justify-center border border-border overflow-hidden`}>
               {shelter.image_url && i === 0 ? (
                 <img src={shelter.image_url} alt={shelter.name} className="w-full h-full object-cover" />
               ) : (
@@ -97,17 +97,17 @@ export default function ShelterDetailPage() {
           ))}
         </div>
 
-        <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200 mb-4 sm:mb-5">
+        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
           <div className="flex items-start justify-between gap-3 mb-2">
-            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">{shelter.name}</h2>
-            <div className="flex items-center gap-1 text-red-400 shrink-0 bg-red-50 px-2.5 py-1 rounded-full">
-              <Heart size={13} className="fill-red-400" /><span className="text-xs font-bold">{animals.length} animals</span>
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground">{shelter.name}</h2>
+            <div className="flex items-center gap-1 text-emergency shrink-0 bg-emergency/10 px-2.5 py-1 rounded-full">
+              <Heart size={13} className="fill-emergency" /><span className="text-xs font-bold">{animals.length} animals</span>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 text-sm text-gray-600 mb-3">
-            <MapPin size={14} className="text-gray-400 shrink-0" /><span>{shelter.address}, {shelter.city}</span>
+          <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-3">
+            <MapPin size={14} className="text-muted-foreground shrink-0" /><span>{shelter.address}, {shelter.city}</span>
           </div>
-          {shelter.description && <p className="text-sm text-gray-700 leading-relaxed mb-5">{shelter.description}</p>}
+          {shelter.description && <p className="text-sm text-foreground leading-relaxed mb-5">{shelter.description}</p>}
 
           <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-5">
             {[
@@ -117,10 +117,10 @@ export default function ShelterDetailPage() {
             ].map((stat) => {
               const Icon = stat.icon;
               return (
-                <div key={stat.label} className="bg-gray-50 rounded-xl p-3 sm:p-4 text-center border border-gray-100">
-                  <div className="flex justify-center mb-1.5"><Icon size={18} className="text-blue-600" /></div>
-                  <p className="text-sm sm:text-base font-bold text-gray-900">{stat.value}</p>
-                  <p className="text-[10px] sm:text-xs text-gray-600">{stat.label}</p>
+                <div key={stat.label} className="bg-muted rounded-xl p-3 sm:p-4 text-center border border-border">
+                  <div className="flex justify-center mb-1.5"><Icon size={18} className="text-primary" /></div>
+                  <p className="text-sm sm:text-base font-bold text-foreground">{stat.value}</p>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground">{stat.label}</p>
                 </div>
               );
             })}
@@ -128,31 +128,31 @@ export default function ShelterDetailPage() {
         </div>
 
         {(shelter.phone || shelter.email || shelter.website || hours) && (
-          <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200 mb-4 sm:mb-5">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Contact & Hours</h3>
+          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+            <h3 className="text-lg font-bold text-foreground mb-4">Contact & Hours</h3>
             <div className="space-y-3.5">
               {shelter.phone && (
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center shrink-0"><Phone size={16} className="text-blue-600" /></div>
-                  <div><p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Phone</p><p className="text-sm font-semibold text-gray-900">{shelter.phone}</p></div>
+                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center shrink-0"><Phone size={16} className="text-primary" /></div>
+                  <div><p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Phone</p><p className="text-sm font-semibold text-foreground">{shelter.phone}</p></div>
                 </div>
               )}
               {shelter.email && (
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center shrink-0"><Mail size={16} className="text-blue-600" /></div>
-                  <div><p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Email</p><p className="text-sm font-semibold text-gray-900">{shelter.email}</p></div>
+                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center shrink-0"><Mail size={16} className="text-primary" /></div>
+                  <div><p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Email</p><p className="text-sm font-semibold text-foreground">{shelter.email}</p></div>
                 </div>
               )}
               {shelter.website && (
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center shrink-0"><Globe size={16} className="text-blue-600" /></div>
-                  <div><p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Website</p><p className="text-sm font-semibold text-blue-600">{shelter.website}</p></div>
+                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center shrink-0"><Globe size={16} className="text-primary" /></div>
+                  <div><p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider">Website</p><p className="text-sm font-semibold text-primary">{shelter.website}</p></div>
                 </div>
               )}
               {hours && (
                 <div className="flex items-start gap-3">
-                  <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center shrink-0 mt-0.5"><Clock size={16} className="text-blue-600" /></div>
-                  <div><p className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Opening Hours</p><p className="text-sm font-semibold text-gray-900">{hours}</p></div>
+                  <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center shrink-0 mt-0.5"><Clock size={16} className="text-primary" /></div>
+                  <div><p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-1">Opening Hours</p><p className="text-sm font-semibold text-foreground">{hours}</p></div>
                 </div>
               )}
             </div>
@@ -160,14 +160,14 @@ export default function ShelterDetailPage() {
         )}
 
         {animals.length > 0 && (
-          <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200 mb-4 sm:mb-5">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Animals Available for Adoption</h3>
+          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+            <h3 className="text-lg font-bold text-foreground mb-4">Animals Available for Adoption</h3>
             <div className="space-y-3 sm:space-y-4">
               {animals.map((animal) => (
-                <div key={animal.id} className="rounded-xl p-4 border border-gray-100 hover:border-blue-100 hover:shadow-md transition-all">
+                <div key={animal.id} className="rounded-xl p-4 border border-border hover:border-primary/20 hover:shadow-card-hover transition-all">
                   <div className="flex items-start justify-between gap-3 mb-2.5">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-orange-50 rounded-xl flex items-center justify-center shrink-0 overflow-hidden">
+                      <div className="w-10 h-10 bg-amber/10 rounded-xl flex items-center justify-center shrink-0 overflow-hidden">
                         {animal.image_url ? (
                           <img src={animal.image_url} alt={animal.name} className="w-full h-full object-cover rounded-xl" />
                         ) : (
@@ -175,8 +175,8 @@ export default function ShelterDetailPage() {
                         )}
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 text-sm sm:text-base">{animal.name}</h4>
-                        <p className="text-xs sm:text-sm text-gray-600 capitalize">
+                        <h4 className="font-bold text-foreground text-sm sm:text-base">{animal.name}</h4>
+                        <p className="text-xs sm:text-sm text-muted-foreground capitalize">
                           {animal.breed || animal.species}
                           {animal.age_years ? ` · ${animal.age_years}y` : ''}
                           {animal.age_months ? ` ${animal.age_months}m` : ''}
@@ -185,12 +185,12 @@ export default function ShelterDetailPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0">
-                      <button onClick={() => { setSelectedAnimal(animal); setIsAdoptModalOpen(true); }} className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-1.5 rounded-lg text-xs sm:text-sm transition-colors">Adopt</button>
+                      <button onClick={() => { setSelectedAnimal(animal); setIsAdoptModalOpen(true); }} className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-1.5 rounded-lg text-xs sm:text-sm transition-colors">Adopt</button>
                     </div>
                   </div>
-                  {animal.description && <p className="text-xs text-gray-600 leading-relaxed">{animal.description}</p>}
+                  {animal.description && <p className="text-xs text-muted-foreground leading-relaxed">{animal.description}</p>}
                   {animal.health_status && (
-                    <span className="inline-block mt-1.5 text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-green-50 text-green-700">{animal.health_status}</span>
+                    <span className="inline-block mt-1.5 text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full bg-vitality/10 text-vitality">{animal.health_status}</span>
                   )}
                 </div>
               ))}
@@ -199,21 +199,21 @@ export default function ShelterDetailPage() {
         )}
 
         {packages.length > 0 && (
-          <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">Donation Packages</h3>
+          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+            <h3 className="text-lg font-bold text-foreground mb-4">Donation Packages</h3>
             <div className="space-y-3">
               {packages.map((pkg) => (
-                <div key={pkg.id} className="flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl border border-gray-100 hover:border-blue-100 hover:shadow-sm transition-all cursor-pointer group">
+                <div key={pkg.id} className="flex items-center justify-between gap-3 p-3.5 sm:p-4 rounded-xl border border-border hover:border-primary/20 hover:shadow-card transition-all cursor-pointer group">
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-gray-900 text-sm sm:text-base">{pkg.name}</h4>
-                    {pkg.description && <p className="text-xs sm:text-sm text-gray-600">{pkg.description}</p>}
-                    {pkg.is_recurring && <span className="text-xs text-blue-600 font-medium">Monthly</span>}
+                    <h4 className="font-bold text-foreground text-sm sm:text-base">{pkg.name}</h4>
+                    {pkg.description && <p className="text-xs sm:text-sm text-muted-foreground">{pkg.description}</p>}
+                    {pkg.is_recurring && <span className="text-xs text-primary font-medium">Monthly</span>}
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="bg-blue-50 text-blue-700 font-bold text-xs sm:text-sm px-3 py-1.5 rounded-lg border border-blue-100">
+                    <span className="bg-primary/10 text-primary font-bold text-xs sm:text-sm px-3 py-1.5 rounded-lg border border-primary/20">
                       PKR {Number(pkg.amount).toLocaleString()}
                     </span>
-                    <ChevronRight size={16} className="text-gray-300 group-hover:text-blue-600 transition-colors" />
+                    <ChevronRight size={16} className="text-muted-foreground/40 group-hover:text-primary transition-colors" />
                   </div>
                 </div>
               ))}

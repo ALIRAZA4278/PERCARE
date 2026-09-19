@@ -195,7 +195,7 @@ export default function DashboardShell({ role, children }) {
 
         {mobileOpen && (
           <div
-            className="md:hidden fixed inset-0 top-14 z-30 bg-black/40"
+            className="md:hidden fixed inset-0 top-14 z-30 bg-foreground/40"
             onClick={() => setMobileOpen(false)}
           >
             <aside

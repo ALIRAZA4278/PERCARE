@@ -56,51 +56,51 @@ export default function PetDetailPage() {
   }
 
   if (loading) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+    return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
   }
 
   if (!pet) {
     return (
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-        <p className="text-xl font-bold text-gray-700 mb-4">Pet not found</p>
-        <Link href="/get-your-pet" className="text-blue-600 hover:underline">Back to Pets</Link>
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center">
+        <p className="text-xl font-bold text-foreground mb-4">Pet not found</p>
+        <Link href="/get-your-pet" className="text-primary hover:underline">Back to Pets</Link>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-        <Link href="/get-your-pet" className="inline-flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 mb-5 transition-colors">
+        <Link href="/get-your-pet" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-5 transition-colors">
           <ArrowLeft size={16} />Back to Pets
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <div className="relative">
-            <div className="bg-white rounded-2xl border border-gray-200 aspect-square flex items-center justify-center overflow-hidden">
+            <div className="bg-card rounded-2xl border border-border aspect-square flex items-center justify-center overflow-hidden">
               {pet.image_url ? (
                 <img src={pet.image_url} alt={pet.name} className="w-full h-full object-cover" />
               ) : (
                 <span className="text-8xl sm:text-9xl">{emojiMap[pet.species] || '🐾'}</span>
               )}
-              <div className="absolute top-4 left-4 bg-green-500 text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+              <div className="absolute top-4 left-4 bg-vitality text-white text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
                 <CheckCircle size={12} />Vet Certified
               </div>
               <div className="absolute top-4 right-4">
-                <button onClick={handleLike} className="w-9 h-9 bg-white rounded-full flex items-center justify-center border border-gray-200 hover:bg-gray-50 transition-colors">
-                  <Heart size={16} className={liked ? 'text-red-500 fill-red-500' : 'text-gray-400'} />
+                <button onClick={handleLike} className="w-9 h-9 bg-card rounded-full flex items-center justify-center border border-border hover:bg-muted transition-colors">
+                  <Heart size={16} className={liked ? 'text-emergency fill-emergency' : 'text-muted-foreground'} />
                 </button>
               </div>
             </div>
           </div>
 
           <div>
-            <div className="inline-flex items-center gap-1 bg-blue-50 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-full mb-2 border border-blue-100">
+            <div className="inline-flex items-center gap-1 bg-primary/10 text-primary text-xs font-bold px-2.5 py-1 rounded-full mb-2 border border-primary/20">
               <PawPrint size={12} />{pet.species?.toUpperCase() || 'PET'}
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{pet.name}</h1>
-            {pet.breed && <p className="text-sm sm:text-base text-gray-500 mb-4 capitalize">{pet.breed}</p>}
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-1">{pet.name}</h1>
+            {pet.breed && <p className="text-sm sm:text-base text-muted-foreground mb-4 capitalize">{pet.breed}</p>}
 
             <div className="grid grid-cols-2 gap-3 mb-4">
               {[
@@ -109,35 +109,35 @@ export default function PetDetailPage() {
                 { label: 'COLOR', value: pet.color || 'N/A' },
                 { label: 'SPECIES', value: pet.species ? (pet.species.charAt(0).toUpperCase() + pet.species.slice(1)) : 'N/A' },
               ].map(({ label, value }) => (
-                <div key={label} className="bg-white rounded-xl p-3.5 border border-gray-200">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">{label}</p>
-                  <p className="text-sm font-bold text-gray-900 capitalize">{value}</p>
+                <div key={label} className="bg-card rounded-xl p-3.5 border border-border">
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-0.5">{label}</p>
+                  <p className="text-sm font-bold text-foreground capitalize">{value}</p>
                 </div>
               ))}
             </div>
 
-            {pet.description && <p className="text-sm text-gray-600 leading-relaxed mb-5">{pet.description}</p>}
+            {pet.description && <p className="text-sm text-muted-foreground leading-relaxed mb-5">{pet.description}</p>}
 
-            <p className="text-2xl sm:text-3xl font-bold text-blue-600 mb-5">Rs. {Number(pet.price).toLocaleString()}</p>
+            <p className="text-2xl sm:text-3xl font-bold text-primary mb-5">Rs. {Number(pet.price).toLocaleString()}</p>
 
             <div className="flex items-center gap-3 mb-6">
-              <button onClick={handleBuy} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
+              <button onClick={handleBuy} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
                 <ShoppingBag size={16} />Buy Now
               </button>
-              <button className="px-6 py-3.5 bg-white border border-gray-200 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center gap-2 text-sm">
+              <button className="px-6 py-3.5 bg-card border border-border text-foreground font-semibold rounded-xl hover:bg-muted transition-colors flex items-center justify-center gap-2 text-sm">
                 <Phone size={16} />Inquire
               </button>
             </div>
 
-            <div className="bg-green-50 rounded-2xl p-5 border border-green-100">
+            <div className="bg-vitality/10 rounded-2xl p-5 border border-vitality/20">
               <div className="flex items-center gap-2 mb-3">
-                <Shield size={16} className="text-green-600" />
-                <h3 className="font-bold text-gray-900 text-sm">Package Includes</h3>
+                <Shield size={16} className="text-vitality" />
+                <h3 className="font-bold text-foreground text-sm">Package Includes</h3>
               </div>
               <div className="space-y-2.5">
                 {packageIncludes.map(({ icon: Icon, text }) => (
-                  <div key={text} className="flex items-center gap-2.5 text-sm text-gray-700">
-                    <Icon size={15} className="text-green-600 shrink-0" />
+                  <div key={text} className="flex items-center gap-2.5 text-sm text-foreground">
+                    <Icon size={15} className="text-vitality shrink-0" />
                     <span>{text}</span>
                   </div>
                 ))}

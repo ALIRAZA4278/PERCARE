@@ -123,96 +123,96 @@ export default function ProductsPage() {
     medicine: products.filter(p => p.is_medicine).length,
   };
 
-  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500 text-sm">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-muted-foreground text-sm">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Products</h1>
-        <p className="text-sm text-gray-500 mt-1">{products.length} total · {counts.approved} approved · {counts.pending} pending · {counts.inactive} inactive</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Products</h1>
+        <p className="text-sm text-muted-foreground mt-1">{products.length} total · {counts.approved} approved · {counts.pending} pending · {counts.inactive} inactive</p>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3 mb-5">
         <div className="relative flex-1">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search product, brand, store, category..."
-            className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
+            className="w-full pl-9 pr-4 py-2.5 bg-card border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
         </div>
         <div className="flex gap-2 overflow-x-auto">
           {['all', 'approved', 'pending', 'inactive', 'medicine'].map(f => (
             <button key={f} onClick={() => setFilter(f)}
-              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+              className={`px-3 py-2 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition-colors flex items-center gap-1.5 ${filter === f ? 'bg-primary text-white' : 'bg-card text-muted-foreground border border-border hover:border-border'}`}>
               {f} <span className="opacity-70">({counts[f]})</span>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Product</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden sm:table-cell">Store</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden md:table-cell">Category</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Price</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden md:table-cell">Stock</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Status</th>
-                <th className="text-right text-xs font-semibold text-gray-500 px-4 py-3">Actions</th>
+              <tr className="border-b border-border">
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Product</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3 hidden sm:table-cell">Store</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3 hidden md:table-cell">Category</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Price</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3 hidden md:table-cell">Stock</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Status</th>
+                <th className="text-right text-xs font-semibold text-muted-foreground px-4 py-3">Actions</th>
               </tr>
             </thead>
             <tbody>
               {paged.length === 0 ? (
-                <tr><td colSpan={7} className="text-center text-gray-600 py-12 text-sm">No products found</td></tr>
+                <tr><td colSpan={7} className="text-center text-muted-foreground py-12 text-sm">No products found</td></tr>
               ) : paged.map(product => (
-                <tr key={product.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors">
+                <tr key={product.id} className="border-b border-border last:border-0 hover:bg-muted transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 bg-gray-100 rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
+                      <div className="w-9 h-9 bg-muted rounded-lg flex items-center justify-center shrink-0 overflow-hidden">
                         {product.image_url
                           ? <img src={product.image_url} alt="" className="w-full h-full object-cover rounded-lg" />
                           : <span>📦</span>}
                       </div>
                       <div className="min-w-0">
-                        <p className="text-gray-900 font-medium text-xs truncate max-w-[120px]">{product.name}</p>
-                        {product.brand && <p className="text-gray-500 text-[10px] truncate max-w-[120px]">{product.brand}</p>}
-                        {product.is_medicine && <span className="text-[9px] font-bold text-purple-700 bg-purple-100 px-1.5 py-0.5 rounded">Medicine</span>}
+                        <p className="text-foreground font-medium text-xs truncate max-w-[120px]">{product.name}</p>
+                        {product.brand && <p className="text-muted-foreground text-[10px] truncate max-w-[120px]">{product.brand}</p>}
+                        {product.is_medicine && <span className="text-[9px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Medicine</span>}
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs hidden sm:table-cell">{product.store?.name || '—'}</td>
-                  <td className="px-4 py-3 text-gray-500 text-xs hidden md:table-cell">{product.category?.name || '—'}</td>
+                  <td className="px-4 py-3 text-muted-foreground text-xs hidden sm:table-cell">{product.store?.name || '—'}</td>
+                  <td className="px-4 py-3 text-muted-foreground text-xs hidden md:table-cell">{product.category?.name || '—'}</td>
                   <td className="px-4 py-3">
-                    <p className="text-gray-900 font-semibold text-xs">Rs. {Number(product.price || 0).toLocaleString()}</p>
-                    {product.sale_price && <p className="text-green-600 text-[10px]">Sale: Rs. {Number(product.sale_price).toLocaleString()}</p>}
+                    <p className="text-foreground font-semibold text-xs">Rs. {Number(product.price || 0).toLocaleString()}</p>
+                    {product.sale_price && <p className="text-vitality text-[10px]">Sale: Rs. {Number(product.sale_price).toLocaleString()}</p>}
                   </td>
                   <td className="px-4 py-3 text-xs hidden md:table-cell">
                     {product.stock_quantity != null
-                      ? <span className={product.stock_quantity < 5 ? 'text-red-600 font-semibold' : 'text-gray-500'}>{product.stock_quantity}</span>
-                      : <span className="text-gray-600">—</span>}
+                      ? <span className={product.stock_quantity < 5 ? 'text-emergency font-semibold' : 'text-muted-foreground'}>{product.stock_quantity}</span>
+                      : <span className="text-muted-foreground">—</span>}
                   </td>
                   <td className="px-4 py-3">
                     {!product.is_active
-                      ? <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">Inactive</span>
+                      ? <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Inactive</span>
                       : product.is_approved
-                        ? <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-100 text-green-700">Approved</span>
-                        : <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">Pending</span>}
+                        ? <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-vitality/10 text-vitality">Approved</span>
+                        : <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber/10 text-amber">Pending</span>}
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-1.5">
                       <button onClick={() => openEdit(product)} disabled={processing === product.id}
-                        className="flex items-center gap-1 px-2.5 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg transition-colors border border-gray-200">
+                        className="flex items-center gap-1 px-2.5 py-1.5 bg-muted hover:bg-muted text-foreground text-xs font-semibold rounded-lg transition-colors border border-border">
                         <Pencil size={12} /> Edit
                       </button>
                       {product.is_approved ? (
                         <button onClick={() => handleReject(product)} disabled={processing === product.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 bg-gray-100 hover:bg-red-50 text-red-600 text-xs font-semibold rounded-lg transition-colors border border-gray-200 disabled:opacity-40">
+                          className="flex items-center gap-1 px-2.5 py-1.5 bg-muted hover:bg-emergency/10 text-emergency text-xs font-semibold rounded-lg transition-colors border border-border disabled:opacity-40">
                           <XCircle size={12} /> Reject
                         </button>
                       ) : (
                         <button onClick={() => handleApprove(product)} disabled={processing === product.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 bg-green-50 hover:bg-green-100 text-green-700 text-xs font-semibold rounded-lg transition-colors border border-green-200 disabled:opacity-40">
+                          className="flex items-center gap-1 px-2.5 py-1.5 bg-vitality/10 hover:bg-vitality/10 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-40">
                           <CheckCircle size={12} /> Approve
                         </button>
                       )}
@@ -227,10 +227,10 @@ export default function ProductsPage() {
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
-          <p className="text-xs text-gray-500">Page {page + 1} of {totalPages}</p>
+          <p className="text-xs text-muted-foreground">Page {page + 1} of {totalPages}</p>
           <div className="flex gap-2">
-            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-2 bg-white border border-gray-200 rounded-lg text-gray-500 disabled:opacity-30 hover:border-gray-300"><ChevronLeft size={16} /></button>
-            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} className="p-2 bg-white border border-gray-200 rounded-lg text-gray-500 disabled:opacity-30 hover:border-gray-300"><ChevronRight size={16} /></button>
+            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border"><ChevronLeft size={16} /></button>
+            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border"><ChevronRight size={16} /></button>
           </div>
         </div>
       )}
@@ -240,10 +240,10 @@ export default function ProductsPage() {
         <>
           <div className="fixed inset-0 bg-black/70 z-40" onClick={() => setModal(null)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-lg border border-gray-200 p-6 max-h-[90vh] overflow-y-auto">
+            <div className="bg-card rounded-2xl w-full max-w-lg border border-border p-6 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-5">
-                <h3 className="text-lg font-bold text-gray-900">Edit Product</h3>
-                <button onClick={() => setModal(null)} className="p-1 hover:bg-gray-100 rounded-lg text-gray-500"><X size={18} /></button>
+                <h3 className="text-lg font-bold text-foreground">Edit Product</h3>
+                <button onClick={() => setModal(null)} className="p-1 hover:bg-muted rounded-lg text-muted-foreground"><X size={18} /></button>
               </div>
 
               <div className="space-y-3">
@@ -257,17 +257,17 @@ export default function ProductsPage() {
                     { key: 'sku', label: 'SKU' },
                   ].map(({ key, label, type }) => (
                     <div key={key}>
-                      <label className="block text-xs font-semibold text-gray-500 mb-1.5">{label}</label>
+                      <label className="block text-xs font-semibold text-muted-foreground mb-1.5">{label}</label>
                       <input type={type || 'text'} value={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-                        className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
+                        className="w-full px-3 py-2 rounded-xl bg-muted border border-border outline-none focus:border-primary text-foreground text-sm" />
                     </div>
                   ))}
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-500 mb-1.5">Description</label>
+                  <label className="block text-xs font-semibold text-muted-foreground mb-1.5">Description</label>
                   <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
-                    className="w-full px-3 py-2 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm resize-none" />
+                    className="w-full px-3 py-2 rounded-xl bg-muted border border-border outline-none focus:border-primary text-foreground text-sm resize-none" />
                 </div>
 
                 <div className="grid grid-cols-3 gap-2">
@@ -276,10 +276,10 @@ export default function ProductsPage() {
                     { key: 'is_active', label: 'Active', accent: 'accent-blue-500' },
                     { key: 'is_medicine', label: 'Medicine', accent: 'accent-purple-500' },
                   ].map(({ key, label, accent }) => (
-                    <div key={key} className="flex items-center gap-2 p-2.5 bg-gray-50 rounded-xl">
+                    <div key={key} className="flex items-center gap-2 p-2.5 bg-muted rounded-xl">
                       <input type="checkbox" id={key} checked={form[key]} onChange={e => setForm(f => ({ ...f, [key]: e.target.checked }))}
                         className={`w-4 h-4 ${accent}`} />
-                      <label htmlFor={key} className="text-xs font-medium text-gray-900 cursor-pointer">{label}</label>
+                      <label htmlFor={key} className="text-xs font-medium text-foreground cursor-pointer">{label}</label>
                     </div>
                   ))}
                 </div>
@@ -287,10 +287,10 @@ export default function ProductsPage() {
 
               <div className="flex gap-2 mt-5">
                 <button onClick={handleSave} disabled={saving}
-                  className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                   <Save size={15} /> {saving ? 'Saving...' : 'Save Changes'}
                 </button>
-                <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl text-sm">Cancel</button>
+                <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>

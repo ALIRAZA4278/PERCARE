@@ -73,7 +73,7 @@ export default function FaqPage() {
           {FAQS.map((item, index) => {
             const isOpen = openIndex === index;
             return (
-              <div key={item.q} className="border rounded-xl px-4 bg-card shadow-sm">
+              <div key={item.q} className="border rounded-xl px-4 bg-card shadow-card">
                 <h3 className="flex">
                   <button
                     type="button"

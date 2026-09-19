@@ -8,17 +8,17 @@ import { supabase } from '@/lib/supabase';
 const STATUS_TABS = ['All', 'open', 'in_progress', 'resolved', 'closed'];
 
 const statusBadge = {
-  open: 'bg-orange-100 text-orange-700',
-  in_progress: 'bg-blue-100 text-blue-700',
-  resolved: 'bg-green-100 text-green-700',
-  closed: 'bg-gray-100 text-gray-600',
+  open: 'bg-amber/10 text-amber',
+  in_progress: 'bg-primary/10 text-primary',
+  resolved: 'bg-vitality/10 text-vitality',
+  closed: 'bg-muted text-muted-foreground',
 };
 
 const priorityBadge = {
-  urgent: 'bg-red-100 text-red-700',
-  high: 'bg-orange-100 text-orange-700',
-  medium: 'bg-blue-100 text-blue-700',
-  low: 'bg-gray-100 text-gray-600',
+  urgent: 'bg-emergency/10 text-emergency',
+  high: 'bg-amber/10 text-amber',
+  medium: 'bg-primary/10 text-primary',
+  low: 'bg-muted text-muted-foreground',
 };
 
 export default function TicketsPage() {
@@ -73,97 +73,97 @@ export default function TicketsPage() {
     return acc;
   }, {});
 
-  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Support Tickets</h1>
-        <p className="text-sm text-gray-500 mt-1">{tickets.length} total tickets</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Support Tickets</h1>
+        <p className="text-sm text-muted-foreground mt-1">{tickets.length} total tickets</p>
       </div>
 
       <div className="flex gap-2 mb-5 overflow-x-auto pb-1">
         {STATUS_TABS.map(s => (
           <button key={s} onClick={() => setTab(s)}
-            className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${tab === s ? 'bg-blue-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:border-gray-300'}`}>
+            className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap flex items-center gap-1.5 transition-colors ${tab === s ? 'bg-primary text-white' : 'bg-card text-muted-foreground border border-border hover:border-border'}`}>
             {s.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
-            {counts[s] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tab === s ? 'bg-white/20' : 'bg-gray-100 text-gray-600'}`}>{counts[s]}</span>}
+            {counts[s] > 0 && <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${tab === s ? 'bg-card/20' : 'bg-muted text-muted-foreground'}`}>{counts[s]}</span>}
           </button>
         ))}
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200">
+              <tr className="border-b border-border">
                 <th className="w-8 px-4 py-3" />
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Subject</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden sm:table-cell">Creator</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Priority</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Status</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden md:table-cell">Date</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Subject</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3 hidden sm:table-cell">Creator</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Priority</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Status</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3 hidden md:table-cell">Date</th>
               </tr>
             </thead>
             <tbody>
               {filtered.length === 0 ? (
-                <tr><td colSpan={6} className="text-center text-gray-600 py-12">No tickets found</td></tr>
+                <tr><td colSpan={6} className="text-center text-muted-foreground py-12">No tickets found</td></tr>
               ) : filtered.map(ticket => {
                 const edit = getEdit(ticket);
                 const isDirty = edits[ticket.id] !== undefined;
                 return (
                   <>
                     <tr key={ticket.id}
-                      className="border-b border-gray-200 hover:bg-gray-50 transition-colors cursor-pointer"
+                      className="border-b border-border hover:bg-muted transition-colors cursor-pointer"
                       onClick={() => setExpanded(expanded === ticket.id ? null : ticket.id)}>
-                      <td className="px-4 py-3 text-gray-500">
+                      <td className="px-4 py-3 text-muted-foreground">
                         {expanded === ticket.id ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                       </td>
-                      <td className="px-4 py-3 text-gray-900 font-medium max-w-[180px] truncate">{ticket.subject || '—'}</td>
+                      <td className="px-4 py-3 text-foreground font-medium max-w-[180px] truncate">{ticket.subject || '—'}</td>
                       <td className="px-4 py-3 hidden sm:table-cell">
-                        <p className="text-gray-900 text-xs font-medium">{ticket.creator?.full_name || '—'}</p>
-                        <p className="text-gray-500 text-[10px]">{ticket.creator?.email}</p>
+                        <p className="text-foreground text-xs font-medium">{ticket.creator?.full_name || '—'}</p>
+                        <p className="text-muted-foreground text-[10px]">{ticket.creator?.email}</p>
                       </td>
                       <td className="px-4 py-3">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${priorityBadge[ticket.priority] || 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${priorityBadge[ticket.priority] || 'bg-muted text-muted-foreground'}`}>
                           {ticket.priority || 'none'}
                         </span>
                       </td>
                       <td className="px-4 py-3">
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${statusBadge[ticket.status] || 'bg-gray-100 text-gray-600'}`}>
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${statusBadge[ticket.status] || 'bg-muted text-muted-foreground'}`}>
                           {ticket.status?.replace(/_/g, ' ')}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-gray-500 text-xs hidden md:table-cell">
+                      <td className="px-4 py-3 text-muted-foreground text-xs hidden md:table-cell">
                         {ticket.created_at ? new Date(ticket.created_at).toLocaleDateString() : '—'}
                       </td>
                     </tr>
                     {expanded === ticket.id && (
-                      <tr key={`${ticket.id}-detail`} className="border-b border-gray-200 bg-gray-50">
+                      <tr key={`${ticket.id}-detail`} className="border-b border-border bg-muted">
                         <td colSpan={6} className="px-6 py-5" onClick={e => e.stopPropagation()}>
                           {ticket.description && (
                             <div className="mb-4">
-                              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">Description</p>
-                              <p className="text-sm text-gray-700 bg-gray-50 px-3 py-2.5 rounded-lg">{ticket.description}</p>
+                              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1.5">Description</p>
+                              <p className="text-sm text-foreground bg-muted px-3 py-2.5 rounded-lg">{ticket.description}</p>
                             </div>
                           )}
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1.5">Admin Notes</label>
+                              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide block mb-1.5">Admin Notes</label>
                               <textarea
                                 value={edit.admin_notes}
                                 onChange={e => setEdit(ticket.id, 'admin_notes', e.target.value)}
                                 placeholder="Add notes..."
                                 rows={3}
-                                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm resize-none placeholder-gray-400"
+                                className="w-full px-3 py-2.5 rounded-lg bg-muted border border-border outline-none focus:border-primary text-foreground text-sm resize-none placeholder:text-muted-foreground"
                               />
                             </div>
                             <div>
-                              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1.5">Status</label>
+                              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide block mb-1.5">Status</label>
                               <select
                                 value={edit.status}
                                 onChange={e => setEdit(ticket.id, 'status', e.target.value)}
-                                className="w-full px-3 py-2.5 rounded-lg bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm mb-3">
+                                className="w-full px-3 py-2.5 rounded-lg bg-muted border border-border outline-none focus:border-primary text-foreground text-sm mb-3">
                                 <option value="open">Open</option>
                                 <option value="in_progress">In Progress</option>
                                 <option value="resolved">Resolved</option>
@@ -172,7 +172,7 @@ export default function TicketsPage() {
                               <button
                                 onClick={() => handleSave(ticket)}
                                 disabled={saving === ticket.id || !isDirty}
-                                className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-100 disabled:text-gray-500 text-white text-xs font-semibold rounded-lg transition-colors">
+                                className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white text-xs font-semibold rounded-lg transition-colors">
                                 <Save size={13} />
                                 {saving === ticket.id ? 'Saving...' : 'Save Changes'}
                               </button>

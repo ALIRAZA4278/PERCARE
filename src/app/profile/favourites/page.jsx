@@ -86,24 +86,24 @@ export default function FavouritesPage() {
   const filtered = activeFilter === 'All' ? visibleFavourites : visibleFavourites.filter(f => f.target_type === filterTypeMap[activeFilter]);
 
   if (authLoading || loading) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+    return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+    <div className="min-h-screen bg-background">
+      <div className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3 mb-3">
-            <Link href="/profile" className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0">
-              <ArrowLeft size={18} className="text-gray-700" />
+            <Link href="/profile" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
+              <ArrowLeft size={18} className="text-foreground" />
             </Link>
-            <h1 className="text-base sm:text-xl font-bold text-gray-900">Favourites</h1>
+            <h1 className="text-base sm:text-xl font-bold text-foreground">Favourites</h1>
           </div>
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide">
             {filters.map((f) => (
               <button key={f} onClick={() => setActiveFilter(f)}
                 className={`px-3 sm:px-4 py-1.5 rounded-full font-medium text-xs sm:text-sm whitespace-nowrap transition-colors flex-shrink-0 ${
-                  activeFilter === f ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  activeFilter === f ? 'bg-primary text-white' : 'bg-muted text-foreground hover:bg-muted'
                 }`}>{f}</button>
             ))}
           </div>
@@ -115,26 +115,26 @@ export default function FavouritesPage() {
           {filtered.map((item) => {
             const Icon = iconMap[item.target_type] || PawPrint;
             return (
-              <div key={item.id} className="flex items-center justify-between bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-200 hover:shadow-md transition-all">
+              <div key={item.id} className="flex items-center justify-between bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border hover:shadow-card-hover transition-all">
                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <Icon size={20} className="text-blue-600" />
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Icon size={20} className="text-primary" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-bold text-gray-900 text-sm sm:text-base">{item.name}</h3>
-                    <p className="text-xs sm:text-sm text-gray-600">{item.sub}</p>
-                    <span className="text-xs font-medium text-blue-600 capitalize">{filterLabels[item.target_type] || item.target_type}</span>
+                    <h3 className="font-bold text-foreground text-sm sm:text-base">{item.name}</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">{item.sub}</p>
+                    <span className="text-xs font-medium text-primary capitalize">{filterLabels[item.target_type] || item.target_type}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 flex-shrink-0">
                   {item.rating > 0 && (
                     <div className="flex items-center gap-1">
-                      <Star size={14} className="text-yellow-500 fill-yellow-500" />
-                      <span className="text-sm font-semibold text-gray-900">{item.rating}</span>
+                      <Star size={14} className="text-amber fill-amber" />
+                      <span className="text-sm font-semibold text-foreground">{item.rating}</span>
                     </div>
                   )}
                   <button onClick={() => removeFavourite(item.id)}>
-                    <Heart size={20} className="text-red-500 fill-red-500 cursor-pointer hover:scale-110 transition-transform" />
+                    <Heart size={20} className="text-emergency fill-emergency cursor-pointer hover:scale-110 transition-transform" />
                   </button>
                 </div>
               </div>
@@ -145,8 +145,8 @@ export default function FavouritesPage() {
         {filtered.length === 0 && (
           <div className="text-center py-16">
             <div className="text-6xl mb-4">❤️</div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">No favourites yet</h3>
-            <p className="text-gray-600">Save vets, products, and more to see them here.</p>
+            <h3 className="text-xl font-bold text-foreground mb-2">No favourites yet</h3>
+            <p className="text-muted-foreground">Save vets, products, and more to see them here.</p>
           </div>
         )}
       </div>

@@ -78,7 +78,7 @@ export default function ShelterOverviewPage() {
 
   const progressPct = expenseGoal.goal > 0 ? Math.min((expenseGoal.spent / expenseGoal.goal) * 100, 100) : 0;
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   const handleCreateShelter = async () => {
     if (!createForm.name.trim() || !createForm.address.trim() || !createForm.city.trim()) return;
@@ -98,47 +98,47 @@ export default function ShelterOverviewPage() {
 
   if (!shelter) return (
     <div className="p-4 sm:p-6 lg:p-8">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Welcome to Shelter Dashboard</h1>
-      <div className="bg-white rounded-2xl border border-gray-200 p-6 max-w-xl">
-        <h2 className="text-lg font-bold text-gray-900 mb-1">Set Up Your Shelter</h2>
-        <p className="text-sm text-gray-500 mb-5">Create your shelter profile to start managing animals and adoptions.</p>
+      <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">Welcome to Shelter Dashboard</h1>
+      <div className="bg-card rounded-2xl border border-border p-6 max-w-xl">
+        <h2 className="text-lg font-bold text-foreground mb-1">Set Up Your Shelter</h2>
+        <p className="text-sm text-muted-foreground mb-5">Create your shelter profile to start managing animals and adoptions.</p>
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Shelter Name *</label>
+            <label className="block text-sm font-medium text-foreground mb-1">Shelter Name *</label>
             <input type="text" value={createForm.name} onChange={e => setCreateForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g., Safe Paws Shelter"
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+              className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <label className="block text-sm font-medium text-foreground mb-1">Description</label>
             <textarea value={createForm.description} onChange={e => setCreateForm(f => ({ ...f, description: e.target.value }))} rows={3} placeholder="About your shelter..."
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 focus:ring-2 focus:ring-teal-100 text-sm text-gray-900 bg-white placeholder-gray-400 resize-none" />
+              className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground resize-none" />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Address *</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Address *</label>
               <input type="text" value={createForm.address} onChange={e => setCreateForm(f => ({ ...f, address: e.target.value }))} placeholder="Street address"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">City *</label>
+              <label className="block text-sm font-medium text-foreground mb-1">City *</label>
               <input type="text" value={createForm.city} onChange={e => setCreateForm(f => ({ ...f, city: e.target.value }))} placeholder="e.g., Karachi"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Phone</label>
               <input type="text" value={createForm.phone} onChange={e => setCreateForm(f => ({ ...f, phone: e.target.value }))} placeholder="+92 300 1234567"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Email</label>
               <input type="email" value={createForm.email} onChange={e => setCreateForm(f => ({ ...f, email: e.target.value }))} placeholder="info@shelter.org"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-teal-500 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
           </div>
           <button onClick={handleCreateShelter} disabled={creating || !createForm.name.trim() || !createForm.address.trim() || !createForm.city.trim()}
-            className="w-full bg-teal-500 hover:bg-teal-600 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
+            className="w-full bg-vitality hover:bg-vitality disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
             {creating ? 'Creating...' : 'Create Shelter Profile'}
           </button>
         </div>
@@ -151,16 +151,16 @@ export default function ShelterOverviewPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Welcome, {shelter.name}!</h1>
-          <p className="text-sm text-gray-600 mt-1">Here's what's happening at your shelter today</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Welcome, {shelter.name}!</h1>
+          <p className="text-sm text-muted-foreground mt-1">Here's what's happening at your shelter today</p>
         </div>
         <div className="flex items-center gap-2">
           <Link href="/dashboard/shelter/intake"
-            className="bg-teal-500 hover:bg-teal-600 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+            className="bg-vitality hover:bg-vitality text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
             <Plus size={16} /> New Intake
           </Link>
           <Link href="/dashboard/shelter/adoptions"
-            className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+            className="bg-card border border-border hover:bg-muted text-foreground text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
             <Eye size={16} /> View Requests
           </Link>
         </div>
@@ -169,28 +169,28 @@ export default function ShelterOverviewPage() {
       {/* Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
-          { icon: PawPrint, label: 'Animals in Care', value: stats.animals, iconBg: 'bg-teal-50', iconColor: 'text-teal-600' },
-          { icon: Heart, label: 'Adoption Requests', value: stats.adoptionRequests, iconBg: 'bg-pink-50', iconColor: 'text-pink-600' },
-          { icon: HandHeart, label: 'Donations (Month)', value: formatK(stats.donationsMonth), iconBg: 'bg-green-50', iconColor: 'text-green-600' },
-          { icon: CheckCircle, label: 'Adopted This Month', value: stats.adoptedMonth, iconBg: 'bg-blue-50', iconColor: 'text-blue-600' },
+          { icon: PawPrint, label: 'Animals in Care', value: stats.animals, iconBg: 'bg-vitality/10', iconColor: 'text-vitality' },
+          { icon: Heart, label: 'Adoption Requests', value: stats.adoptionRequests, iconBg: 'bg-emergency/10', iconColor: 'text-emergency' },
+          { icon: HandHeart, label: 'Donations (Month)', value: formatK(stats.donationsMonth), iconBg: 'bg-vitality/10', iconColor: 'text-vitality' },
+          { icon: CheckCircle, label: 'Adopted This Month', value: stats.adoptedMonth, iconBg: 'bg-primary/10', iconColor: 'text-primary' },
         ].map(({ icon: Icon, label, value, iconBg, iconColor }) => (
-          <div key={label} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-200">
+          <div key={label} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border">
             <div className={`w-10 h-10 ${iconBg} rounded-xl flex items-center justify-center mb-3`}>
               <Icon size={20} className={iconColor} />
             </div>
-            <p className="text-xl sm:text-2xl font-bold text-gray-900">{value}</p>
-            <p className="text-xs sm:text-sm text-gray-500">{label}</p>
+            <p className="text-xl sm:text-2xl font-bold text-foreground">{value}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{label}</p>
           </div>
         ))}
       </div>
 
       {/* Monthly Expense Goal */}
-      <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200 mb-6">
+      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-6">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-bold text-gray-900">Monthly Expense Goal</h3>
-          <span className="text-sm font-semibold text-gray-700">{progressPct.toFixed(0)}%</span>
+          <h3 className="text-base font-bold text-foreground">Monthly Expense Goal</h3>
+          <span className="text-sm font-semibold text-foreground">{progressPct.toFixed(0)}%</span>
         </div>
-        <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden mb-2">
+        <div className="w-full bg-muted rounded-full h-3 overflow-hidden mb-2">
           <div
             className="h-full rounded-full transition-all"
             style={{
@@ -200,39 +200,39 @@ export default function ShelterOverviewPage() {
           />
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-sm text-gray-600">Spent: {formatK(expenseGoal.spent)}</span>
-          <span className="text-sm text-gray-600">Goal: {formatK(expenseGoal.goal)}</span>
+          <span className="text-sm text-muted-foreground">Spent: {formatK(expenseGoal.spent)}</span>
+          <span className="text-sm text-muted-foreground">Goal: {formatK(expenseGoal.goal)}</span>
         </div>
       </div>
 
       {/* Two-column: Adoption Requests + Recent Donations */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Adoption Requests */}
-        <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
+        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-bold text-gray-900">Adoption Requests</h3>
-            <Link href="/dashboard/shelter/adoptions" className="text-sm text-teal-600 hover:text-teal-700 font-medium">View all</Link>
+            <h3 className="text-base font-bold text-foreground">Adoption Requests</h3>
+            <Link href="/dashboard/shelter/adoptions" className="text-sm text-vitality hover:text-vitality font-medium">View all</Link>
           </div>
           {adoptionRequests.length > 0 ? (
             <div className="space-y-3">
               {adoptionRequests.map((req) => (
-                <div key={req.id} className="flex items-center justify-between gap-3 p-3 bg-gray-50 rounded-xl">
+                <div key={req.id} className="flex items-center justify-between gap-3 p-3 bg-muted rounded-xl">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-9 h-9 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 font-bold text-sm shrink-0">
+                    <div className="w-9 h-9 bg-emergency/10 rounded-full flex items-center justify-center text-emergency font-bold text-sm shrink-0">
                       {req.adopter?.full_name?.charAt(0) || 'A'}
                     </div>
                     <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm truncate">{req.adopter?.full_name || 'Adopter'}</p>
-                      <p className="text-xs text-gray-500 truncate">{req.animal?.name} · {req.animal?.species}</p>
+                      <p className="font-semibold text-foreground text-sm truncate">{req.adopter?.full_name || 'Adopter'}</p>
+                      <p className="text-xs text-muted-foreground truncate">{req.animal?.name} · {req.animal?.species}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button onClick={() => handleRequest(req.id, 'approved')}
-                      className="w-8 h-8 bg-green-50 hover:bg-green-100 text-green-600 rounded-lg flex items-center justify-center transition-colors">
+                      className="w-8 h-8 bg-vitality/10 hover:bg-vitality/10 text-vitality rounded-lg flex items-center justify-center transition-colors">
                       <Check size={15} />
                     </button>
                     <button onClick={() => handleRequest(req.id, 'rejected')}
-                      className="w-8 h-8 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg flex items-center justify-center transition-colors">
+                      className="w-8 h-8 bg-emergency/10 hover:bg-emergency/10 text-emergency rounded-lg flex items-center justify-center transition-colors">
                       <X size={15} />
                     </button>
                   </div>
@@ -240,35 +240,35 @@ export default function ShelterOverviewPage() {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500 text-center py-8">No pending adoption requests</p>
+            <p className="text-sm text-muted-foreground text-center py-8">No pending adoption requests</p>
           )}
         </div>
 
         {/* Recent Donations */}
-        <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
+        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-bold text-gray-900">Recent Donations</h3>
-            <Link href="/dashboard/shelter/donations" className="text-sm text-teal-600 hover:text-teal-700 font-medium">View all</Link>
+            <h3 className="text-base font-bold text-foreground">Recent Donations</h3>
+            <Link href="/dashboard/shelter/donations" className="text-sm text-vitality hover:text-vitality font-medium">View all</Link>
           </div>
           {donations.length > 0 ? (
             <div className="space-y-3">
               {donations.map((don) => (
                 <div key={don.id} className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold text-sm shrink-0">
+                    <div className="w-9 h-9 bg-vitality/10 rounded-full flex items-center justify-center text-vitality font-bold text-sm shrink-0">
                       {don.donor?.full_name?.charAt(0) || don.donor_name?.charAt(0) || 'D'}
                     </div>
                     <div className="min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm truncate">{don.donor?.full_name || don.donor_name || 'Anonymous'}</p>
-                      <p className="text-xs text-gray-500">{don.donation_type || 'One-time'} · {getTimeAgo(don.created_at)}</p>
+                      <p className="font-semibold text-foreground text-sm truncate">{don.donor?.full_name || don.donor_name || 'Anonymous'}</p>
+                      <p className="text-xs text-muted-foreground">{don.donation_type || 'One-time'} · {getTimeAgo(don.created_at)}</p>
                     </div>
                   </div>
-                  <span className="font-bold text-green-600 text-sm shrink-0">Rs. {(don.amount || 0).toLocaleString()}</span>
+                  <span className="font-bold text-vitality text-sm shrink-0">Rs. {(don.amount || 0).toLocaleString()}</span>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500 text-center py-8">No donations this month</p>
+            <p className="text-sm text-muted-foreground text-center py-8">No donations this month</p>
           )}
         </div>
       </div>

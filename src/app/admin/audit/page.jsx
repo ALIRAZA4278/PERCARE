@@ -9,10 +9,10 @@ const PAGE_SIZE = 50;
 
 function actionBadge(action) {
   const a = action?.toLowerCase() || '';
-  if (a.includes('approve') || a.includes('verify')) return 'bg-green-100 text-green-700';
-  if (a.includes('reject') || a.includes('ban') || a.includes('delete')) return 'bg-red-100 text-red-700';
-  if (a.includes('unban') || a.includes('resolve') || a.includes('update')) return 'bg-blue-100 text-blue-700';
-  return 'bg-gray-100 text-gray-600';
+  if (a.includes('approve') || a.includes('verify')) return 'bg-vitality/10 text-vitality';
+  if (a.includes('reject') || a.includes('ban') || a.includes('delete')) return 'bg-emergency/10 text-emergency';
+  if (a.includes('unban') || a.includes('resolve') || a.includes('update')) return 'bg-primary/10 text-primary';
+  return 'bg-muted text-muted-foreground';
 }
 
 export default function AuditPage() {
@@ -51,44 +51,44 @@ export default function AuditPage() {
   const paged = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
-  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Audit Log</h1>
-        <p className="text-sm text-gray-500 mt-1">Last {logs.length} admin actions</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Audit Log</h1>
+        <p className="text-sm text-muted-foreground mt-1">Last {logs.length} admin actions</p>
       </div>
 
       <div className="relative mb-5">
-        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Search by action, target type, or details..."
-          className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-400" />
+          className="w-full pl-9 pr-4 py-2.5 bg-card border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+      <div className="bg-card rounded-xl border border-border overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-200">
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Admin</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Action</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden sm:table-cell">Target</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3 hidden md:table-cell">Details</th>
-                <th className="text-left text-xs font-semibold text-gray-500 px-4 py-3">Time</th>
+              <tr className="border-b border-border">
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Admin</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Action</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3 hidden sm:table-cell">Target</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3 hidden md:table-cell">Details</th>
+                <th className="text-left text-xs font-semibold text-muted-foreground px-4 py-3">Time</th>
               </tr>
             </thead>
             <tbody>
               {paged.length === 0 ? (
-                <tr><td colSpan={5} className="text-center text-gray-600 py-12">No audit logs found</td></tr>
+                <tr><td colSpan={5} className="text-center text-muted-foreground py-12">No audit logs found</td></tr>
               ) : paged.map(log => (
-                <tr key={log.id} className="border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors">
+                <tr key={log.id} className="border-b border-border last:border-0 hover:bg-muted transition-colors">
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 font-bold text-[10px] shrink-0">
+                      <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center text-muted-foreground font-bold text-[10px] shrink-0">
                         {log.admin?.full_name?.charAt(0) || 'A'}
                       </div>
-                      <span className="text-gray-900 text-xs font-medium truncate max-w-[80px]">{log.admin?.full_name || 'Admin'}</span>
+                      <span className="text-foreground text-xs font-medium truncate max-w-[80px]">{log.admin?.full_name || 'Admin'}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3">
@@ -99,15 +99,15 @@ export default function AuditPage() {
                   <td className="px-4 py-3 hidden sm:table-cell">
                     {log.target_type && (
                       <div>
-                        <span className="text-xs text-gray-600 bg-gray-100 px-2 py-0.5 rounded-full">{log.target_type}</span>
-                        {log.target_id && <p className="text-[10px] text-gray-500 mt-1 font-mono">{log.target_id.slice(0, 6)}...</p>}
+                        <span className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-full">{log.target_type}</span>
+                        {log.target_id && <p className="text-[10px] text-muted-foreground mt-1 font-mono">{log.target_id.slice(0, 6)}...</p>}
                       </div>
                     )}
                   </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs hidden md:table-cell max-w-[220px]">
+                  <td className="px-4 py-3 text-muted-foreground text-xs hidden md:table-cell max-w-[220px]">
                     <p className="truncate">{log.details || '—'}</p>
                   </td>
-                  <td className="px-4 py-3 text-gray-500 text-xs whitespace-nowrap">
+                  <td className="px-4 py-3 text-muted-foreground text-xs whitespace-nowrap">
                     {log.created_at ? new Date(log.created_at).toLocaleString() : '—'}
                   </td>
                 </tr>
@@ -119,16 +119,16 @@ export default function AuditPage() {
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-muted-foreground">
             Showing {page * PAGE_SIZE + 1}–{Math.min((page + 1) * PAGE_SIZE, filtered.length)} of {filtered.length}
           </p>
           <div className="flex gap-2">
             <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}
-              className="p-2 bg-white border border-gray-200 rounded-lg text-gray-500 disabled:opacity-30 hover:border-gray-300 transition-colors">
+              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border transition-colors">
               <ChevronLeft size={16} />
             </button>
             <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1}
-              className="p-2 bg-white border border-gray-200 rounded-lg text-gray-500 disabled:opacity-30 hover:border-gray-300 transition-colors">
+              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border transition-colors">
               <ChevronRight size={16} />
             </button>
           </div>

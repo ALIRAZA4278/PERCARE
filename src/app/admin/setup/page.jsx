@@ -68,60 +68,60 @@ WHERE email = '${email}'
 ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-foreground rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Shield size={32} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">Admin Setup</h1>
-          <p className="text-sm text-gray-500 mt-1">Create the admin account</p>
+          <h1 className="text-2xl font-bold text-foreground">Admin Setup</h1>
+          <p className="text-sm text-muted-foreground mt-1">Create the admin account</p>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-200 p-6">
+        <div className="bg-card rounded-2xl border border-border p-6">
           {status === 'idle' || status === 'error' ? (
             <form onSubmit={handleCreate} className="space-y-4">
               {status === 'error' && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700">{message}</div>
+                <div className="p-3 bg-emergency/10 border border-emergency/20 rounded-xl text-xs text-emergency">{message}</div>
               )}
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5">Admin Email</label>
+                <label className="block text-xs font-semibold text-muted-foreground mb-1.5">Admin Email</label>
                 <input type="email" value={email} onChange={e => setEmail(e.target.value)} required
-                  className="w-full px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm" />
+                  className="w-full px-4 py-2.5 rounded-xl bg-muted border border-border outline-none focus:border-primary text-foreground text-sm" />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5">Password</label>
+                <label className="block text-xs font-semibold text-muted-foreground mb-1.5">Password</label>
                 <div className="relative">
                   <input type={showPw ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} required minLength={6}
                     placeholder="Min 6 characters"
-                    className="w-full px-4 py-2.5 pr-10 rounded-xl bg-gray-50 border border-gray-300 outline-none focus:border-blue-500 text-gray-900 text-sm placeholder-gray-400" />
-                  <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                    className="w-full px-4 py-2.5 pr-10 rounded-xl bg-muted border border-border outline-none focus:border-primary text-foreground text-sm placeholder:text-muted-foreground" />
+                  <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground">
                     {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
               </div>
               <button type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm transition-colors">
+                className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm transition-colors">
                 Create Admin Account
               </button>
             </form>
           ) : status === 'loading' ? (
-            <div className="text-center py-6 text-gray-500 text-sm">Creating account...</div>
+            <div className="text-center py-6 text-muted-foreground text-sm">Creating account...</div>
           ) : status === 'success' ? (
             <div className="space-y-3">
-              <div className="p-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700">✓ {message}</div>
-              <a href="/admin/login" className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm text-center">
+              <div className="p-3 bg-vitality/10 border border-vitality/20 rounded-xl text-sm text-vitality">✓ {message}</div>
+              <a href="/admin/login" className="block w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm text-center">
                 Go to Admin Login
               </a>
             </div>
           ) : (
             <div className="space-y-3">
-              <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-xl text-xs text-yellow-700">{message}</div>
+              <div className="p-3 bg-amber/10 border border-amber/20 rounded-xl text-xs text-amber">{message}</div>
               <div>
-                <p className="text-xs text-gray-500 mb-2">Run this SQL in Supabase SQL Editor:</p>
-                <pre className="bg-gray-100 border border-gray-300 rounded-lg p-3 text-xs text-green-700 overflow-x-auto whitespace-pre-wrap">{sqlFix}</pre>
+                <p className="text-xs text-muted-foreground mb-2">Run this SQL in Supabase SQL Editor:</p>
+                <pre className="bg-muted border border-border rounded-lg p-3 text-xs text-vitality overflow-x-auto whitespace-pre-wrap">{sqlFix}</pre>
               </div>
-              <a href="/admin/login" className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl text-sm text-center">
+              <a href="/admin/login" className="block w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm text-center">
                 Try Admin Login
               </a>
             </div>

@@ -7,11 +7,11 @@ import { supabase } from '@/lib/supabase';
 
 const healthBadgeColor = (h) => {
   const v = (h || '').toLowerCase();
-  if (v.includes('healthy')) return 'border-green-400 text-green-600';
-  if (v.includes('injur')) return 'border-orange-400 text-orange-600';
-  if (v.includes('malnour')) return 'border-orange-400 text-orange-600';
-  if (v.includes('sick')) return 'border-red-400 text-red-600';
-  return 'border-gray-400 text-gray-600';
+  if (v.includes('healthy')) return 'border-vitality/40 text-vitality';
+  if (v.includes('injur')) return 'border-amber/40 text-amber';
+  if (v.includes('malnour')) return 'border-amber/40 text-amber';
+  if (v.includes('sick')) return 'border-emergency text-emergency';
+  return 'border-border text-muted-foreground';
 };
 
 const emptyForm = { name: '', species: '', breed: '', age: '', source: '', health_condition: '', notes: '' };
@@ -80,19 +80,19 @@ export default function ShelterIntakePage() {
 
   const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Pet Intake</h1>
-          <p className="text-sm text-teal-600 mt-0.5">Register new animals arriving at the shelter</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Pet Intake</h1>
+          <p className="text-sm text-vitality mt-0.5">Register new animals arriving at the shelter</p>
         </div>
         {!showForm && (
           <button onClick={() => setShowForm(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+            className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
             <Plus size={16} /> New Intake
           </button>
         )}
@@ -100,59 +100,59 @@ export default function ShelterIntakePage() {
 
       {/* Inline Register Form */}
       {showForm && (
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 mb-6">
-          <h3 className="text-base font-bold text-gray-900 mb-5">Register New Animal</h3>
+        <div className="bg-card rounded-2xl border border-border p-6 mb-6">
+          <h3 className="text-base font-bold text-foreground mb-5">Register New Animal</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Animal Name (if known)</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Animal Name (if known)</label>
               <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                 placeholder="e.g., Buddy"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Species</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Species</label>
               <input type="text" value={form.species} onChange={e => setForm(f => ({ ...f, species: e.target.value }))}
                 placeholder="e.g., Dog, Cat, Bird"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Breed (if known)</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Breed (if known)</label>
               <input type="text" value={form.breed} onChange={e => setForm(f => ({ ...f, breed: e.target.value }))}
                 placeholder="e.g., Labrador"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Estimated Age</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Estimated Age</label>
               <input type="text" value={form.age} onChange={e => setForm(f => ({ ...f, age: e.target.value }))}
                 placeholder="e.g., 2 years"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Source</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Source</label>
               <input type="text" value={form.source} onChange={e => setForm(f => ({ ...f, source: e.target.value }))}
                 placeholder="e.g., Surrendered, Rescue, Found"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Health Condition</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Health Condition</label>
               <input type="text" value={form.health_condition} onChange={e => setForm(f => ({ ...f, health_condition: e.target.value }))}
                 placeholder="e.g., Healthy, Injured, Malnourished"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
           </div>
           <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+            <label className="block text-sm font-medium text-foreground mb-1">Notes</label>
             <textarea value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))}
               rows={3} placeholder="Add any additional details about the animal..."
-              className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400 resize-y" />
+              className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground resize-y" />
           </div>
           <div className="flex items-center gap-3">
             <button onClick={handleSave} disabled={saving || !form.species.trim()}
-              className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">
+              className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">
               {saving ? 'Registering...' : 'Register Animal'}
             </button>
             <button onClick={() => { setShowForm(false); setForm(emptyForm); }}
-              className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">
+              className="bg-card border border-border hover:bg-muted text-foreground font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">
               Cancel
             </button>
           </div>
@@ -160,37 +160,37 @@ export default function ShelterIntakePage() {
       )}
 
       {/* Recent Intakes */}
-      <div className="bg-white rounded-2xl border border-gray-200">
-        <div className="p-5 border-b border-gray-100">
-          <h3 className="text-base font-bold text-gray-900">Recent Intakes</h3>
+      <div className="bg-card rounded-2xl border border-border">
+        <div className="p-5 border-b border-border">
+          <h3 className="text-base font-bold text-foreground">Recent Intakes</h3>
         </div>
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-border">
           {intakes.map((intake) => (
             <div key={intake.id} className="p-5">
               <div className="flex items-start justify-between gap-3 mb-2">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center shrink-0">
-                    <PawPrint size={18} className="text-gray-400" />
+                  <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center shrink-0">
+                    <PawPrint size={18} className="text-muted-foreground" />
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 text-sm">{intake.name || `Unnamed ${intake.species}`}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="font-bold text-foreground text-sm">{intake.name || `Unnamed ${intake.species}`}</p>
+                    <p className="text-xs text-muted-foreground">
                       {intake.species}{intake.source ? ` · ${intake.source}` : ''} · {formatDate(intake.created_at)}
                     </p>
                   </div>
                 </div>
                 {intake.health_condition && (
-                  <span className={`text-xs font-semibold px-3 py-1 rounded-full border bg-white shrink-0 ${healthBadgeColor(intake.health_condition)}`}>
+                  <span className={`text-xs font-semibold px-3 py-1 rounded-full border bg-card shrink-0 ${healthBadgeColor(intake.health_condition)}`}>
                     {intake.health_condition}
                   </span>
                 )}
               </div>
               {intake.notes && (
-                <p className="text-sm text-teal-600 mb-3 ml-13 pl-13">{intake.notes}</p>
+                <p className="text-sm text-vitality mb-3 ml-13 pl-13">{intake.notes}</p>
               )}
               <div className="pl-13">
                 <button onClick={() => handleMoveToAnimals(intake)} disabled={movingId === intake.id}
-                  className="bg-yellow-400 hover:bg-yellow-500 disabled:opacity-50 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors">
+                  className="bg-amber hover:bg-amber disabled:opacity-50 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors">
                   <ArrowRight size={13} /> {movingId === intake.id ? 'Moving...' : 'Move to Animals'}
                 </button>
               </div>
@@ -199,8 +199,8 @@ export default function ShelterIntakePage() {
           {intakes.length === 0 && !showForm && (
             <div className="text-center py-16">
               <div className="text-6xl mb-4">📋</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">No intake records</h3>
-              <p className="text-gray-600">Click "+ New Intake" to register an animal arriving at the shelter.</p>
+              <h3 className="text-xl font-bold text-foreground mb-2">No intake records</h3>
+              <p className="text-muted-foreground">Click "+ New Intake" to register an animal arriving at the shelter.</p>
             </div>
           )}
         </div>

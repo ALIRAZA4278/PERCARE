@@ -6,12 +6,12 @@ import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 
 const iconMap = {
-  adoption: { icon: Heart, iconBg: 'bg-pink-50', iconColor: 'text-pink-600', borderColor: 'border-pink-200' },
-  donation: { icon: HandHeart, iconBg: 'bg-green-50', iconColor: 'text-green-600', borderColor: 'border-green-200' },
-  approval: { icon: CheckCircle, iconBg: 'bg-blue-50', iconColor: 'text-blue-600', borderColor: 'border-blue-200' },
-  system: { icon: Bell, iconBg: 'bg-gray-50', iconColor: 'text-gray-600', borderColor: 'border-gray-200' },
-  appointment: { icon: Calendar, iconBg: 'bg-blue-50', iconColor: 'text-blue-600', borderColor: 'border-blue-200' },
-  lost_found: { icon: AlertTriangle, iconBg: 'bg-red-50', iconColor: 'text-red-600', borderColor: 'border-red-200' },
+  adoption: { icon: Heart, iconBg: 'bg-emergency/10', iconColor: 'text-emergency', borderColor: 'border-emergency/20' },
+  donation: { icon: HandHeart, iconBg: 'bg-vitality/10', iconColor: 'text-vitality', borderColor: 'border-vitality/20' },
+  approval: { icon: CheckCircle, iconBg: 'bg-primary/10', iconColor: 'text-primary', borderColor: 'border-primary/20' },
+  system: { icon: Bell, iconBg: 'bg-muted', iconColor: 'text-muted-foreground', borderColor: 'border-border' },
+  appointment: { icon: Calendar, iconBg: 'bg-primary/10', iconColor: 'text-primary', borderColor: 'border-primary/20' },
+  lost_found: { icon: AlertTriangle, iconBg: 'bg-emergency/10', iconColor: 'text-emergency', borderColor: 'border-emergency/20' },
 };
 
 export default function ShelterNotificationsPage() {
@@ -50,17 +50,17 @@ export default function ShelterNotificationsPage() {
 
   const unreadCount = notifications.filter(n => !n.is_read).length;
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Notifications</h1>
-          <p className="text-sm text-gray-600 mt-1">Stay updated on your shelter activity</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Notifications</h1>
+          <p className="text-sm text-muted-foreground mt-1">Stay updated on your shelter activity</p>
         </div>
         {unreadCount > 0 && (
-          <button onClick={markAllRead} className="text-teal-600 font-medium text-sm hover:text-teal-700">Mark all read</button>
+          <button onClick={markAllRead} className="text-vitality font-medium text-sm hover:text-vitality">Mark all read</button>
         )}
       </div>
       <div className="max-w-3xl space-y-3">
@@ -69,22 +69,22 @@ export default function ShelterNotificationsPage() {
           const Icon = config.icon;
           return (
             <div key={n.id} onClick={() => markAsRead(n.id)}
-              className={`bg-white rounded-xl p-4 sm:p-5 border cursor-pointer hover:shadow-md transition-all ${n.is_read ? 'border-gray-200' : `${config.borderColor} border-l-4`}`}>
+              className={`bg-card rounded-xl p-4 sm:p-5 border cursor-pointer hover:shadow-card-hover transition-all ${n.is_read ? 'border-border' : `${config.borderColor} border-l-4`}`}>
               <div className="flex gap-3 sm:gap-4">
                 <div className={`w-10 h-10 ${config.iconBg} rounded-full flex items-center justify-center flex-shrink-0`}><Icon size={18} className={config.iconColor} /></div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <h3 className={`font-bold text-sm ${n.is_read ? 'text-gray-700' : 'text-gray-900'}`}>{n.title}</h3>
-                    <span className="text-[10px] text-gray-500 flex-shrink-0">{getTimeAgo(n.created_at)}</span>
+                    <h3 className={`font-bold text-sm ${n.is_read ? 'text-foreground' : 'text-foreground'}`}>{n.title}</h3>
+                    <span className="text-[10px] text-muted-foreground flex-shrink-0">{getTimeAgo(n.created_at)}</span>
                   </div>
-                  <p className={`text-xs sm:text-sm ${n.is_read ? 'text-gray-500' : 'text-gray-700'}`}>{n.message}</p>
+                  <p className={`text-xs sm:text-sm ${n.is_read ? 'text-muted-foreground' : 'text-foreground'}`}>{n.message}</p>
                 </div>
               </div>
             </div>
           );
         })}
         {notifications.length === 0 && (
-          <div className="text-center py-16"><div className="text-6xl mb-4">🔔</div><h3 className="text-xl font-bold text-gray-900 mb-2">No notifications</h3><p className="text-gray-600">You're all caught up!</p></div>
+          <div className="text-center py-16"><div className="text-6xl mb-4">🔔</div><h3 className="text-xl font-bold text-foreground mb-2">No notifications</h3><p className="text-muted-foreground">You're all caught up!</p></div>
         )}
       </div>
     </div>

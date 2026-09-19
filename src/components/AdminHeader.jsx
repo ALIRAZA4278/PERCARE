@@ -7,7 +7,7 @@ import { supabase } from '@/lib/supabase';
 import { useAdminAlerts } from '@/lib/useAdminAlerts';
 
 const typeIcon = { user: Users, vet: Stethoscope, store: Store, product: Package };
-const severityColor = { danger: 'bg-red-50 border-red-200 text-red-700', warning: 'bg-orange-50 border-orange-200 text-orange-700', info: 'bg-blue-50 border-blue-200 text-blue-700' };
+const severityColor = { danger: 'bg-emergency/10 border-emergency/20 text-emergency', warning: 'bg-amber/10 border-amber/20 text-amber', info: 'bg-primary/10 border-primary/20 text-primary' };
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -57,38 +57,38 @@ export default function AdminHeader() {
   };
 
   return (
-    <div className="sticky top-0 z-10 bg-white border-b border-gray-200 px-4 sm:px-6 py-3 flex items-center gap-3">
+    <div className="sticky top-0 z-10 bg-card border-b border-border px-4 sm:px-6 py-3 flex items-center gap-3">
       <div ref={searchRef} className="relative flex-1 max-w-xl">
-        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
         <input
           value={query}
           onChange={e => setQuery(e.target.value)}
           onFocus={() => query && setShowResults(true)}
           placeholder="Search users, vets, stores, products..."
-          className="w-full pl-9 pr-8 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 placeholder-gray-400 outline-none focus:border-gray-300 focus:bg-white transition-colors"
+          className="w-full pl-9 pr-8 py-2 bg-muted border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary focus:bg-card transition-colors"
         />
         {query && (
-          <button onClick={() => { setQuery(''); setShowResults(false); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+          <button onClick={() => { setQuery(''); setShowResults(false); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-muted-foreground">
             <X size={14} />
           </button>
         )}
         {showResults && (
-          <div className="absolute top-full left-0 right-0 mt-1.5 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden max-h-80 overflow-y-auto">
+          <div className="absolute top-full left-0 right-0 mt-1.5 bg-card border border-border rounded-xl shadow-elevated overflow-hidden max-h-80 overflow-y-auto">
             {results.length === 0 ? (
-              <p className="text-xs text-gray-500 text-center py-4">No matches</p>
+              <p className="text-xs text-muted-foreground text-center py-4">No matches</p>
             ) : results.map(r => {
               const Icon = typeIcon[r.type];
               return (
                 <button key={`${r.type}-${r.id}`} onClick={() => goTo(r.href)}
-                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-gray-50 transition-colors text-left border-b border-gray-100 last:border-0">
-                  <div className="w-7 h-7 bg-gray-100 rounded-lg flex items-center justify-center shrink-0">
-                    <Icon size={13} className="text-gray-500" />
+                  className="w-full flex items-center gap-3 px-3 py-2.5 hover:bg-muted transition-colors text-left border-b border-border last:border-0">
+                  <div className="w-7 h-7 bg-muted rounded-lg flex items-center justify-center shrink-0">
+                    <Icon size={13} className="text-muted-foreground" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-xs font-semibold text-gray-900 truncate">{r.label || '—'}</p>
-                    <p className="text-[10px] text-gray-500 truncate">{r.sub}</p>
+                    <p className="text-xs font-semibold text-foreground truncate">{r.label || '—'}</p>
+                    <p className="text-[10px] text-muted-foreground truncate">{r.sub}</p>
                   </div>
-                  <span className="text-[9px] font-bold text-gray-400 uppercase shrink-0">{r.type}</span>
+                  <span className="text-[9px] font-bold text-muted-foreground uppercase shrink-0">{r.type}</span>
                 </button>
               );
             })}
@@ -97,24 +97,24 @@ export default function AdminHeader() {
       </div>
 
       <div ref={alertsRef} className="relative shrink-0">
-        <button onClick={() => setShowAlerts(v => !v)} className="relative p-2 hover:bg-gray-100 rounded-lg text-gray-500 transition-colors">
+        <button onClick={() => setShowAlerts(v => !v)} className="relative p-2 hover:bg-muted rounded-lg text-muted-foreground transition-colors">
           <Bell size={18} />
           {alerts.length > 0 && (
-            <span className="absolute top-1 right-1 w-2 h-2 bg-red-600 rounded-full" />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-emergency rounded-full" />
           )}
         </button>
         {showAlerts && (
-          <div className="absolute top-full right-0 mt-1.5 w-80 bg-white border border-gray-200 rounded-xl shadow-lg overflow-hidden max-h-96 overflow-y-auto">
-            <div className="px-4 py-3 border-b border-gray-100">
-              <h3 className="text-sm font-bold text-gray-900">Alerts</h3>
+          <div className="absolute top-full right-0 mt-1.5 w-80 bg-card border border-border rounded-xl shadow-elevated overflow-hidden max-h-96 overflow-y-auto">
+            <div className="px-4 py-3 border-b border-border">
+              <h3 className="text-sm font-bold text-foreground">Alerts</h3>
             </div>
             {alerts.length === 0 ? (
-              <p className="text-xs text-gray-500 text-center py-6">All clear — no active alerts</p>
+              <p className="text-xs text-muted-foreground text-center py-6">All clear — no active alerts</p>
             ) : alerts.map(a => (
               <button key={a.id} onClick={() => { router.push(a.href); setShowAlerts(false); }}
-                className={`w-full text-left px-4 py-3 border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors`}>
+                className={`w-full text-left px-4 py-3 border-b border-border last:border-0 hover:bg-muted transition-colors`}>
                 <span className={`inline-block text-[9px] font-bold px-1.5 py-0.5 rounded border mb-1 uppercase ${severityColor[a.severity]}`}>{a.severity}</span>
-                <p className="text-xs text-gray-700 leading-relaxed">{a.message}</p>
+                <p className="text-xs text-foreground leading-relaxed">{a.message}</p>
               </button>
             ))}
           </div>

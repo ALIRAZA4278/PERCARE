@@ -57,64 +57,64 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-10">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-lg">
         <div className="text-center mb-6">
-          <div className="w-14 h-14 bg-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-14 h-14 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4">
             <Stethoscope size={28} className="text-white" />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Welcome to PetCare</h1>
-          <p className="text-sm text-gray-500 mt-1">Sign in to your account</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Welcome to PetCare</h1>
+          <p className="text-sm text-muted-foreground mt-1">Sign in to your account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-gray-200 p-6 sm:p-8">
+        <form onSubmit={handleSubmit} className="bg-card rounded-2xl border border-border p-6 sm:p-8">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
+            <div className="mb-4 p-3 bg-emergency/10 border border-emergency/20 rounded-xl text-sm text-emergency">
               {error}
             </div>
           )}
 
           <div className="mb-6">
-            <h2 className="font-bold text-gray-900 mb-1">Choose your role</h2>
-            <p className="text-sm text-gray-500 mb-4">Select how you want to sign in</p>
+            <h2 className="font-bold text-foreground mb-1">Choose your role</h2>
+            <p className="text-sm text-muted-foreground mb-4">Select how you want to sign in</p>
             <div className="grid grid-cols-2 gap-3">
               {roles.map(({ id, icon: Icon, label, description }) => (
                 <button key={id} type="button" onClick={() => setSelectedRole(id)}
-                  className={`p-4 rounded-xl border-2 text-center transition-all ${selectedRole === id ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'}`}>
-                  <Icon size={24} className={`mx-auto mb-2 ${selectedRole === id ? 'text-blue-600' : 'text-gray-400'}`} />
-                  <p className={`text-sm font-semibold ${selectedRole === id ? 'text-blue-600' : 'text-gray-700'}`}>{label}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{description}</p>
+                  className={`p-4 rounded-xl border-2 text-center transition-all ${selectedRole === id ? 'border-primary bg-primary/10' : 'border-border bg-card hover:border-border'}`}>
+                  <Icon size={24} className={`mx-auto mb-2 ${selectedRole === id ? 'text-primary' : 'text-muted-foreground'}`} />
+                  <p className={`text-sm font-semibold ${selectedRole === id ? 'text-primary' : 'text-foreground'}`}>{label}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
                 </button>
               ))}
             </div>
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-bold text-gray-900 mb-2">Email</label>
+            <label className="block text-sm font-bold text-foreground mb-2">Email</label>
             <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" required
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all text-gray-900 text-sm bg-gray-50" />
+              className="w-full px-4 py-3 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-foreground text-sm bg-muted" />
           </div>
 
           <div className="mb-6">
-            <label className="block text-sm font-bold text-gray-900 mb-2">Password</label>
+            <label className="block text-sm font-bold text-foreground mb-2">Password</label>
             <div className="relative">
               <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" required
-                className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all text-gray-900 text-sm bg-gray-50" />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 transition-colors">
+                className="w-full px-4 py-3 pr-12 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-foreground text-sm bg-muted" />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-muted-foreground hover:text-muted-foreground transition-colors">
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
           </div>
 
           <button type="submit" disabled={isLoading}
-            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
+            className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
             <LogIn size={16} />
             {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
 
-          <p className="text-center text-sm text-gray-600 mt-5">
+          <p className="text-center text-sm text-muted-foreground mt-5">
             Don't have an account?{' '}
-            <Link href="/signup" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">Sign up</Link>
+            <Link href="/signup" className="text-primary font-semibold hover:text-primary transition-colors">Sign up</Link>
           </p>
         </form>
       </div>
