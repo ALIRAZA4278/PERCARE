@@ -1,48 +1,69 @@
 'use client';
 
+import { Lightbulb, Send } from 'lucide-react';
 import { useState } from 'react';
-import { MessageSquare, Send } from 'lucide-react';
+
+const TOPICS = ['general', 'feature', 'bug', 'design'];
 
 export default function HelpUsImprove() {
-  const [activeTab, setActiveTab] = useState('General');
-  const tabs = ['General', 'Feature', 'Bug', 'Design'];
+  const [text, setText] = useState('');
+  const [topic, setTopic] = useState('general');
+  const [status, setStatus] = useState('');
+
+  const submit = () => {
+    if (!text.trim()) {
+      setStatus('Please write your suggestion first');
+      return;
+    }
+    setStatus('Thank you! Your suggestion has been submitted 🎉');
+    setText('');
+    setTopic('general');
+  };
 
   return (
-    <div className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-gray-200 mb-6 sm:mb-8 hover:shadow-md transition-shadow mx-4">
-      <div className="flex items-center gap-2 sm:gap-3 mb-1.5 sm:mb-2">
-        <MessageSquare className="text-blue-600" size={20} />
-        <h2 className="text-lg sm:text-2xl font-bold text-gray-900">Help Us Improve</h2>
+    <section className="px-4 md:px-8 pb-12">
+      <div className="rounded-2xl bg-card shadow-card p-5 md:p-6">
+        <div className="flex items-center gap-2.5 mb-1">
+          <Lightbulb className="h-5 w-5 text-primary" />
+          <h3 className="font-bold text-foreground text-base">Help Us Improve</h3>
+        </div>
+        <p className="text-xs text-muted-foreground mb-4">
+          Got an idea to make PetCare better? We&apos;d love to hear from you.
+        </p>
+
+        <div className="flex gap-2 mb-3 flex-wrap">
+          {TOPICS.map((item) => (
+            <button
+              key={item}
+              onClick={() => setTopic(item)}
+              className={`px-3 py-1.5 rounded-full text-[11px] font-semibold capitalize transition-expo btn-press ${
+                topic === item
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground'
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+
+        <textarea
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Tell us what you'd like to see improved..."
+          className="w-full h-24 p-3 rounded-xl bg-muted border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-expo resize-none"
+        />
+
+        {status && <p className="text-xs font-medium text-muted-foreground mt-2">{status}</p>}
+
+        <button
+          onClick={submit}
+          className="mt-3 inline-flex items-center gap-2 h-10 px-5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold btn-press transition-expo hover:opacity-90"
+        >
+          <Send className="h-3.5 w-3.5" />
+          Submit Suggestion
+        </button>
       </div>
-      <p className="text-gray-600 text-xs sm:text-sm mb-4 sm:mb-5 leading-relaxed">
-        Got an idea to make PetCare better? We'd love to hear from you.
-      </p>
-
-      <div className="flex flex-wrap gap-2 mb-4 sm:mb-5">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className={`font-medium px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-colors text-xs sm:text-sm ${
-              activeTab === tab
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
-
-      <textarea
-        placeholder="Tell us what you'd like to see improved..."
-        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all resize-none mb-3 sm:mb-4 text-xs sm:text-sm"
-        rows={4}
-      />
-
-      <button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm text-sm sm:text-base">
-        <Send size={16} />
-        Submit Suggestion
-      </button>
-    </div>
+    </section>
   );
 }

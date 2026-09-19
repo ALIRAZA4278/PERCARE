@@ -1,65 +1,88 @@
 'use client';
 
-import { Stethoscope, Building2, Package, Home, PawPrint, AlertTriangle } from 'lucide-react';
-import { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabase';
+import { Heart, PawPrint, Shield, ShoppingBag, Stethoscope, TriangleAlert } from 'lucide-react';
 import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+import { gridCols } from '@/lib/gridCols';
 
 export default function Stats() {
   const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
-  const [counts, setCounts] = useState({ vets: 0, clinics: 0, products: 0, shelters: 0, petsRegistered: 0, petsReunited: 0 });
-
-  useEffect(() => {
-    const fetchCounts = async () => {
-      const [vetsRes, clinicsRes, productsRes, sheltersRes, petsRes, reunitedRes] = await Promise.all([
-        supabase.from('vet_profiles').select('id', { count: 'exact', head: true }),
-        supabase.from('clinics').select('id', { count: 'exact', head: true }).eq('is_approved', true),
-        supabase.from('products').select('id', { count: 'exact', head: true }).eq('is_active', true).eq('is_approved', true),
-        supabase.from('shelters').select('id', { count: 'exact', head: true }),
-        supabase.from('pets').select('id', { count: 'exact', head: true }),
-        supabase.from('lost_found_pets').select('id', { count: 'exact', head: true }).eq('status', 'reunited'),
-      ]);
-      setCounts({
-        vets: vetsRes.count || 0,
-        clinics: clinicsRes.count || 0,
-        products: productsRes.count || 0,
-        shelters: sheltersRes.count || 0,
-        petsRegistered: petsRes.count || 0,
-        petsReunited: reunitedRes.count || 0,
-      });
-    };
-    fetchCounts();
-  }, []);
 
   const stats = [
-    { number: counts.vets > 0 ? `${counts.vets}+` : '—', label: 'Verified Vets', color: 'blue', icon: Stethoscope },
-    { number: counts.clinics > 0 ? `${counts.clinics}+` : '—', label: 'Clinics', color: 'green', icon: Building2 },
-    marketplaceEnabled && { number: counts.products > 0 ? `${counts.products}+` : '—', label: 'Products', color: 'yellow', icon: Package },
-    sheltersEnabled && { number: counts.shelters > 0 ? `${counts.shelters}+` : '—', label: 'Shelters', color: 'red', icon: Home },
-    !marketplaceEnabled && { number: counts.petsRegistered > 0 ? `${counts.petsRegistered}+` : '—', label: 'Pets Registered', color: 'yellow', icon: PawPrint },
-    !sheltersEnabled && { number: counts.petsReunited > 0 ? `${counts.petsReunited}+` : '—', label: 'Pets Reunited', color: 'red', icon: AlertTriangle },
-  ].filter(Boolean);
-
-  const bgColors = { blue: 'bg-blue-50', green: 'bg-green-50', red: 'bg-red-50', yellow: 'bg-yellow-50' };
-  const iconColors = { blue: 'text-blue-200', green: 'text-green-200', red: 'text-red-200', yellow: 'text-yellow-200' };
+    {
+      value: '500+',
+      label: 'Verified Vets',
+      icon: Stethoscope,
+      gradient: 'from-primary/15 to-primary/5',
+      iconColor: 'text-primary',
+      borderColor: 'border-primary/20',
+    },
+    {
+      value: '120+',
+      label: 'Clinics',
+      icon: Shield,
+      gradient: 'from-vitality/15 to-vitality/5',
+      iconColor: 'text-vitality',
+      borderColor: 'border-vitality/20',
+    },
+    {
+      value: '8,000+',
+      label: 'Pets Registered',
+      icon: PawPrint,
+      gradient: 'from-primary/15 to-primary/5',
+      iconColor: 'text-primary',
+      borderColor: 'border-primary/20',
+    },
+    {
+      value: '300+',
+      label: 'Pets Reunited',
+      icon: TriangleAlert,
+      gradient: 'from-amber/15 to-amber/5',
+      iconColor: 'text-amber',
+      borderColor: 'border-amber/20',
+    },
+    ...(marketplaceEnabled
+      ? [
+          {
+            value: '2,000+',
+            label: 'Products',
+            icon: ShoppingBag,
+            gradient: 'from-amber/15 to-amber/5',
+            iconColor: 'text-amber',
+            borderColor: 'border-amber/20',
+          },
+        ]
+      : []),
+    ...(sheltersEnabled
+      ? [
+          {
+            value: '50+',
+            label: 'Shelters',
+            icon: Heart,
+            gradient: 'from-emergency/15 to-emergency/5',
+            iconColor: 'text-emergency',
+            borderColor: 'border-emergency/20',
+          },
+        ]
+      : []),
+  ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5 mb-6 sm:mb-8 px-4">
-      {stats.map((stat) => {
-        const Icon = stat.icon;
-        return (
-          <div
-            key={stat.label}
-            className={`${bgColors[stat.color]} rounded-xl sm:rounded-2xl p-4 sm:p-6 relative overflow-hidden`}
-          >
-            <div className={`absolute top-3 right-3 sm:top-4 sm:right-4 ${iconColors[stat.color]} opacity-40`}>
-              <Icon size={36} strokeWidth={1.5} />
+    <section className="px-4 md:px-8 pb-12 max-w-5xl mx-auto">
+      <div className={`grid grid-cols-2 ${gridCols(stats.length)} gap-3`}>
+        {stats.map((stat) => {
+          const Icon = stat.icon;
+          return (
+            <div
+              key={stat.label}
+              className={`relative overflow-hidden p-5 rounded-2xl bg-gradient-to-br ${stat.gradient} border ${stat.borderColor}`}
+            >
+              <Icon className={`h-8 w-8 ${stat.iconColor} opacity-20 absolute top-3 right-3`} />
+              <p className="text-2xl md:text-3xl font-extrabold text-foreground">{stat.value}</p>
+              <p className="text-xs text-muted-foreground mt-1 font-medium">{stat.label}</p>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 relative z-10">{stat.number}</h3>
-            <p className="text-xs sm:text-sm text-gray-600 relative z-10">{stat.label}</p>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

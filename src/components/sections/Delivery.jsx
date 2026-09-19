@@ -1,45 +1,48 @@
 'use client';
 
-import { Truck, Shield, Headphones } from 'lucide-react';
+import { Headset, PackageCheck, Truck } from 'lucide-react';
 import { useFeatureFlags } from '@/context/FeatureFlagsContext';
+
+const BADGES = [
+  { icon: Truck, label: 'Free Delivery' },
+  { icon: PackageCheck, label: 'Tamper-Proof' },
+  { icon: Headset, label: 'On-Spot Help' },
+];
 
 export default function Delivery() {
   const { marketplaceEnabled } = useFeatureFlags();
-  const deliveryFeatures = [
-    { icon: Truck, label: 'Free Delivery' },
-    { icon: Shield, label: 'Tamper-Proof' },
-    { icon: Headphones, label: 'On-Spot Help' },
-  ];
-
   if (!marketplaceEnabled) return null;
 
   return (
-    <div className="bg-blue-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-blue-100 mb-6 sm:mb-8 mx-4">
-      <div className="flex gap-3 sm:gap-4 mb-4 sm:mb-6">
-        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-          <Truck className="text-blue-600" size={20} />
+    <section className="px-4 md:px-8 pb-12 max-w-5xl mx-auto">
+      <div className="rounded-2xl bg-primary/5 border border-primary/15 p-5 md:p-6">
+        <div className="flex items-center gap-2.5 mb-4">
+          <Truck className="h-5 w-5 text-primary" />
+          <h3 className="font-bold text-foreground text-sm">Free &amp; Fast Delivery</h3>
         </div>
-        <div className="flex-1">
-          <h3 className="font-bold text-gray-900 mb-1.5 sm:mb-2 text-base sm:text-lg">Free & Fast Delivery</h3>
-          <p className="text-xs sm:text-sm text-gray-700 leading-relaxed">
-            We deliver pet products right to your doorstep — quickly and free of charge. Our company takes full responsibility for every order. If anything arrives tampered with, broken, misplaced, or missing, our delivery rider will assist you on the spot and resolve the issue immediately.
-          </p>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-3 sm:gap-4">
-        {deliveryFeatures.map((feature) => {
-          const Icon = feature.icon;
-          return (
-            <div key={feature.label} className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 text-center">
-              <div className="flex justify-center mb-1.5 sm:mb-2">
-                <Icon className="text-blue-600" size={20} />
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          We deliver pet products right to your doorstep — quickly and free of charge. Our company
+          takes full responsibility for every order. If anything arrives tampered with, broken,
+          misplaced, or missing, our delivery rider will assist you on the spot and resolve the
+          issue immediately.
+        </p>
+        <div className="grid grid-cols-3 gap-3 mt-4">
+          {BADGES.map((badge) => {
+            const Icon = badge.icon;
+            return (
+              <div
+                key={badge.label}
+                className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-card"
+              >
+                <Icon className="h-4 w-4 text-primary" />
+                <span className="text-[10px] font-medium text-foreground text-center">
+                  {badge.label}
+                </span>
               </div>
-              <p className="text-xs sm:text-sm font-medium text-gray-900">{feature.label}</p>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
