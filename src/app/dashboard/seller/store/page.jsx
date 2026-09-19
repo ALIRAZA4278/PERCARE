@@ -75,13 +75,13 @@ export default function SellerStorePage() {
   };
 
   const renderStars = (rating) => [...Array(5)].map((_, i) => (
-    <Star key={i} size={16} className={i < Math.floor(rating || 0) ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'} />
+    <Star key={i} size={16} className={i < Math.floor(rating || 0) ? 'text-amber fill-amber' : 'text-muted-foreground/40'} />
   ));
 
   // Store categories (from products brands/categories)
   const storeCategories = ['Dog Food', 'Cat Food', 'Bird Supplies', 'Fish Accessories', 'Grooming', 'Health & Wellness', 'Toys', 'Beds & Cages'];
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   const handleCreateStore = async () => {
     if (!createForm.name.trim()) return;
@@ -103,49 +103,49 @@ export default function SellerStorePage() {
   if (!store) {
     return (
       <div className="p-4 sm:p-6 lg:p-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">My Store</h1>
-        <div className="bg-white rounded-2xl border border-gray-200 p-6 max-w-xl">
-          <h2 className="text-lg font-bold text-gray-900 mb-1">Create Your Store</h2>
-          <p className="text-sm text-gray-500 mb-5">Set up your store to start selling products.</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">My Store</h1>
+        <div className="bg-card rounded-2xl border border-border p-6 max-w-xl">
+          <h2 className="text-lg font-bold text-foreground mb-1">Create Your Store</h2>
+          <p className="text-sm text-muted-foreground mb-5">Set up your store to start selling products.</p>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Store Name *</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Store Name *</label>
               <input type="text" value={createForm.name} onChange={e => setCreateForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g., PetCare Supplies"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+              <label className="block text-sm font-medium text-foreground mb-1">Description</label>
               <textarea value={createForm.description} onChange={e => setCreateForm(f => ({ ...f, description: e.target.value }))} rows={3} placeholder="Describe your store..."
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 text-sm text-gray-900 bg-white placeholder-gray-400 resize-none" />
+                className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground resize-none" />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                <label className="block text-sm font-medium text-foreground mb-1">Category</label>
                 <select value={createForm.store_category} onChange={e => setCreateForm(f => ({ ...f, store_category: e.target.value }))}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 text-sm text-gray-900 bg-white">
+                  className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card">
                   {categoryOptions.map(c => <option key={c}>{c}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+                <label className="block text-sm font-medium text-foreground mb-1">Phone</label>
                 <input type="text" value={createForm.phone} onChange={e => setCreateForm(f => ({ ...f, phone: e.target.value }))} placeholder="+92 300 1234567"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                  className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card placeholder:text-muted-foreground" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                <label className="block text-sm font-medium text-foreground mb-1">Address</label>
                 <input type="text" value={createForm.address} onChange={e => setCreateForm(f => ({ ...f, address: e.target.value }))} placeholder="Street address"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                  className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card placeholder:text-muted-foreground" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                <label className="block text-sm font-medium text-foreground mb-1">City</label>
                 <input type="text" value={createForm.city} onChange={e => setCreateForm(f => ({ ...f, city: e.target.value }))} placeholder="e.g., Karachi"
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-orange-400 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                  className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card placeholder:text-muted-foreground" />
               </div>
             </div>
             <button onClick={handleCreateStore} disabled={creating || !createForm.name.trim()}
-              className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
+              className="w-full bg-amber hover:bg-amber/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
               {creating ? 'Creating...' : 'Create Store'}
             </button>
           </div>
@@ -154,50 +154,50 @@ export default function SellerStorePage() {
     );
   }
 
-  const inputClass = "w-full px-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400";
+  const inputClass = "w-full px-4 py-2.5 rounded-lg border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground";
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Store</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">My Store</h1>
         <div className="flex items-center gap-3">
-          <button className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2">
+          <button className="bg-card border border-border hover:bg-muted text-foreground font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2">
             <Building2 size={14} /> Register as Company
           </button>
           <button onClick={openEdit}
-            className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2">
+            className="bg-card border border-border hover:bg-muted text-foreground font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2">
             <Edit size={14} /> Edit Store
           </button>
         </div>
       </div>
 
       {/* Store Profile Card */}
-      <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200 mb-5">
+      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-5">
         <div className="flex items-start gap-4 sm:gap-5">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-orange-50 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-amber/10 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden">
             {store.logo_url ? (
               <img src={store.logo_url} alt="" className="w-full h-full object-cover rounded-2xl" />
             ) : (
-              <Store size={32} className="text-orange-400" />
+              <Store size={32} className="text-amber" />
             )}
           </div>
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900">{store.name}</h2>
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground">{store.name}</h2>
               {store.is_approved && (
-                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-green-50 text-green-700 flex items-center gap-1">
+                <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-vitality/10 text-vitality flex items-center gap-1">
                   <CheckCircle size={10} /> Verified
                 </span>
               )}
             </div>
-            <p className="text-sm text-gray-500 mb-2">{store.description || 'No description'}</p>
-            <span className="text-xs font-medium px-3 py-1 rounded-full border border-gray-300 text-gray-700">
+            <p className="text-sm text-muted-foreground mb-2">{store.description || 'No description'}</p>
+            <span className="text-xs font-medium px-3 py-1 rounded-full border border-border text-foreground">
               {store.store_category || 'General Pet Store'}
             </span>
             <div className="flex items-center gap-1 mt-2">
               {renderStars(store.rating)}
-              <span className="text-sm text-gray-600 ml-1">{store.rating || 0} ({store.total_reviews || 0} reviews)</span>
+              <span className="text-sm text-muted-foreground ml-1">{store.rating || 0} ({store.total_reviews || 0} reviews)</span>
             </div>
           </div>
         </div>
@@ -206,33 +206,33 @@ export default function SellerStorePage() {
       {/* Store Details + Performance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 mb-5">
         {/* Store Details */}
-        <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Store Details</h3>
+        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+          <h3 className="text-lg font-bold text-foreground mb-4">Store Details</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
-              <MapPin size={16} className="text-gray-400 flex-shrink-0" />
-              <span className="text-sm text-gray-900">{store.address}{store.city ? `, ${store.city}` : ''}</span>
+              <MapPin size={16} className="text-muted-foreground flex-shrink-0" />
+              <span className="text-sm text-foreground">{store.address}{store.city ? `, ${store.city}` : ''}</span>
             </div>
             {store.phone && (
               <div className="flex items-center gap-3">
-                <Phone size={16} className="text-gray-400 flex-shrink-0" />
-                <span className="text-sm text-gray-900">{store.phone}</span>
+                <Phone size={16} className="text-muted-foreground flex-shrink-0" />
+                <span className="text-sm text-foreground">{store.phone}</span>
               </div>
             )}
             <div className="flex items-center gap-3">
-              <Globe size={16} className="text-gray-400 flex-shrink-0" />
-              <span className="text-sm text-gray-900">{formData.website || 'Not set'}</span>
+              <Globe size={16} className="text-muted-foreground flex-shrink-0" />
+              <span className="text-sm text-foreground">{formData.website || 'Not set'}</span>
             </div>
             <div className="flex items-center gap-3">
-              <Building2 size={16} className="text-gray-400 flex-shrink-0" />
-              <span className="text-sm text-gray-900">{storeTypeMap[store.location_type] || 'Online Store'}</span>
+              <Building2 size={16} className="text-muted-foreground flex-shrink-0" />
+              <span className="text-sm text-foreground">{storeTypeMap[store.location_type] || 'Online Store'}</span>
             </div>
           </div>
         </div>
 
         {/* Performance */}
-        <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-4">Performance</h3>
+        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+          <h3 className="text-lg font-bold text-foreground mb-4">Performance</h3>
           <div className="grid grid-cols-2 gap-3">
             {[
               { value: stats.products, label: 'Products' },
@@ -240,9 +240,9 @@ export default function SellerStorePage() {
               { value: `${stats.fulfillment}%`, label: 'Fulfillment' },
               { value: stats.avgDelivery, label: 'Avg. Delivery' },
             ].map(({ value, label }) => (
-              <div key={label} className="bg-gray-50 rounded-xl p-4 text-center border border-gray-100">
-                <p className="text-xl font-bold text-gray-900">{value}</p>
-                <p className="text-xs text-gray-500">{label}</p>
+              <div key={label} className="bg-muted rounded-xl p-4 text-center border border-border">
+                <p className="text-xl font-bold text-foreground">{value}</p>
+                <p className="text-xs text-muted-foreground">{label}</p>
               </div>
             ))}
           </div>
@@ -250,11 +250,11 @@ export default function SellerStorePage() {
       </div>
 
       {/* Store Categories */}
-      <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">Store Categories</h3>
+      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <h3 className="text-lg font-bold text-foreground mb-4">Store Categories</h3>
         <div className="flex flex-wrap gap-2">
           {storeCategories.map((cat) => (
-            <span key={cat} className="text-sm font-medium px-4 py-1.5 rounded-full bg-green-50 text-green-700 border border-green-200">
+            <span key={cat} className="text-sm font-medium px-4 py-1.5 rounded-full bg-vitality/10 text-vitality border border-vitality/20">
               {cat}
             </span>
           ))}
@@ -264,50 +264,50 @@ export default function SellerStorePage() {
       {/* Edit Store Modal */}
       {showEditModal && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setShowEditModal(false)} />
+          <div className="fixed inset-0 bg-foreground/40 z-40" onClick={() => setShowEditModal(false)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white rounded-t-2xl z-10">
-                <h2 className="text-lg font-bold text-gray-900">Edit Store Details</h2>
-                <button onClick={() => setShowEditModal(false)} className="p-1 hover:bg-gray-100 rounded-lg"><X size={20} className="text-gray-700" /></button>
+            <div className="bg-card rounded-2xl w-full max-w-sm shadow-elevated max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between p-5 border-b border-border sticky top-0 bg-card rounded-t-2xl z-10">
+                <h2 className="text-lg font-bold text-foreground">Edit Store Details</h2>
+                <button onClick={() => setShowEditModal(false)} className="p-1 hover:bg-muted rounded-lg"><X size={20} className="text-foreground" /></button>
               </div>
               <div className="p-5 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Store Name</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Store Name</label>
                   <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Description</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Description</label>
                   <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     rows={3} className={`${inputClass} resize-none`} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Store Category</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Store Category</label>
                   <select value={formData.store_category} onChange={(e) => setFormData({ ...formData, store_category: e.target.value })} className={inputClass}>
                     {categoryOptions.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Store Type</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Store Type</label>
                   <select value={formData.store_type} onChange={(e) => setFormData({ ...formData, store_type: e.target.value })} className={inputClass}>
                     {storeTypeOptions.map(t => <option key={t} value={t}>{t}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Address</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Address</label>
                   <input type="text" value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Phone</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Phone</label>
                   <input type="text" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} className={inputClass} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1.5">Website</label>
+                  <label className="block text-sm font-medium text-foreground mb-1.5">Website</label>
                   <input type="text" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} placeholder="petsupply.pk" className={inputClass} />
                 </div>
                 <div className="flex items-center gap-3">
-                  <button onClick={handleSave} className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">Save Changes</button>
-                  <button onClick={() => setShowEditModal(false)} className="px-4 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-lg transition-colors border border-gray-200 text-sm">Cancel</button>
+                  <button onClick={handleSave} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">Save Changes</button>
+                  <button onClick={() => setShowEditModal(false)} className="px-4 py-2.5 bg-card hover:bg-muted text-foreground font-medium rounded-lg transition-colors border border-border text-sm">Cancel</button>
                 </div>
               </div>
             </div>

@@ -49,29 +49,29 @@ export default function AdminSidebar() {
   };
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full bg-card">
       {/* Logo */}
-      <div className="p-5 border-b border-gray-200 shrink-0">
+      <div className="p-5 border-b border-border shrink-0">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 bg-gray-900 rounded-lg flex items-center justify-center shadow-sm">
+          <div className="w-8 h-8 bg-foreground rounded-lg flex items-center justify-center shadow-card">
             <Shield size={16} className="text-white" />
           </div>
           <div>
-            <h1 className="font-bold text-gray-900 text-sm">FluffyNest</h1>
-            <p className="text-[10px] text-blue-600 uppercase tracking-widest font-bold">ADMIN PANEL</p>
+            <h1 className="font-bold text-foreground text-sm">FluffyNest</h1>
+            <p className="text-[10px] text-primary uppercase tracking-widest font-bold">ADMIN PANEL</p>
           </div>
         </div>
       </div>
 
       {/* Admin info + role badge */}
-      <div className="px-4 py-3 border-b border-gray-200 shrink-0">
+      <div className="px-4 py-3 border-b border-border shrink-0">
         <div className="flex items-center gap-2.5 mb-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-700 to-blue-900 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0">
+          <div className="w-8 h-8 bg-gradient-to-br from-primary to-primary rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0">
             {profile?.full_name?.charAt(0)?.toUpperCase() || 'A'}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-gray-900 truncate">{profile?.full_name || 'Admin'}</p>
-            <p className="text-[10px] text-gray-500 truncate">{profile?.email}</p>
+            <p className="text-xs font-semibold text-foreground truncate">{profile?.full_name || 'Admin'}</p>
+            <p className="text-[10px] text-muted-foreground truncate">{profile?.email}</p>
           </div>
         </div>
         <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${roleBadgeClass}`}>
@@ -85,8 +85,8 @@ export default function AdminSidebar() {
           <Link key={href} href={href} onClick={() => setMobileOpen(false)}
             className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
               isActive(href)
-                ? 'bg-blue-600 text-white shadow-sm'
-                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                ? 'bg-primary text-white shadow-card'
+                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
             }`}>
             <Icon size={16} className="shrink-0" />
             <span>{name}</span>
@@ -95,9 +95,9 @@ export default function AdminSidebar() {
       </nav>
 
       {/* Logout */}
-      <div className="p-2 border-t border-gray-200 shrink-0">
+      <div className="p-2 border-t border-border shrink-0">
         <button onClick={handleLogout}
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-red-600 hover:bg-red-50 transition-colors w-full">
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-emergency hover:bg-emergency/10 transition-colors w-full">
           <LogOut size={16} />
           <span>Sign Out</span>
         </button>
@@ -108,14 +108,14 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Mobile top bar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-30 px-4 py-3 flex items-center justify-between shadow-sm">
+      <div className="lg:hidden fixed top-0 left-0 right-0 bg-card border-b border-border z-30 px-4 py-3 flex items-center justify-between shadow-card">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-gray-900 rounded-lg flex items-center justify-center">
+          <div className="w-7 h-7 bg-foreground rounded-lg flex items-center justify-center">
             <Shield size={14} className="text-white" />
           </div>
-          <span className="font-bold text-gray-900 text-sm">Admin Panel</span>
+          <span className="font-bold text-foreground text-sm">Admin Panel</span>
         </div>
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 hover:bg-gray-100 rounded-lg text-gray-600">
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 hover:bg-muted rounded-lg text-muted-foreground">
           {mobileOpen ? <X size={18} /> : <Menu size={18} />}
         </button>
       </div>
@@ -124,14 +124,14 @@ export default function AdminSidebar() {
       {mobileOpen && (
         <>
           <div className="fixed inset-0 bg-black/70 z-40 lg:hidden" onClick={() => setMobileOpen(false)} />
-          <div className="fixed left-0 top-0 bottom-0 w-64 z-50 lg:hidden shadow-2xl">
+          <div className="fixed left-0 top-0 bottom-0 w-64 z-50 lg:hidden shadow-elevated">
             <SidebarContent />
           </div>
         </>
       )}
 
       {/* Desktop sidebar */}
-      <div className="hidden lg:block fixed left-0 top-0 bottom-0 w-64 border-r border-gray-200 z-20">
+      <div className="hidden lg:block fixed left-0 top-0 bottom-0 w-64 border-r border-border z-20">
         <SidebarContent />
       </div>
     </>

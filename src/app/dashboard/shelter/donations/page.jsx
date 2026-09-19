@@ -103,48 +103,48 @@ export default function ShelterDonationsPage() {
   const formatK = (n) => n >= 1000 ? `Rs. ${(n / 1000).toFixed(0)}K` : `Rs. ${n}`;
   const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Donations</h1>
-          <p className="text-sm text-teal-600 mt-0.5">Manage donation packages and track contributions</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Donations</h1>
+          <p className="text-sm text-vitality mt-0.5">Manage donation packages and track contributions</p>
         </div>
-        <button onClick={openCreate} className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+        <button onClick={openCreate} className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
           <Plus size={16} /> Create Package
         </button>
       </div>
 
       {/* Stat Cards */}
       <div className="grid grid-cols-3 gap-4 mb-5">
-        <div className="bg-white rounded-2xl p-5 border border-gray-200">
-          <DollarSign size={22} className="text-teal-500 mb-2" />
-          <p className="text-2xl font-bold text-gray-900">{formatK(thisMonth)}</p>
-          <p className="text-sm text-teal-500 mt-0.5">This Month</p>
+        <div className="bg-card rounded-2xl p-5 border border-border">
+          <DollarSign size={22} className="text-vitality mb-2" />
+          <p className="text-2xl font-bold text-foreground">{formatK(thisMonth)}</p>
+          <p className="text-sm text-vitality mt-0.5">This Month</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 border border-gray-200">
-          <Heart size={22} className="text-pink-400 mb-2" />
-          <p className="text-2xl font-bold text-gray-900">{uniqueDonors}</p>
-          <p className="text-sm text-teal-500 mt-0.5">Total Donors</p>
+        <div className="bg-card rounded-2xl p-5 border border-border">
+          <Heart size={22} className="text-emergency mb-2" />
+          <p className="text-2xl font-bold text-foreground">{uniqueDonors}</p>
+          <p className="text-sm text-vitality mt-0.5">Total Donors</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 border border-gray-200">
-          <TrendingUp size={22} className="text-teal-500 mb-2" />
-          <p className="text-2xl font-bold text-gray-900">{formatK(allTime)}</p>
-          <p className="text-sm text-teal-500 mt-0.5">All Time</p>
+        <div className="bg-card rounded-2xl p-5 border border-border">
+          <TrendingUp size={22} className="text-vitality mb-2" />
+          <p className="text-2xl font-bold text-foreground">{formatK(allTime)}</p>
+          <p className="text-sm text-vitality mt-0.5">All Time</p>
         </div>
       </div>
 
       {/* Monthly Goal Progress */}
       {monthlyGoal > 0 && (
-        <div className="bg-white rounded-2xl p-5 border border-gray-200 mb-5">
+        <div className="bg-card rounded-2xl p-5 border border-border mb-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="font-semibold text-gray-900">Monthly Goal Progress</span>
-            <span className="text-sm font-medium text-gray-600">{formatK(thisMonth)} / {formatK(monthlyGoal)}</span>
+            <span className="font-semibold text-foreground">Monthly Goal Progress</span>
+            <span className="text-sm font-medium text-muted-foreground">{formatK(thisMonth)} / {formatK(monthlyGoal)}</span>
           </div>
-          <div className="w-full bg-gray-100 rounded-full h-3 overflow-hidden">
+          <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
             <div className="h-full rounded-full transition-all"
               style={{ width: `${progressPct}%`, background: 'linear-gradient(to right, #3b82f6, #22c55e)' }} />
           </div>
@@ -152,88 +152,88 @@ export default function ShelterDonationsPage() {
       )}
 
       {/* Donation Packages */}
-      <div className="bg-white rounded-2xl border border-gray-200 mb-5">
-        <div className="p-5 border-b border-gray-100">
-          <h3 className="text-base font-bold text-gray-900">Donation Packages</h3>
+      <div className="bg-card rounded-2xl border border-border mb-5">
+        <div className="p-5 border-b border-border">
+          <h3 className="text-base font-bold text-foreground">Donation Packages</h3>
         </div>
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-border">
           {packages.map((pkg) => (
             <div key={pkg.id} className="flex items-center justify-between px-5 py-4">
               <div>
-                <p className="font-semibold text-gray-900 text-sm">{pkg.name}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{pkg.is_recurring ? 'Monthly' : 'One-time'} · {getDonorCount(pkg.id)} donors</p>
+                <p className="font-semibold text-foreground text-sm">{pkg.name}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{pkg.is_recurring ? 'Monthly' : 'One-time'} · {getDonorCount(pkg.id)} donors</p>
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-semibold text-gray-900 text-sm">{pkg.amount ? `Rs. ${Number(pkg.amount).toLocaleString()}` : 'Custom'}</span>
-                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${pkg.is_active ? 'bg-green-50 text-green-700' : 'bg-yellow-50 text-yellow-700'}`}>
+                <span className="font-semibold text-foreground text-sm">{pkg.amount ? `Rs. ${Number(pkg.amount).toLocaleString()}` : 'Custom'}</span>
+                <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${pkg.is_active ? 'bg-vitality/10 text-vitality' : 'bg-amber/10 text-amber'}`}>
                   {pkg.is_active ? 'Active' : 'Pending'}
                 </span>
-                <button onClick={() => openEdit(pkg)} className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
-                  <Pencil size={15} className="text-gray-500" />
+                <button onClick={() => openEdit(pkg)} className="p-1.5 hover:bg-muted rounded-lg transition-colors">
+                  <Pencil size={15} className="text-muted-foreground" />
                 </button>
               </div>
             </div>
           ))}
           {packages.length === 0 && (
-            <p className="text-sm text-gray-500 text-center py-10">No donation packages yet. Create one to get started.</p>
+            <p className="text-sm text-muted-foreground text-center py-10">No donation packages yet. Create one to get started.</p>
           )}
         </div>
       </div>
 
       {/* Bank Details */}
-      <div className="bg-white rounded-2xl border border-gray-200 mb-5">
-        <div className="p-5 border-b border-gray-100">
-          <h3 className="text-base font-bold text-gray-900">Bank Details</h3>
+      <div className="bg-card rounded-2xl border border-border mb-5">
+        <div className="p-5 border-b border-border">
+          <h3 className="text-base font-bold text-foreground">Bank Details</h3>
         </div>
         <div className="flex items-center justify-between px-5 py-4">
           <div className="flex items-center gap-3">
-            <CreditCard size={20} className="text-gray-400" />
+            <CreditCard size={20} className="text-muted-foreground" />
             <div>
               {shelter?.bank_name ? (
                 <>
-                  <p className="font-semibold text-gray-900 text-sm">{shelter.bank_name}</p>
-                  <p className="text-xs text-gray-500">Account: {shelter.account_number || '—'}</p>
+                  <p className="font-semibold text-foreground text-sm">{shelter.bank_name}</p>
+                  <p className="text-xs text-muted-foreground">Account: {shelter.account_number || '—'}</p>
                 </>
               ) : (
-                <p className="text-sm text-gray-500">No bank details added</p>
+                <p className="text-sm text-muted-foreground">No bank details added</p>
               )}
             </div>
           </div>
-          <button onClick={() => setShowBankEdit(true)} className="p-1.5 hover:bg-gray-100 rounded-lg transition-colors">
-            <Pencil size={15} className="text-gray-500" />
+          <button onClick={() => setShowBankEdit(true)} className="p-1.5 hover:bg-muted rounded-lg transition-colors">
+            <Pencil size={15} className="text-muted-foreground" />
           </button>
         </div>
       </div>
 
       {/* Recent Donations */}
-      <div className="bg-white rounded-2xl border border-gray-200">
-        <div className="p-5 border-b border-gray-100">
-          <h3 className="text-base font-bold text-gray-900">Recent Donations</h3>
+      <div className="bg-card rounded-2xl border border-border">
+        <div className="p-5 border-b border-border">
+          <h3 className="text-base font-bold text-foreground">Recent Donations</h3>
         </div>
-        <div className="divide-y divide-gray-50">
+        <div className="divide-y divide-border">
           {donations.map((don) => {
             const name = don.donor?.full_name || 'Anonymous';
             const initial = name.charAt(0).toUpperCase();
             return (
               <div key={don.id} className="flex items-center justify-between px-5 py-4">
                 <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 font-bold text-sm shrink-0">
+                  <div className="w-9 h-9 bg-muted rounded-full flex items-center justify-center text-muted-foreground font-bold text-sm shrink-0">
                     {initial}
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 text-sm">{name}</p>
-                    <p className="text-xs text-teal-600">{don.package?.name || don.donation_type || 'Donation'}{don.description ? ` · ${don.description}` : ''}</p>
+                    <p className="font-semibold text-foreground text-sm">{name}</p>
+                    <p className="text-xs text-vitality">{don.package?.name || don.donation_type || 'Donation'}{don.description ? ` · ${don.description}` : ''}</p>
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <p className="font-bold text-teal-600 text-sm">Rs. {(don.amount || 0).toLocaleString()}</p>
-                  <p className="text-xs text-gray-400">{formatDate(don.created_at)}</p>
+                  <p className="font-bold text-vitality text-sm">Rs. {(don.amount || 0).toLocaleString()}</p>
+                  <p className="text-xs text-muted-foreground">{formatDate(don.created_at)}</p>
                 </div>
               </div>
             );
           })}
           {donations.length === 0 && (
-            <p className="text-sm text-gray-500 text-center py-10">No donations received yet.</p>
+            <p className="text-sm text-muted-foreground text-center py-10">No donations received yet.</p>
           )}
         </div>
       </div>
@@ -241,41 +241,41 @@ export default function ShelterDonationsPage() {
       {/* Create Package Modal */}
       {showCreatePkg && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setShowCreatePkg(false)} />
+          <div className="fixed inset-0 bg-foreground/40 z-40" onClick={() => setShowCreatePkg(false)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl">
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <h2 className="text-base font-bold text-gray-900">Create Donation Package</h2>
-                <button onClick={() => setShowCreatePkg(false)} className="p-1 hover:bg-gray-100 rounded-full"><X size={18} className="text-gray-700" /></button>
+            <div className="bg-card rounded-2xl w-full max-w-sm shadow-elevated">
+              <div className="flex items-center justify-between p-5 border-b border-border">
+                <h2 className="text-base font-bold text-foreground">Create Donation Package</h2>
+                <button onClick={() => setShowCreatePkg(false)} className="p-1 hover:bg-muted rounded-full"><X size={18} className="text-foreground" /></button>
               </div>
               <div className="p-5 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Package Name</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Package Name</label>
                   <input type="text" value={pkgForm.name} onChange={e => setPkgForm(f => ({ ...f, name: e.target.value }))} placeholder="e.g., Feed a Pet (Daily)"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Amount</label>
                   <input type="text" value={pkgForm.amount} onChange={e => setPkgForm(f => ({ ...f, amount: e.target.value }))} placeholder="e.g., Rs. 500 or Custom"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Frequency</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Frequency</label>
                   <select value={pkgForm.frequency} onChange={e => setPkgForm(f => ({ ...f, frequency: e.target.value }))}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 text-sm text-gray-900 bg-white">
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card">
                     <option>One-time</option><option>Monthly</option>
                   </select>
                 </div>
-                <div className="flex items-start gap-2 bg-yellow-50 border border-yellow-200 rounded-xl p-3">
-                  <AlertCircle size={15} className="text-yellow-600 mt-0.5 shrink-0" />
-                  <p className="text-xs text-yellow-700">This package will be submitted for approval before going live.</p>
+                <div className="flex items-start gap-2 bg-amber/10 border border-amber/20 rounded-xl p-3">
+                  <AlertCircle size={15} className="text-amber mt-0.5 shrink-0" />
+                  <p className="text-xs text-amber">This package will be submitted for approval before going live.</p>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleCreatePkg} disabled={pkgSaving}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                     {pkgSaving ? 'Submitting...' : 'Submit for Approval'}
                   </button>
-                  <button onClick={() => setShowCreatePkg(false)} className="flex-1 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
+                  <button onClick={() => setShowCreatePkg(false)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
                 </div>
               </div>
             </div>
@@ -286,40 +286,40 @@ export default function ShelterDonationsPage() {
       {/* Edit Package Modal */}
       {editPkg && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setEditPkg(null)} />
+          <div className="fixed inset-0 bg-foreground/40 z-40" onClick={() => setEditPkg(null)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl">
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <h2 className="text-base font-bold text-gray-900">Edit Package</h2>
-                <button onClick={() => setEditPkg(null)} className="p-1 hover:bg-gray-100 rounded-full"><X size={18} className="text-gray-700" /></button>
+            <div className="bg-card rounded-2xl w-full max-w-sm shadow-elevated">
+              <div className="flex items-center justify-between p-5 border-b border-border">
+                <h2 className="text-base font-bold text-foreground">Edit Package</h2>
+                <button onClick={() => setEditPkg(null)} className="p-1 hover:bg-muted rounded-full"><X size={18} className="text-foreground" /></button>
               </div>
               <div className="p-5 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Package Name</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Package Name</label>
                   <input type="text" value={pkgForm.name} onChange={e => setPkgForm(f => ({ ...f, name: e.target.value }))}
-                    className="w-full px-4 py-2.5 rounded-xl border border-blue-400 outline-none ring-2 ring-blue-100 text-sm text-gray-900 bg-white" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-primary/40 outline-none ring-2 ring-primary/20 text-sm text-foreground bg-card" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Amount</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Amount</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-500">Rs.</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">Rs.</span>
                     <input type="text" value={pkgForm.amount} onChange={e => setPkgForm(f => ({ ...f, amount: e.target.value }))}
-                      className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white" />
+                      className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card" />
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Frequency</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Frequency</label>
                   <select value={pkgForm.frequency} onChange={e => setPkgForm(f => ({ ...f, frequency: e.target.value }))}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 text-sm text-gray-900 bg-white">
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card">
                     <option>One-time</option><option>Monthly</option>
                   </select>
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleEditPkg} disabled={pkgSaving}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                     {pkgSaving ? 'Saving...' : 'Save Changes'}
                   </button>
-                  <button onClick={() => setEditPkg(null)} className="flex-1 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
+                  <button onClick={() => setEditPkg(null)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
                 </div>
               </div>
             </div>
@@ -330,30 +330,30 @@ export default function ShelterDonationsPage() {
       {/* Bank Details Edit Modal */}
       {showBankEdit && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setShowBankEdit(false)} />
+          <div className="fixed inset-0 bg-foreground/40 z-40" onClick={() => setShowBankEdit(false)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl">
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <h2 className="text-base font-bold text-gray-900">Edit Bank Details</h2>
-                <button onClick={() => setShowBankEdit(false)} className="p-1 hover:bg-gray-100 rounded-full"><X size={18} className="text-gray-700" /></button>
+            <div className="bg-card rounded-2xl w-full max-w-sm shadow-elevated">
+              <div className="flex items-center justify-between p-5 border-b border-border">
+                <h2 className="text-base font-bold text-foreground">Edit Bank Details</h2>
+                <button onClick={() => setShowBankEdit(false)} className="p-1 hover:bg-muted rounded-full"><X size={18} className="text-foreground" /></button>
               </div>
               <div className="p-5 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Bank Name</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Bank Name</label>
                   <input type="text" value={bankForm.bank_name} onChange={e => setBankForm(f => ({ ...f, bank_name: e.target.value }))} placeholder="e.g., Meezan Bank — Safe Paws Trust"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Account Number</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Account Number</label>
                   <input type="text" value={bankForm.account_number} onChange={e => setBankForm(f => ({ ...f, account_number: e.target.value }))} placeholder="e.g., 0123-4567890-01"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleBankSave} disabled={bankSaving}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                     {bankSaving ? 'Saving...' : 'Save Changes'}
                   </button>
-                  <button onClick={() => setShowBankEdit(false)} className="flex-1 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
+                  <button onClick={() => setShowBankEdit(false)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
                 </div>
               </div>
             </div>

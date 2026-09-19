@@ -82,23 +82,23 @@ export default function BrowsePetsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-gradient-to-b from-gray-100 to-gray-50 py-8 sm:py-14">
+    <div className="min-h-screen bg-background">
+      <div className="bg-gradient-to-b from-muted to-muted py-8 sm:py-14">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
-          <Link href="/" className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-gray-900 mb-6 transition-colors">
+          <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors">
             <ArrowLeft size={16} />Back to Home
           </Link>
           <div className="text-center">
-            <div className="inline-flex items-center gap-1.5 bg-green-100 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full mb-4 uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 bg-vitality/10 text-vitality text-xs font-bold px-3 py-1.5 rounded-full mb-4 uppercase tracking-wider">
               <PawPrint size={13} />Company-Owned Pets Only
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3">
-              Your New Best Friend, <span className="text-blue-600">Delivered Safely.</span>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3">
+              Your New Best Friend, <span className="text-primary">Delivered Safely.</span>
             </h1>
-            <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto mb-6 leading-relaxed">
+            <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto mb-6 leading-relaxed">
               We take care of everything — health, food, shelter, and support. Browse our curated selection of premium pets.
             </p>
-            <Link href="#browse" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
+            <Link href="#browse" className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 rounded-xl transition-colors text-sm">
               Explore Pets <ArrowRight size={16} />
             </Link>
           </div>
@@ -108,27 +108,27 @@ export default function BrowsePetsPage() {
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
         <div className="py-10 sm:py-14">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">What You Get With Every Pet</h2>
-            <p className="text-sm sm:text-base text-gray-600">A complete package designed for trust, safety, and your pet's well-being</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">What You Get With Every Pet</h2>
+            <p className="text-sm sm:text-base text-muted-foreground">A complete package designed for trust, safety, and your pet's well-being</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="bg-white rounded-2xl p-5 sm:p-6 border border-gray-200 hover:shadow-md transition-all">
-                <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center mb-3"><Icon size={20} className="text-blue-600" /></div>
-                <h3 className="font-bold text-gray-900 text-sm sm:text-base mb-1">{title}</h3>
-                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">{description}</p>
+              <div key={title} className="bg-card rounded-2xl p-5 sm:p-6 border border-border hover:shadow-card-hover transition-all">
+                <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mb-3"><Icon size={20} className="text-primary" /></div>
+                <h3 className="font-bold text-foreground text-sm sm:text-base mb-1">{title}</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{description}</p>
               </div>
             ))}
           </div>
         </div>
 
         <div id="browse" className="pb-10 sm:pb-14">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Browse by Category</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4">Browse by Category</h2>
           <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4 scrollbar-hide">
             {categories.map((cat) => (
               <button key={cat} onClick={() => setActiveCategory(cat)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-colors flex-shrink-0 ${
-                  activeCategory === cat ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                  activeCategory === cat ? 'bg-primary text-white' : 'bg-card text-foreground border border-border hover:bg-muted'
                 }`}>
                 <PawPrint size={14} />{cat}
               </button>
@@ -137,37 +137,37 @@ export default function BrowsePetsPage() {
 
           <div className="flex items-center gap-3 mb-4">
             <div className="flex-1 relative">
-              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground" />
               <input type="text" placeholder="Search by name or breed..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm bg-white" />
+                className="w-full pl-11 pr-4 py-3 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm bg-card" />
             </div>
           </div>
 
           {loading ? (
-            <div className="text-center py-16"><p className="text-gray-500">Loading pets...</p></div>
+            <div className="text-center py-16"><p className="text-muted-foreground">Loading pets...</p></div>
           ) : (
             <>
-              <p className="text-sm text-gray-600 mb-4"><span className="font-semibold text-gray-900">{filtered.length}</span> pets found</p>
+              <p className="text-sm text-muted-foreground mb-4"><span className="font-semibold text-foreground">{filtered.length}</span> pets found</p>
               <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
                 {filtered.map((pet) => (
-                  <Link key={pet.id} href={`/get-your-pet/${pet.id}`} className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all group">
-                    <div className="relative aspect-square bg-gray-100 flex items-center justify-center group-hover:bg-gray-200 transition-colors">
+                  <Link key={pet.id} href={`/get-your-pet/${pet.id}`} className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-card-hover transition-all group">
+                    <div className="relative aspect-square bg-muted flex items-center justify-center group-hover:bg-muted transition-colors">
                       {pet.image_url ? (
                         <img src={pet.image_url} alt={pet.name} className="w-full h-full object-cover" />
                       ) : (
                         <span className="text-5xl sm:text-6xl">{emojiMap[pet.species] || '🐾'}</span>
                       )}
-                      <div className="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                      <div className="absolute top-3 left-3 bg-vitality text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
                         <CheckCircle size={10} />Vet Certified
                       </div>
-                      <button onClick={handleLike} className="absolute top-3 right-3 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center hover:bg-white transition-colors">
-                        <Heart size={15} className="text-gray-400" />
+                      <button onClick={handleLike} className="absolute top-3 right-3 w-8 h-8 bg-card/80 rounded-full flex items-center justify-center hover:bg-card transition-colors">
+                        <Heart size={15} className="text-muted-foreground" />
                       </button>
                     </div>
                     <div className="p-3 sm:p-4">
-                      <h3 className="font-bold text-gray-900 text-sm">{pet.name}</h3>
-                      <p className="text-xs text-gray-500 mb-2 capitalize">{pet.breed || pet.species} · {pet.age_years ? `${pet.age_years}y` : ''}{pet.age_months ? ` ${pet.age_months}m` : ''}</p>
-                      <p className="text-sm sm:text-base font-bold text-blue-600">Rs. {pet.price.toLocaleString()}</p>
+                      <h3 className="font-bold text-foreground text-sm">{pet.name}</h3>
+                      <p className="text-xs text-muted-foreground mb-2 capitalize">{pet.breed || pet.species} · {pet.age_years ? `${pet.age_years}y` : ''}{pet.age_months ? ` ${pet.age_months}m` : ''}</p>
+                      <p className="text-sm sm:text-base font-bold text-primary">Rs. {pet.price.toLocaleString()}</p>
                     </div>
                   </Link>
                 ))}
@@ -176,54 +176,54 @@ export default function BrowsePetsPage() {
               {filtered.length === 0 && (
                 <div className="text-center py-16">
                   <div className="text-6xl mb-4">🐾</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">No pets available yet</h3>
-                  <p className="text-gray-600">Check back soon for new arrivals!</p>
+                  <h3 className="text-xl font-bold text-foreground mb-2">No pets available yet</h3>
+                  <p className="text-muted-foreground">Check back soon for new arrivals!</p>
                 </div>
               )}
             </>
           )}
         </div>
 
-        <div className="py-10 sm:py-14 border-t border-gray-200">
+        <div className="py-10 sm:py-14 border-t border-border">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">How It Works</h2>
-            <p className="text-sm sm:text-base text-gray-600">A simple, safe process from selection to delivery</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">How It Works</h2>
+            <p className="text-sm sm:text-base text-muted-foreground">A simple, safe process from selection to delivery</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
             {steps.map(({ num, title, description }) => (
-              <div key={num} className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-200 text-center hover:shadow-md transition-all">
-                <div className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-sm">{num}</div>
-                <h3 className="font-bold text-gray-900 text-sm mb-1">{title}</h3>
-                <p className="text-xs text-gray-600 leading-relaxed">{description}</p>
+              <div key={num} className="bg-card rounded-2xl p-4 sm:p-5 border border-border text-center hover:shadow-card-hover transition-all">
+                <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-3 font-bold text-sm">{num}</div>
+                <h3 className="font-bold text-foreground text-sm mb-1">{title}</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">{description}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="py-10 sm:py-14 border-t border-gray-200">
+        <div className="py-10 sm:py-14 border-t border-border">
           <div className="text-center mb-8">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Trusted by Pet Lovers</h2>
-            <p className="text-sm sm:text-base text-gray-600">Hear from families who found their perfect companion</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Trusted by Pet Lovers</h2>
+            <p className="text-sm sm:text-base text-muted-foreground">Hear from families who found their perfect companion</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             {reviews.map((review) => (
-              <div key={review.name} className="bg-white rounded-2xl p-5 sm:p-6 border border-gray-200">
+              <div key={review.name} className="bg-card rounded-2xl p-5 sm:p-6 border border-border">
                 <div className="flex items-center gap-0.5 mb-3">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={16} className={i < review.rating ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'} />
+                    <Star key={i} size={16} className={i < review.rating ? 'text-amber fill-amber' : 'text-muted-foreground/40'} />
                   ))}
                 </div>
-                <p className="text-sm text-gray-700 leading-relaxed mb-3">{review.text}</p>
-                <p className="font-bold text-gray-900 text-sm">{review.name}</p>
+                <p className="text-sm text-foreground leading-relaxed mb-3">{review.text}</p>
+                <p className="font-bold text-foreground text-sm">{review.name}</p>
               </div>
             ))}
           </div>
           <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
             {[
-              { icon: Truck, label: 'Safe Delivery', color: 'text-blue-600 bg-blue-50 border-blue-100' },
-              { icon: CheckCircle, label: 'Verified Health', color: 'text-green-600 bg-green-50 border-green-100' },
-              { icon: Stethoscope, label: 'Vet Approved', color: 'text-green-600 bg-green-50 border-green-100' },
-              { icon: Shield, label: '100-Day Guarantee', color: 'text-blue-600 bg-blue-50 border-blue-100' },
+              { icon: Truck, label: 'Safe Delivery', color: 'text-primary bg-primary/10 border-primary/20' },
+              { icon: CheckCircle, label: 'Verified Health', color: 'text-vitality bg-vitality/10 border-vitality/20' },
+              { icon: Stethoscope, label: 'Vet Approved', color: 'text-vitality bg-vitality/10 border-vitality/20' },
+              { icon: Shield, label: '100-Day Guarantee', color: 'text-primary bg-primary/10 border-primary/20' },
             ].map(({ icon: Icon, label, color }) => (
               <div key={label} className={`flex items-center gap-1.5 px-4 py-2 rounded-full border text-sm font-medium ${color}`}>
                 <Icon size={15} />{label}

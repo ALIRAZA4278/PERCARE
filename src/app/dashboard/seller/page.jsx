@@ -75,16 +75,16 @@ export default function SellerDashboardPage() {
   };
 
   const statusColors = {
-    pending: 'bg-yellow-50 text-yellow-700',
-    confirmed: 'bg-blue-50 text-blue-700',
-    processing: 'bg-orange-50 text-orange-700',
-    shipped: 'bg-blue-50 text-blue-700',
-    delivered: 'bg-green-50 text-green-700',
-    cancelled: 'bg-red-50 text-red-600',
+    pending: 'bg-amber/10 text-amber',
+    confirmed: 'bg-primary/10 text-primary',
+    processing: 'bg-amber/10 text-amber',
+    shipped: 'bg-primary/10 text-primary',
+    delivered: 'bg-vitality/10 text-vitality',
+    cancelled: 'bg-emergency/10 text-emergency',
   };
 
   if (loading) {
-    return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+    return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
   }
 
   if (!store) {
@@ -92,9 +92,9 @@ export default function SellerDashboardPage() {
       <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-[60vh]">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-4">🏪</div>
-          <h2 className="text-xl font-bold text-gray-900 mb-2">Set Up Your Store</h2>
-          <p className="text-gray-600 mb-6">Create your store to start selling products.</p>
-          <Link href="/dashboard/seller/store" className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-6 py-3 rounded-lg transition-colors text-sm">
+          <h2 className="text-xl font-bold text-foreground mb-2">Set Up Your Store</h2>
+          <p className="text-muted-foreground mb-6">Create your store to start selling products.</p>
+          <Link href="/dashboard/seller/store" className="bg-amber hover:bg-amber/90 text-white font-medium px-6 py-3 rounded-lg transition-colors text-sm">
             Create Store
           </Link>
         </div>
@@ -107,16 +107,16 @@ export default function SellerDashboardPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Welcome, {store.name}! 🏪</h1>
-          <p className="text-sm text-gray-600 mt-1">Here's your store performance today</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Welcome, {store.name}! 🏪</h1>
+          <p className="text-sm text-muted-foreground mt-1">Here's your store performance today</p>
         </div>
         <div className="flex items-center gap-3">
           <Link href="/dashboard/seller/products"
-            className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium px-4 py-2 rounded-lg transition-colors text-sm">
+            className="bg-card border border-border hover:bg-muted text-foreground font-medium px-4 py-2 rounded-lg transition-colors text-sm">
             Manage Products
           </Link>
           <Link href="/dashboard/seller/orders"
-            className="bg-orange-500 hover:bg-orange-600 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm">
+            className="bg-amber hover:bg-amber/90 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm">
             View Orders
           </Link>
         </div>
@@ -125,15 +125,15 @@ export default function SellerDashboardPage() {
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
         {[
-          { icon: Package, label: 'Total Products', value: stats.products, color: 'bg-blue-50 text-blue-600' },
-          { icon: ClipboardList, label: 'Active Orders', value: stats.activeOrders, color: 'bg-green-50 text-green-600' },
-          { icon: DollarSign, label: 'Revenue (Month)', value: `Rs. ${(stats.revenue / 1000).toFixed(0)}K`, color: 'bg-yellow-50 text-yellow-600' },
-          { icon: Star, label: 'Store Rating', value: stats.rating || '—', color: 'bg-purple-50 text-purple-600' },
+          { icon: Package, label: 'Total Products', value: stats.products, color: 'bg-primary/10 text-primary' },
+          { icon: ClipboardList, label: 'Active Orders', value: stats.activeOrders, color: 'bg-vitality/10 text-vitality' },
+          { icon: DollarSign, label: 'Revenue (Month)', value: `Rs. ${(stats.revenue / 1000).toFixed(0)}K`, color: 'bg-amber/10 text-amber' },
+          { icon: Star, label: 'Store Rating', value: stats.rating || '—', color: 'bg-primary/10 text-primary' },
         ].map(({ icon: Icon, label, value, color }) => (
-          <div key={label} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-200">
+          <div key={label} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border">
             <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-3`}><Icon size={20} /></div>
-            <p className="text-xl sm:text-2xl font-bold text-gray-900">{value}</p>
-            <p className="text-xs sm:text-sm text-gray-500">{label}</p>
+            <p className="text-xl sm:text-2xl font-bold text-foreground">{value}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{label}</p>
           </div>
         ))}
       </div>
@@ -141,22 +141,22 @@ export default function SellerDashboardPage() {
       {/* Recent Orders + Low Stock + Quick Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6">
         {/* Recent Orders */}
-        <div className="lg:col-span-3 bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
+        <div className="lg:col-span-3 bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-gray-900">Recent Orders</h3>
-            <Link href="/dashboard/seller/orders" className="text-sm text-blue-600 font-medium hover:text-blue-700">View all</Link>
+            <h3 className="text-lg font-bold text-foreground">Recent Orders</h3>
+            <Link href="/dashboard/seller/orders" className="text-sm text-primary font-medium hover:text-primary">View all</Link>
           </div>
           {recentOrders.length > 0 ? (
             <div className="space-y-3">
               {recentOrders.map((order) => (
-                <div key={order.id} className="flex items-center justify-between p-3 sm:p-4 rounded-xl border border-gray-100 hover:bg-gray-50 transition-colors">
+                <div key={order.id} className="flex items-center justify-between p-3 sm:p-4 rounded-xl border border-border hover:bg-muted transition-colors">
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900 text-sm">{order.productName}</p>
-                    <p className="text-xs text-gray-500">{order.id.slice(0, 8).toUpperCase()} · {order.buyer}</p>
+                    <p className="font-semibold text-foreground text-sm">{order.productName}</p>
+                    <p className="text-xs text-muted-foreground">{order.id.slice(0, 8).toUpperCase()} · {order.buyer}</p>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
-                    <span className="font-bold text-gray-900 text-sm">Rs. {order.price.toLocaleString()}</span>
-                    <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${statusColors[order.status] || 'bg-gray-100 text-gray-600'}`}>
+                    <span className="font-bold text-foreground text-sm">Rs. {order.price.toLocaleString()}</span>
+                    <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full ${statusColors[order.status] || 'bg-muted text-muted-foreground'}`}>
                       {order.status}
                     </span>
                   </div>
@@ -164,40 +164,40 @@ export default function SellerDashboardPage() {
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500 text-center py-8">No orders yet</p>
+            <p className="text-sm text-muted-foreground text-center py-8">No orders yet</p>
           )}
         </div>
 
         {/* Right Column */}
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Low Stock Alert */}
-          <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
+          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
             <div className="flex items-center gap-2 mb-4">
-              <AlertCircle size={18} className="text-orange-500" />
-              <h3 className="text-lg font-bold text-gray-900">Low Stock Alert</h3>
+              <AlertCircle size={18} className="text-amber" />
+              <h3 className="text-lg font-bold text-foreground">Low Stock Alert</h3>
             </div>
             {lowStock.length > 0 ? (
               <div className="space-y-3">
                 {lowStock.map((item, i) => (
                   <div key={i} className="flex items-center justify-between">
                     <div>
-                      <p className="font-semibold text-gray-900 text-sm">{item.name}</p>
-                      <p className="text-xs text-gray-500">Min: 10</p>
+                      <p className="font-semibold text-foreground text-sm">{item.name}</p>
+                      <p className="text-xs text-muted-foreground">Min: 10</p>
                     </div>
-                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-red-50 text-red-600">{item.stock_quantity} left</span>
+                    <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-emergency/10 text-emergency">{item.stock_quantity} left</span>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-500">All products well stocked</p>
+              <p className="text-sm text-muted-foreground">All products well stocked</p>
             )}
           </div>
 
           {/* Quick Stats */}
-          <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
+          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
             <div className="flex items-center gap-2 mb-4">
-              <TrendingUp size={18} className="text-blue-600" />
-              <h3 className="text-lg font-bold text-gray-900">Quick Stats</h3>
+              <TrendingUp size={18} className="text-primary" />
+              <h3 className="text-lg font-bold text-foreground">Quick Stats</h3>
             </div>
             <div className="space-y-3">
               {[
@@ -206,8 +206,8 @@ export default function SellerDashboardPage() {
                 { label: 'Return Requests', value: quickStats.returns },
               ].map(({ label, value }) => (
                 <div key={label} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">{label}</span>
-                  <span className="font-bold text-gray-900">{value}</span>
+                  <span className="text-sm text-muted-foreground">{label}</span>
+                  <span className="font-bold text-foreground">{value}</span>
                 </div>
               ))}
             </div>

@@ -21,42 +21,42 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+    <div className="min-h-screen bg-background">
+      <div className="bg-card border-b border-border sticky top-0 z-10">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3">
-            <Link href="/profile/settings" className="p-2 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0">
-              <ArrowLeft size={18} className="text-gray-700" />
+            <Link href="/profile/settings" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
+              <ArrowLeft size={18} className="text-foreground" />
             </Link>
-            <span className="text-sm text-gray-600">Back</span>
+            <span className="text-sm text-muted-foreground">Back</span>
           </div>
         </div>
       </div>
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="flex items-center gap-2.5 mb-6">
-          <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center">
-            <HelpCircle size={18} className="text-blue-600" />
+          <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center">
+            <HelpCircle size={18} className="text-primary" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Frequently Asked Questions</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">Frequently Asked Questions</h1>
         </div>
 
         <div className="space-y-2 sm:space-y-3">
           {faqs.map((faq, index) => (
-            <div key={index} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div key={index} className="bg-card rounded-xl border border-border overflow-hidden">
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-gray-50 transition-colors"
+                className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-muted transition-colors"
               >
-                <span className="font-medium text-gray-900 text-sm sm:text-base pr-4">{faq.q}</span>
+                <span className="font-medium text-foreground text-sm sm:text-base pr-4">{faq.q}</span>
                 <ChevronDown
                   size={18}
-                  className={`text-gray-400 flex-shrink-0 transition-transform duration-200 ${openIndex === index ? 'rotate-180' : ''}`}
+                  className={`text-muted-foreground flex-shrink-0 transition-transform duration-200 ${openIndex === index ? 'rotate-180' : ''}`}
                 />
               </button>
               {openIndex === index && (
                 <div className="px-4 sm:px-5 pb-4 sm:pb-5 pt-0">
-                  <p className="text-sm text-gray-600 leading-relaxed">{faq.a}</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{faq.a}</p>
                 </div>
               )}
             </div>

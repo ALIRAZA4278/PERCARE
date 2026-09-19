@@ -68,27 +68,27 @@ export default function SellerAnalyticsPage() {
   const formatK = (n) => n >= 1000 ? `${(n / 1000).toFixed(1)}K` : n.toString();
   const maxRevenue = Math.max(...monthlyRevenue.map(m => m.amount), 1);
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Analytics</h1>
-        <p className="text-sm text-gray-600 mt-1">Your store performance at a glance</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Analytics</h1>
+        <p className="text-sm text-muted-foreground mt-1">Your store performance at a glance</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
-          { icon: DollarSign, label: 'Total Revenue', value: `Rs. ${formatK(stats.revenue)}`, color: 'bg-blue-50 text-blue-600' },
-          { icon: ClipboardList, label: 'Total Orders', value: stats.orders, color: 'bg-green-50 text-green-600' },
-          { icon: Eye, label: 'Store Views', value: formatK(stats.views), color: 'bg-yellow-50 text-yellow-600' },
-          { icon: TrendingUp, label: 'Conversion Rate', value: `${stats.conversion}%`, color: 'bg-purple-50 text-purple-600' },
+          { icon: DollarSign, label: 'Total Revenue', value: `Rs. ${formatK(stats.revenue)}`, color: 'bg-primary/10 text-primary' },
+          { icon: ClipboardList, label: 'Total Orders', value: stats.orders, color: 'bg-vitality/10 text-vitality' },
+          { icon: Eye, label: 'Store Views', value: formatK(stats.views), color: 'bg-amber/10 text-amber' },
+          { icon: TrendingUp, label: 'Conversion Rate', value: `${stats.conversion}%`, color: 'bg-primary/10 text-primary' },
         ].map(({ icon: Icon, label, value, color }) => (
-          <div key={label} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-200">
+          <div key={label} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border">
             <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-3`}><Icon size={20} /></div>
-            <p className="text-xl sm:text-2xl font-bold text-gray-900">{value}</p>
-            <p className="text-xs sm:text-sm text-gray-500">{label}</p>
+            <p className="text-xl sm:text-2xl font-bold text-foreground">{value}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{label}</p>
           </div>
         ))}
       </div>
@@ -96,39 +96,39 @@ export default function SellerAnalyticsPage() {
       {/* Monthly Revenue + Top Products */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Monthly Revenue */}
-        <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-5">Monthly Revenue</h3>
+        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+          <h3 className="text-lg font-bold text-foreground mb-5">Monthly Revenue</h3>
           <div className="space-y-4">
             {monthlyRevenue.map(({ month, amount }) => (
               <div key={month} className="flex items-center gap-3">
-                <span className="text-sm font-medium text-gray-700 w-8">{month}</span>
-                <div className="flex-1 bg-gray-100 rounded-full h-6 overflow-hidden">
-                  <div className="bg-blue-500 h-full rounded-full transition-all" style={{ width: `${Math.max((amount / maxRevenue) * 100, 2)}%` }} />
+                <span className="text-sm font-medium text-foreground w-8">{month}</span>
+                <div className="flex-1 bg-muted rounded-full h-6 overflow-hidden">
+                  <div className="bg-primary h-full rounded-full transition-all" style={{ width: `${Math.max((amount / maxRevenue) * 100, 2)}%` }} />
                 </div>
-                <span className="text-sm font-semibold text-gray-700 w-20 text-right">Rs. {formatK(amount)}</span>
+                <span className="text-sm font-semibold text-foreground w-20 text-right">Rs. {formatK(amount)}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Top Products */}
-        <div className="bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-gray-200">
-          <h3 className="text-lg font-bold text-gray-900 mb-5">Top Products</h3>
+        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+          <h3 className="text-lg font-bold text-foreground mb-5">Top Products</h3>
           {topProducts.length > 0 ? (
             <div className="space-y-4">
               {topProducts.map((p, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <span className="text-sm font-bold text-gray-400 w-6">#{i + 1}</span>
+                  <span className="text-sm font-bold text-muted-foreground w-6">#{i + 1}</span>
                   <div className="flex-1 min-w-0">
-                    <p className="font-semibold text-gray-900 text-sm">{p.name}</p>
-                    <p className="text-xs text-gray-500">{p.sold} sold</p>
+                    <p className="font-semibold text-foreground text-sm">{p.name}</p>
+                    <p className="text-xs text-muted-foreground">{p.sold} sold</p>
                   </div>
-                  <span className="font-bold text-gray-900 text-sm">Rs. {formatK(p.revenue)}</span>
+                  <span className="font-bold text-foreground text-sm">Rs. {formatK(p.revenue)}</span>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-500 text-center py-8">No sales data yet</p>
+            <p className="text-sm text-muted-foreground text-center py-8">No sales data yet</p>
           )}
         </div>
       </div>

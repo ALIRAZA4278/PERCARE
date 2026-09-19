@@ -120,23 +120,23 @@ export default function ShelterFinancialsPage() {
     setSuggestion('');
   };
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Financial Overview</h1>
-          <p className="text-sm text-teal-600 mt-0.5">Track expenses and set monthly goals</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Financial Overview</h1>
+          <p className="text-sm text-vitality mt-0.5">Track expenses and set monthly goals</p>
         </div>
         <div className="flex items-center gap-2">
           <button onClick={() => setShowSuggest(true)}
-            className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+            className="bg-card border border-border hover:bg-muted text-foreground text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
             <Lightbulb size={15} /> Suggest
           </button>
           <button onClick={() => setShowAdd(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+            className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
             <Plus size={16} /> Add Expense
           </button>
         </div>
@@ -144,27 +144,27 @@ export default function ShelterFinancialsPage() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-3 gap-4 mb-5">
-        <div className="bg-white rounded-2xl p-5 border border-gray-200">
-          <DollarSign size={20} className="text-green-500 mb-2" />
-          <p className="text-2xl font-bold text-gray-900">{formatK(monthlyIncome)}</p>
-          <p className="text-sm text-green-500 mt-0.5">Monthly Income</p>
+        <div className="bg-card rounded-2xl p-5 border border-border">
+          <DollarSign size={20} className="text-vitality mb-2" />
+          <p className="text-2xl font-bold text-foreground">{formatK(monthlyIncome)}</p>
+          <p className="text-sm text-vitality mt-0.5">Monthly Income</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 border border-gray-200">
-          <TrendingUp size={20} className="text-pink-400 mb-2" />
-          <p className="text-2xl font-bold text-gray-900">{formatK(monthlyExpenses)}</p>
-          <p className="text-sm text-pink-400 mt-0.5">Monthly Expenses</p>
+        <div className="bg-card rounded-2xl p-5 border border-border">
+          <TrendingUp size={20} className="text-emergency mb-2" />
+          <p className="text-2xl font-bold text-foreground">{formatK(monthlyExpenses)}</p>
+          <p className="text-sm text-emergency mt-0.5">Monthly Expenses</p>
         </div>
-        <div className="bg-white rounded-2xl p-5 border border-gray-200">
-          <AlertCircle size={20} className={deficit >= 0 ? 'text-green-500' : 'text-red-500'} style={{ marginBottom: 8 }} />
-          <p className={`text-2xl font-bold ${deficit >= 0 ? 'text-gray-900' : 'text-red-500'}`}>{formatK(deficit)}</p>
-          <p className={`text-sm mt-0.5 ${deficit >= 0 ? 'text-green-500' : 'text-red-400'}`}>{deficit >= 0 ? 'Surplus' : 'Deficit'}</p>
+        <div className="bg-card rounded-2xl p-5 border border-border">
+          <AlertCircle size={20} className={deficit >= 0 ? 'text-vitality' : 'text-emergency'} style={{ marginBottom: 8 }} />
+          <p className={`text-2xl font-bold ${deficit >= 0 ? 'text-foreground' : 'text-emergency'}`}>{formatK(deficit)}</p>
+          <p className={`text-sm mt-0.5 ${deficit >= 0 ? 'text-vitality' : 'text-emergency'}`}>{deficit >= 0 ? 'Surplus' : 'Deficit'}</p>
         </div>
       </div>
 
       {/* Expense Breakdown */}
-      <div className="bg-white rounded-2xl border border-gray-200 mb-5">
-        <div className="p-5 border-b border-gray-100">
-          <h3 className="text-base font-bold text-gray-900">Expense Breakdown</h3>
+      <div className="bg-card rounded-2xl border border-border mb-5">
+        <div className="p-5 border-b border-border">
+          <h3 className="text-base font-bold text-foreground">Expense Breakdown</h3>
         </div>
         <div className="p-5 space-y-5">
           {categories.map((cat) => {
@@ -175,23 +175,23 @@ export default function ShelterFinancialsPage() {
             return (
               <div key={cat.id}>
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-sm font-semibold text-gray-800">{cat.name}</span>
+                  <span className="text-sm font-semibold text-foreground">{cat.name}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-muted-foreground">
                       {formatK(spent)} / {formatK(budget)}
                     </span>
-                    <button onClick={() => openEdit(cat)} className="p-1 hover:bg-gray-100 rounded-lg transition-colors">
-                      <Pencil size={13} className="text-gray-400" />
+                    <button onClick={() => openEdit(cat)} className="p-1 hover:bg-muted rounded-lg transition-colors">
+                      <Pencil size={13} className="text-muted-foreground" />
                     </button>
                   </div>
                 </div>
-                <div className="relative w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
+                <div className="relative w-full bg-muted rounded-full h-2.5 overflow-hidden">
                   {over ? (
-                    <div className="absolute left-0 top-0 h-full rounded-full bg-red-400" style={{ width: '100%' }} />
+                    <div className="absolute left-0 top-0 h-full rounded-full bg-emergency/40" style={{ width: '100%' }} />
                   ) : (
                     <>
-                      <div className="absolute left-0 top-0 h-full rounded-full bg-yellow-400" style={{ width: `${pct}%` }} />
-                      <div className="absolute right-0 top-0 h-full rounded-full bg-green-400" style={{ width: `${100 - pct}%` }} />
+                      <div className="absolute left-0 top-0 h-full rounded-full bg-amber" style={{ width: `${pct}%` }} />
+                      <div className="absolute right-0 top-0 h-full rounded-full bg-vitality/60" style={{ width: `${100 - pct}%` }} />
                     </>
                   )}
                 </div>
@@ -199,34 +199,34 @@ export default function ShelterFinancialsPage() {
             );
           })}
           {categories.length === 0 && (
-            <p className="text-sm text-gray-500 text-center py-6">No expense categories yet. Click "+ Add Expense" to create one.</p>
+            <p className="text-sm text-muted-foreground text-center py-6">No expense categories yet. Click "+ Add Expense" to create one.</p>
           )}
         </div>
       </div>
 
       {/* Monthly Trends */}
-      <div className="bg-white rounded-2xl border border-gray-200">
-        <div className="p-5 border-b border-gray-100">
-          <h3 className="text-base font-bold text-gray-900">Monthly Trends</h3>
+      <div className="bg-card rounded-2xl border border-border">
+        <div className="p-5 border-b border-border">
+          <h3 className="text-base font-bold text-foreground">Monthly Trends</h3>
         </div>
         <div className="p-5 space-y-5">
           {trends.map(({ month, income, expenses: exp }) => (
             <div key={month} className="flex items-center gap-4">
-              <span className="text-sm font-bold text-gray-700 w-8 shrink-0">{month}</span>
+              <span className="text-sm font-bold text-foreground w-8 shrink-0">{month}</span>
               <div className="flex-1 space-y-1.5">
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-green-600 font-medium w-14 shrink-0">Income</span>
-                  <div className="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
-                    <div className="h-full rounded-full bg-green-500" style={{ width: `${Math.max((income / maxTrend) * 100, 2)}%` }} />
+                  <span className="text-[10px] text-vitality font-medium w-14 shrink-0">Income</span>
+                  <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                    <div className="h-full rounded-full bg-vitality" style={{ width: `${Math.max((income / maxTrend) * 100, 2)}%` }} />
                   </div>
-                  <span className="text-xs font-semibold text-gray-600 w-14 text-right shrink-0">{formatK(income)}</span>
+                  <span className="text-xs font-semibold text-muted-foreground w-14 text-right shrink-0">{formatK(income)}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-red-400 font-medium w-14 shrink-0">Expenses</span>
-                  <div className="flex-1 bg-gray-100 rounded-full h-2 overflow-hidden">
-                    <div className="h-full rounded-full bg-red-400" style={{ width: `${Math.max((exp / maxTrend) * 100, 2)}%` }} />
+                  <span className="text-[10px] text-emergency font-medium w-14 shrink-0">Expenses</span>
+                  <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
+                    <div className="h-full rounded-full bg-emergency/40" style={{ width: `${Math.max((exp / maxTrend) * 100, 2)}%` }} />
                   </div>
-                  <span className="text-xs font-semibold text-gray-600 w-14 text-right shrink-0">{formatK(exp)}</span>
+                  <span className="text-xs font-semibold text-muted-foreground w-14 text-right shrink-0">{formatK(exp)}</span>
                 </div>
               </div>
             </div>
@@ -237,32 +237,32 @@ export default function ShelterFinancialsPage() {
       {/* Add Expense Modal */}
       {showAdd && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setShowAdd(false)} />
+          <div className="fixed inset-0 bg-foreground/40 z-40" onClick={() => setShowAdd(false)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl">
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <h2 className="text-base font-bold text-gray-900">Add Expense</h2>
-                <button onClick={() => setShowAdd(false)} className="p-1 hover:bg-gray-100 rounded-full"><X size={18} className="text-gray-700" /></button>
+            <div className="bg-card rounded-2xl w-full max-w-sm shadow-elevated">
+              <div className="flex items-center justify-between p-5 border-b border-border">
+                <h2 className="text-base font-bold text-foreground">Add Expense</h2>
+                <button onClick={() => setShowAdd(false)} className="p-1 hover:bg-muted rounded-full"><X size={18} className="text-foreground" /></button>
               </div>
               <div className="p-5 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Category Name</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Category Name</label>
                   <input type="text" value={addForm.name} onChange={e => setAddForm(f => ({ ...f, name: e.target.value }))}
                     placeholder="e.g., Transportation"
-                    className="w-full px-4 py-2.5 rounded-xl border border-blue-400 outline-none ring-2 ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-primary/40 outline-none ring-2 ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Monthly Budget (Rs.)</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Monthly Budget (Rs.)</label>
                   <input type="number" value={addForm.budget} onChange={e => setAddForm(f => ({ ...f, budget: e.target.value }))}
                     placeholder="e.g., 10000"
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground" />
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleAdd} disabled={saving}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                     {saving ? 'Adding...' : 'Add Expense'}
                   </button>
-                  <button onClick={() => setShowAdd(false)} className="flex-1 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
+                  <button onClick={() => setShowAdd(false)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
                 </div>
               </div>
             </div>
@@ -273,35 +273,35 @@ export default function ShelterFinancialsPage() {
       {/* Edit Expense Modal */}
       {editCat && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setEditCat(null)} />
+          <div className="fixed inset-0 bg-foreground/40 z-40" onClick={() => setEditCat(null)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl">
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <h2 className="text-base font-bold text-gray-900">Edit Expense</h2>
-                <button onClick={() => setEditCat(null)} className="p-1 hover:bg-gray-100 rounded-full"><X size={18} className="text-gray-700" /></button>
+            <div className="bg-card rounded-2xl w-full max-w-sm shadow-elevated">
+              <div className="flex items-center justify-between p-5 border-b border-border">
+                <h2 className="text-base font-bold text-foreground">Edit Expense</h2>
+                <button onClick={() => setEditCat(null)} className="p-1 hover:bg-muted rounded-full"><X size={18} className="text-foreground" /></button>
               </div>
               <div className="p-5 space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Category</label>
                   <input type="text" value={editForm.name} onChange={e => setEditForm(f => ({ ...f, name: e.target.value }))}
-                    className="w-full px-4 py-2.5 rounded-xl border border-blue-400 outline-none ring-2 ring-blue-100 text-sm text-gray-900 bg-white" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-primary/40 outline-none ring-2 ring-primary/20 text-sm text-foreground bg-card" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Budget (Rs.)</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Budget (Rs.)</label>
                   <input type="number" value={editForm.budget} onChange={e => setEditForm(f => ({ ...f, budget: e.target.value }))}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Spent (Rs.)</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Spent (Rs.)</label>
                   <input type="number" value={editForm.spent} onChange={e => setEditForm(f => ({ ...f, spent: e.target.value }))}
-                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900 bg-white" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card" />
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleEdit} disabled={saving}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                     {saving ? 'Saving...' : 'Save'}
                   </button>
-                  <button onClick={() => setEditCat(null)} className="flex-1 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
+                  <button onClick={() => setEditCat(null)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
                 </div>
               </div>
             </div>
@@ -312,30 +312,30 @@ export default function ShelterFinancialsPage() {
       {/* Suggest Improvement Modal */}
       {showSuggest && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setShowSuggest(false)} />
+          <div className="fixed inset-0 bg-foreground/40 z-40" onClick={() => setShowSuggest(false)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl">
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
+            <div className="bg-card rounded-2xl w-full max-w-sm shadow-elevated">
+              <div className="flex items-center justify-between p-5 border-b border-border">
                 <div className="flex items-center gap-2">
                   <span className="text-xl">💡</span>
-                  <h2 className="text-base font-bold text-gray-900">Suggest an Improvement</h2>
+                  <h2 className="text-base font-bold text-foreground">Suggest an Improvement</h2>
                 </div>
-                <button onClick={() => setShowSuggest(false)} className="p-1 hover:bg-gray-100 rounded-full"><X size={18} className="text-gray-700" /></button>
+                <button onClick={() => setShowSuggest(false)} className="p-1 hover:bg-muted rounded-full"><X size={18} className="text-foreground" /></button>
               </div>
               <div className="p-5 space-y-4">
-                <p className="text-sm text-gray-500">Have an idea to optimize shelter finances? Share it with the team.</p>
+                <p className="text-sm text-muted-foreground">Have an idea to optimize shelter finances? Share it with the team.</p>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Your Suggestion</label>
+                  <label className="block text-sm font-medium text-foreground mb-1">Your Suggestion</label>
                   <textarea value={suggestion} onChange={e => setSuggestion(e.target.value)} rows={4}
                     placeholder="e.g., Partner with local vet clinics for discounted care..."
-                    className="w-full px-4 py-2.5 rounded-xl border border-blue-400 outline-none ring-2 ring-blue-100 text-sm text-gray-900 bg-white placeholder-gray-400 resize-y" />
+                    className="w-full px-4 py-2.5 rounded-xl border border-primary/40 outline-none ring-2 ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground resize-y" />
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleSuggest} disabled={saving || !suggestion.trim()}
-                    className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
                     {saving ? 'Submitting...' : 'Submit Suggestion'}
                   </button>
-                  <button onClick={() => setShowSuggest(false)} className="flex-1 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
+                  <button onClick={() => setShowSuggest(false)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
                 </div>
               </div>
             </div>

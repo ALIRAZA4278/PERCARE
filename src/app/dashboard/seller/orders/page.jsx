@@ -6,9 +6,9 @@ import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/lib/supabase';
 
 const statusColors = {
-  pending: 'bg-yellow-50 text-yellow-700', processing: 'bg-orange-50 text-orange-700',
-  shipped: 'bg-blue-50 text-blue-700', delivered: 'bg-green-50 text-green-700',
-  cancelled: 'bg-red-50 text-red-600', confirmed: 'bg-blue-50 text-blue-700',
+  pending: 'bg-amber/10 text-amber', processing: 'bg-amber/10 text-amber',
+  shipped: 'bg-primary/10 text-primary', delivered: 'bg-vitality/10 text-vitality',
+  cancelled: 'bg-emergency/10 text-emergency', confirmed: 'bg-primary/10 text-primary',
 };
 
 export default function SellerOrdersPage() {
@@ -89,26 +89,26 @@ export default function SellerOrdersPage() {
     return filterMatch && searchMatch;
   });
 
-  if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center"><p className="text-gray-500">Loading...</p></div>;
+  if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
     <div className="p-4 sm:p-6 lg:p-8">
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Orders</h1>
-        <p className="text-sm text-gray-600 mt-1">Track and manage customer orders</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Orders</h1>
+        <p className="text-sm text-muted-foreground mt-1">Track and manage customer orders</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3 sm:gap-4 mb-6">
         {[
-          { value: statCounts.processing, label: 'Processing', color: 'text-orange-600' },
-          { value: statCounts.shipped, label: 'Shipped', color: 'text-blue-600' },
-          { value: statCounts.delivered, label: 'Delivered', color: 'text-green-600' },
-          { value: statCounts.cancelled, label: 'Cancelled', color: 'text-red-600' },
+          { value: statCounts.processing, label: 'Processing', color: 'text-amber' },
+          { value: statCounts.shipped, label: 'Shipped', color: 'text-primary' },
+          { value: statCounts.delivered, label: 'Delivered', color: 'text-vitality' },
+          { value: statCounts.cancelled, label: 'Cancelled', color: 'text-emergency' },
         ].map(({ value, label, color }) => (
-          <div key={label} className="bg-white rounded-xl p-4 sm:p-5 border border-gray-200 text-center">
+          <div key={label} className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
-            <p className="text-xs sm:text-sm text-gray-500">{label}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">{label}</p>
           </div>
         ))}
       </div>
@@ -116,15 +116,15 @@ export default function SellerOrdersPage() {
       {/* Search + Filters */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
         <div className="flex-1 relative max-w-lg">
-          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <input type="text" placeholder="Search by order ID or customer..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-200 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 text-sm text-gray-900" />
+            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground" />
         </div>
         <div className="flex items-center gap-2">
           {['All', 'Processing', 'Shipped', 'Delivered', 'Cancelled'].map((f) => (
             <button key={f} onClick={() => setActiveFilter(f)}
               className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors whitespace-nowrap ${
-                activeFilter === f ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                activeFilter === f ? 'bg-primary text-white' : 'bg-card text-foreground border border-border hover:bg-muted'
               }`}>{f}</button>
           ))}
         </div>
@@ -133,28 +133,28 @@ export default function SellerOrdersPage() {
       {/* Order List */}
       <div className="space-y-3">
         {filtered.map((order) => (
-          <div key={order.id} className="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-gray-200 flex flex-col sm:flex-row sm:items-center gap-3">
+          <div key={order.id} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
-                <span className="font-bold text-gray-900 text-sm">ORD-{order.shortId.slice(0, 4)}</span>
-                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${statusColors[order.status] || 'bg-gray-100 text-gray-600'}`}>{order.status}</span>
+                <span className="font-bold text-foreground text-sm">ORD-{order.shortId.slice(0, 4)}</span>
+                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full ${statusColors[order.status] || 'bg-muted text-muted-foreground'}`}>{order.status}</span>
               </div>
-              <p className="font-semibold text-gray-900 text-sm">{order.buyer}</p>
-              <p className="text-xs text-gray-500">{order.items.join(', ')}</p>
+              <p className="font-semibold text-foreground text-sm">{order.buyer}</p>
+              <p className="text-xs text-muted-foreground">{order.items.join(', ')}</p>
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
               <div className="text-right">
-                <p className="font-bold text-gray-900 text-sm">Rs. {order.total.toLocaleString()}</p>
-                <p className="text-xs text-gray-500">{formatDate(order.date)}</p>
+                <p className="font-bold text-foreground text-sm">Rs. {order.total.toLocaleString()}</p>
+                <p className="text-xs text-muted-foreground">{formatDate(order.date)}</p>
               </div>
               {['pending', 'processing', 'confirmed'].includes(order.status) && (
                 <button onClick={() => handleShip(order.id)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
+                  className="bg-primary hover:bg-primary/90 text-white text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
                   <Truck size={12} /> Ship
                 </button>
               )}
               <button onClick={() => setViewOrder(order)}
-                className="bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
+                className="bg-card border border-border hover:bg-muted text-foreground text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
                 <Eye size={12} /> Details
               </button>
             </div>
@@ -165,36 +165,36 @@ export default function SellerOrdersPage() {
       {filtered.length === 0 && (
         <div className="text-center py-16">
           <div className="text-6xl mb-4">📦</div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">No orders</h3>
-          <p className="text-gray-600">Orders will appear here when customers buy your products.</p>
+          <h3 className="text-xl font-bold text-foreground mb-2">No orders</h3>
+          <p className="text-muted-foreground">Orders will appear here when customers buy your products.</p>
         </div>
       )}
 
       {/* Order Details Modal */}
       {viewOrder && (
         <>
-          <div className="fixed inset-0 bg-black/50 z-40" onClick={() => setViewOrder(null)} />
+          <div className="fixed inset-0 bg-foreground/40 z-40" onClick={() => setViewOrder(null)} />
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl w-full max-w-sm shadow-2xl">
-              <div className="flex items-center justify-between p-5 border-b border-gray-200">
-                <h2 className="text-lg font-bold text-gray-900">Order ORD-{viewOrder.shortId.slice(0, 4)}</h2>
-                <button onClick={() => setViewOrder(null)} className="p-1 hover:bg-gray-100 rounded-full"><X size={18} className="text-gray-700" /></button>
+            <div className="bg-card rounded-2xl w-full max-w-sm shadow-elevated">
+              <div className="flex items-center justify-between p-5 border-b border-border">
+                <h2 className="text-lg font-bold text-foreground">Order ORD-{viewOrder.shortId.slice(0, 4)}</h2>
+                <button onClick={() => setViewOrder(null)} className="p-1 hover:bg-muted rounded-full"><X size={18} className="text-foreground" /></button>
               </div>
               <div className="p-5 space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div><p className="text-xs text-blue-600 mb-0.5">Customer</p><p className="font-semibold text-gray-900 text-sm">{viewOrder.buyer}</p></div>
-                  <div><p className="text-xs text-blue-600 mb-0.5">Status</p><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${statusColors[viewOrder.status]}`}>{viewOrder.status}</span></div>
+                  <div><p className="text-xs text-primary mb-0.5">Customer</p><p className="font-semibold text-foreground text-sm">{viewOrder.buyer}</p></div>
+                  <div><p className="text-xs text-primary mb-0.5">Status</p><span className={`text-xs font-bold px-2.5 py-1 rounded-full ${statusColors[viewOrder.status]}`}>{viewOrder.status}</span></div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <div><p className="text-xs text-blue-600 mb-0.5">Date</p><p className="font-semibold text-gray-900 text-sm">{formatDate(viewOrder.date)}</p></div>
-                  <div><p className="text-xs text-blue-600 mb-0.5">Total</p><p className="font-semibold text-gray-900 text-sm">Rs. {viewOrder.total.toLocaleString()}</p></div>
+                  <div><p className="text-xs text-primary mb-0.5">Date</p><p className="font-semibold text-foreground text-sm">{formatDate(viewOrder.date)}</p></div>
+                  <div><p className="text-xs text-primary mb-0.5">Total</p><p className="font-semibold text-foreground text-sm">Rs. {viewOrder.total.toLocaleString()}</p></div>
                 </div>
-                <div><p className="text-xs text-blue-600 mb-0.5">Items</p><p className="font-semibold text-gray-900 text-sm">{viewOrder.items.join(', ')}</p></div>
-                {viewOrder.address && <div><p className="text-xs text-blue-600 mb-0.5">Delivery Address</p><p className="font-semibold text-gray-900 text-sm">{viewOrder.address}</p></div>}
-                <div><p className="text-xs text-blue-600 mb-0.5">Shipping</p><p className="font-semibold text-gray-900 text-sm">PetCare Platform Shipping</p></div>
+                <div><p className="text-xs text-primary mb-0.5">Items</p><p className="font-semibold text-foreground text-sm">{viewOrder.items.join(', ')}</p></div>
+                {viewOrder.address && <div><p className="text-xs text-primary mb-0.5">Delivery Address</p><p className="font-semibold text-foreground text-sm">{viewOrder.address}</p></div>}
+                <div><p className="text-xs text-primary mb-0.5">Shipping</p><p className="font-semibold text-foreground text-sm">PetCare Platform Shipping</p></div>
                 <div className="grid grid-cols-2 gap-4">
-                  <div><p className="text-xs text-blue-600 mb-0.5">Phone</p><p className="font-semibold text-gray-900 text-sm">{viewOrder.buyerPhone || '—'}</p></div>
-                  <div><p className="text-xs text-blue-600 mb-0.5">Email</p><p className="font-semibold text-gray-900 text-sm">{viewOrder.buyerEmail || '—'}</p></div>
+                  <div><p className="text-xs text-primary mb-0.5">Phone</p><p className="font-semibold text-foreground text-sm">{viewOrder.buyerPhone || '—'}</p></div>
+                  <div><p className="text-xs text-primary mb-0.5">Email</p><p className="font-semibold text-foreground text-sm">{viewOrder.buyerEmail || '—'}</p></div>
                 </div>
               </div>
             </div>
