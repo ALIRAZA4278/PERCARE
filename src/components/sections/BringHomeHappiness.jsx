@@ -48,11 +48,11 @@ export default function BringHomeHappiness() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
-            <Link href="/browse-pets" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm text-sm sm:text-base">
+            <Link href="/get-your-pet" className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm text-sm sm:text-base">
               Browse Pets
               <ArrowRight size={16} />
             </Link>
-            <Link href="/browse-pets" className="text-gray-700 font-medium hover:text-gray-900 transition-colors text-sm sm:text-base text-center sm:text-left">
+            <Link href="/get-your-pet" className="text-gray-700 font-medium hover:text-gray-900 transition-colors text-sm sm:text-base text-center sm:text-left">
               How it Works
             </Link>
           </div>

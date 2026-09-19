@@ -1,36 +1,257 @@
 @import "tailwindcss";
 
+/* ============================================================
+   PetCare Design System
+   Extracted 1:1 from https://fluffynest-hub.lovable.app
+   (assets/index-DZRZ9eNT.css). Tailwind v3 tokens ported to v4.
+   All colors are raw HSL triplets so `/opacity` modifiers work.
+   ============================================================ */
+
+@custom-variant dark (&:is(.dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: 210 20% 98%;
+  --foreground: 224 71% 4%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 224 71% 4%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 224 71% 4%;
+
+  --primary: 221 83% 53%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 142 71% 45%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 210 20% 95%;
+  --muted-foreground: 215 16% 47%;
+
+  --accent: 38 92% 50%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 221 83% 53%;
+
+  --radius: 1rem;
+
+  --sidebar-background: 0 0% 100%;
+  --sidebar-foreground: 224 71% 4%;
+  --sidebar-primary: 221 83% 53%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 210 20% 95%;
+  --sidebar-accent-foreground: 224 71% 4%;
+  --sidebar-border: 214 32% 91%;
+  --sidebar-ring: 221 83% 53%;
+
+  /* Brand semantic colors */
+  --vitality: 142 71% 45%;
+  --vitality-foreground: 0 0% 100%;
+  --amber: 38 92% 50%;
+  --amber-foreground: 38 92% 15%;
+  --amber-muted: 38 80% 95%;
+  --emergency: 0 84% 55%;
+  --emergency-foreground: 0 0% 100%;
+
+  /* Elevation */
+  --shadow-card: 0 2px 4px hsl(224 71% 4% / 0.04);
+  --shadow-card-hover: 0 10px 20px hsl(224 71% 4% / 0.08);
+  --shadow-elevated: 0 8px 30px hsl(224 71% 4% / 0.12);
+
+  /* Motion */
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 0.2s;
+  --duration-medium: 0.4s;
+}
+
+.dark {
+  --background: 224 71% 4%;
+  --foreground: 210 20% 98%;
+
+  --card: 224 50% 8%;
+  --card-foreground: 210 20% 98%;
+
+  --popover: 224 50% 8%;
+  --popover-foreground: 210 20% 98%;
+
+  --primary: 221 83% 60%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 142 60% 40%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 224 40% 14%;
+  --muted-foreground: 215 20% 65%;
+
+  --accent: 38 85% 55%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 62% 30%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 224 30% 18%;
+  --input: 224 30% 18%;
+  --ring: 221 83% 60%;
+
+  --sidebar-background: 224 50% 6%;
+  --sidebar-foreground: 210 20% 90%;
+  --sidebar-primary: 221 83% 60%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 224 40% 14%;
+  --sidebar-accent-foreground: 210 20% 90%;
+  --sidebar-border: 224 30% 18%;
+  --sidebar-ring: 221 83% 60%;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-sidebar-background: hsl(var(--sidebar-background));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
+  --color-vitality: hsl(var(--vitality));
+  --color-vitality-foreground: hsl(var(--vitality-foreground));
+  --color-amber: hsl(var(--amber));
+  --color-amber-foreground: hsl(var(--amber-foreground));
+  --color-amber-muted: hsl(var(--amber-muted));
+  --color-emergency: hsl(var(--emergency));
+  --color-emergency-foreground: hsl(var(--emergency-foreground));
+
+  /* Radius scale — v3 source: lg = --radius, md = radius-4px, sm = radius-8px */
+  --radius-sm: calc(var(--radius) - 8px);
+  --radius-md: calc(var(--radius) - 4px);
+  --radius-lg: var(--radius);
+  --radius-xl: 0.75rem;
+  --radius-2xl: calc(var(--radius) + 0.5rem);
+  --radius-3xl: 1.5rem;
+
+  --font-sans: var(--font-inter), Inter, system-ui, -apple-system, sans-serif;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: var(--font-inter), Inter, system-ui, -apple-system, sans-serif;
+    letter-spacing: -0.01em;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    font-weight: 700;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .hover\:shadow-card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .transition-expo,
+  .btn-press {
+    transition-timing-function: var(--ease-expo);
+    transition-duration: var(--duration-fast);
+  }
+
+  .btn-press:active {
+    transform: scale(0.98);
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Kept for existing pages that still use the old helper name */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-/* Hide scrollbar for category tabs */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
 }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
 }

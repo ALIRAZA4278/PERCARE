@@ -8,8 +8,8 @@ export default function Features() {
   const { marketplaceEnabled, sheltersEnabled } = useFeatureFlags();
 
   const features = [
-    { icon: Stethoscope, title: 'Find Vets', description: 'Discover trusted veterinarians and clinics near you', color: 'blue', href: '/vets' },
-    marketplaceEnabled && { icon: ShoppingBag, title: 'Pet Shop', description: 'Quality pet products from verified sellers', color: 'green', href: '/marketplace' },
+    { icon: Stethoscope, title: 'Find Vets', description: 'Discover trusted veterinarians and clinics near you', color: 'blue', href: '/discover' },
+    marketplaceEnabled && { icon: ShoppingBag, title: 'Pet Shop', description: 'Quality pet products from verified sellers', color: 'green', href: '/shop' },
     sheltersEnabled && { icon: Heart, title: 'Shelters', description: 'Adopt, donate, and support animal welfare', color: 'red', href: '/shelters' },
     { icon: AlertTriangle, title: 'Lost & Found', description: 'Report lost pets or help reunite found animals', color: 'yellow', href: '/lost-found' },
   ].filter(Boolean);
