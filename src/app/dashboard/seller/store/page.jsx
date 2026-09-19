@@ -104,7 +104,7 @@ export default function SellerStorePage() {
     return (
       <div className="p-4 sm:p-6 lg:p-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">My Store</h1>
-        <div className="bg-card rounded-2xl border border-border p-6 max-w-xl">
+        <div className="rounded-2xl bg-card shadow-card p-6 max-w-xl">
           <h2 className="text-lg font-bold text-foreground mb-1">Create Your Store</h2>
           <p className="text-sm text-muted-foreground mb-5">Set up your store to start selling products.</p>
           <div className="space-y-4">
@@ -173,7 +173,7 @@ export default function SellerStorePage() {
       </div>
 
       {/* Store Profile Card */}
-      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-5">
+      <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6 mb-5">
         <div className="flex items-start gap-4 sm:gap-5">
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-amber/10 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden">
             {store.logo_url ? (
@@ -206,7 +206,7 @@ export default function SellerStorePage() {
       {/* Store Details + Performance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 mb-5">
         {/* Store Details */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-4">Store Details</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
@@ -231,7 +231,7 @@ export default function SellerStorePage() {
         </div>
 
         {/* Performance */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-4">Performance</h3>
           <div className="grid grid-cols-2 gap-3">
             {[
@@ -250,7 +250,7 @@ export default function SellerStorePage() {
       </div>
 
       {/* Store Categories */}
-      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+      <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
         <h3 className="text-lg font-bold text-foreground mb-4">Store Categories</h3>
         <div className="flex flex-wrap gap-2">
           {storeCategories.map((cat) => (
@@ -306,7 +306,7 @@ export default function SellerStorePage() {
                   <input type="text" value={formData.website} onChange={(e) => setFormData({ ...formData, website: e.target.value })} placeholder="petsupply.pk" className={inputClass} />
                 </div>
                 <div className="flex items-center gap-3">
-                  <button onClick={handleSave} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">Save Changes</button>
+                  <button onClick={handleSave} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg btn-press transition-expo text-sm">Save Changes</button>
                   <button onClick={() => setShowEditModal(false)} className="px-4 py-2.5 bg-card hover:bg-muted text-foreground font-medium rounded-lg transition-colors border border-border text-sm">Cancel</button>
                 </div>
               </div>

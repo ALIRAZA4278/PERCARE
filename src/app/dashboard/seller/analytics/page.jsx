@@ -85,7 +85,7 @@ export default function SellerAnalyticsPage() {
           { icon: Eye, label: 'Store Views', value: formatK(stats.views), color: 'bg-amber/10 text-amber' },
           { icon: TrendingUp, label: 'Conversion Rate', value: `${stats.conversion}%`, color: 'bg-primary/10 text-primary' },
         ].map(({ icon: Icon, label, value, color }) => (
-          <div key={label} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border">
+          <div key={label} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-4 sm:p-5">
             <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-3`}><Icon size={20} /></div>
             <p className="text-xl sm:text-2xl font-bold text-foreground">{value}</p>
             <p className="text-xs sm:text-sm text-muted-foreground">{label}</p>
@@ -96,14 +96,14 @@ export default function SellerAnalyticsPage() {
       {/* Monthly Revenue + Top Products */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Monthly Revenue */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-5">Monthly Revenue</h3>
           <div className="space-y-4">
             {monthlyRevenue.map(({ month, amount }) => (
               <div key={month} className="flex items-center gap-3">
                 <span className="text-sm font-medium text-foreground w-8">{month}</span>
                 <div className="flex-1 bg-muted rounded-full h-6 overflow-hidden">
-                  <div className="bg-primary h-full rounded-full transition-all" style={{ width: `${Math.max((amount / maxRevenue) * 100, 2)}%` }} />
+                  <div className="bg-primary h-full rounded-full btn-press transition-expo" style={{ width: `${Math.max((amount / maxRevenue) * 100, 2)}%` }} />
                 </div>
                 <span className="text-sm font-semibold text-foreground w-20 text-right">Rs. {formatK(amount)}</span>
               </div>
@@ -112,7 +112,7 @@ export default function SellerAnalyticsPage() {
         </div>
 
         {/* Top Products */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-5">Top Products</h3>
           {topProducts.length > 0 ? (
             <div className="space-y-4">

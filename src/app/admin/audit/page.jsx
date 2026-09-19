@@ -66,7 +66,7 @@ export default function AuditPage() {
           className="w-full pl-9 pr-4 py-2.5 bg-card border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary" />
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="rounded-xl bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -124,11 +124,11 @@ export default function AuditPage() {
           </p>
           <div className="flex gap-2">
             <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}
-              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border transition-colors">
+              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-muted-foreground/30 transition-colors">
               <ChevronLeft size={16} />
             </button>
             <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1}
-              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border transition-colors">
+              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-muted-foreground/30 transition-colors">
               <ChevronRight size={16} />
             </button>
           </div>

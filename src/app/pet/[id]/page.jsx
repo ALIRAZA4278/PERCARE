@@ -448,7 +448,7 @@ export default function PetDetailPage({ params }) {
               <h3 className="text-lg font-bold text-foreground">Vaccination History</h3>
             </div>
             <button onClick={() => setShowAddVaccine(!showAddVaccine)}
-              className="text-primary font-medium text-xs sm:text-sm flex items-center gap-1 hover:text-primary transition-colors">
+              className="text-primary font-medium text-xs sm:text-sm flex items-center gap-1 transition-colors hover:underline">
               <Plus size={14} /> Add
             </button>
           </div>
@@ -515,7 +515,7 @@ export default function PetDetailPage({ params }) {
               <h3 className="text-lg font-bold text-foreground">Medical Notes</h3>
             </div>
             <button onClick={() => setShowAddNote(!showAddNote)}
-              className="text-primary font-medium text-xs sm:text-sm flex items-center gap-1 hover:text-primary transition-colors">
+              className="text-primary font-medium text-xs sm:text-sm flex items-center gap-1 transition-colors hover:underline">
               <Plus size={14} /> Add Note
             </button>
           </div>

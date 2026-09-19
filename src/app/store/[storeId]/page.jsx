@@ -136,7 +136,7 @@ export default function SellerProfilePage() {
                 <Link key={product.id} href={`/product/${product.id}`}
                   className="rounded-2xl bg-card shadow-card overflow-hidden hover:shadow-card-hover transition-all group"
                 >
-                  <div className="aspect-square bg-muted flex items-center justify-center group-hover:bg-muted transition-colors overflow-hidden">
+                  <div className="aspect-square bg-muted flex items-center justify-center group-hover:bg-muted-foreground/10 transition-colors overflow-hidden">
                     {product.image_url ? (
                       <img src={product.image_url} alt={product.name} className="w-full h-full object-cover" />
                     ) : (

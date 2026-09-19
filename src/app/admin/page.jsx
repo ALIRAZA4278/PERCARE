@@ -176,7 +176,7 @@ export default function AdminOverviewPage() {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-7">
         {kpi1.map(({ label, value, icon: Icon, color, bg, href, sub }) => (
           <Link key={label} href={href}
-            className="bg-card rounded-xl p-4 sm:p-5 border border-border hover:border-border transition-all">
+            className="rounded-xl bg-card shadow-card hover:shadow-card-hover p-4 sm:p-5 transition-all">
             <div className={`w-9 h-9 ${bg} rounded-xl flex items-center justify-center mb-3`}>
               <Icon size={17} className={color} />
             </div>
@@ -191,7 +191,7 @@ export default function AdminOverviewPage() {
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
         {kpi2.map(({ label, value, icon: Icon, color, bg, href, sub }) => (
           <Link key={label} href={href}
-            className="bg-card rounded-xl p-4 sm:p-5 border border-border hover:border-border transition-all">
+            className="rounded-xl bg-card shadow-card hover:shadow-card-hover p-4 sm:p-5 transition-all">
             <div className={`w-9 h-9 ${bg} rounded-xl flex items-center justify-center mb-3`}>
               <Icon size={17} className={color} />
             </div>
@@ -203,7 +203,7 @@ export default function AdminOverviewPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-8">
-        <div className="bg-card rounded-xl p-5 border border-border">
+        <div className="rounded-xl bg-card shadow-card p-5">
           <h3 className="text-sm font-bold text-foreground mb-4">Daily Signups</h3>
           <ResponsiveContainer width="100%" height={180}>
             <AreaChart data={charts.signups}>
@@ -216,7 +216,7 @@ export default function AdminOverviewPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-card rounded-xl p-5 border border-border">
+        <div className="rounded-xl bg-card shadow-card p-5">
           <h3 className="text-sm font-bold text-foreground mb-4">Orders Trend</h3>
           <ResponsiveContainer width="100%" height={180}>
             <LineChart data={charts.orders}>
@@ -229,7 +229,7 @@ export default function AdminOverviewPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-card rounded-xl p-5 border border-border">
+        <div className="rounded-xl bg-card shadow-card p-5">
           <h3 className="text-sm font-bold text-foreground mb-4">Revenue Trend (Rs)</h3>
           <ResponsiveContainer width="100%" height={180}>
             <AreaChart data={charts.revenue}>
@@ -242,7 +242,7 @@ export default function AdminOverviewPage() {
           </ResponsiveContainer>
         </div>
 
-        <div className="bg-card rounded-xl p-5 border border-border">
+        <div className="rounded-xl bg-card shadow-card p-5">
           <h3 className="text-sm font-bold text-foreground mb-4">Approval Queue Trend</h3>
           <ResponsiveContainer width="100%" height={180}>
             <LineChart data={charts.approvals}>
@@ -256,7 +256,7 @@ export default function AdminOverviewPage() {
         </div>
       </div>
 
-      <div className="bg-card rounded-xl p-5 border border-border mb-8">
+      <div className="rounded-xl bg-card shadow-card p-5 mb-8">
         <div className="flex items-center gap-2 mb-4">
           <AlertCircle size={16} className="text-amber" />
           <h3 className="text-base font-bold text-foreground">Alerts</h3>
@@ -277,10 +277,10 @@ export default function AdminOverviewPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
-        <div className="bg-card rounded-xl p-5 border border-border">
+        <div className="rounded-xl bg-card shadow-card p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-foreground">Recent Signups</h3>
-            <Link href="/admin/users" className="text-xs text-primary hover:text-primary font-medium">View all</Link>
+            <Link href="/admin/users" className="text-xs text-primary font-medium hover:underline">View all</Link>
           </div>
           <div className="space-y-3">
             {recentUsers.length === 0
@@ -300,10 +300,10 @@ export default function AdminOverviewPage() {
           </div>
         </div>
 
-        <div className="bg-card rounded-xl p-5 border border-border">
+        <div className="rounded-xl bg-card shadow-card p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-foreground">Recent Orders</h3>
-            <Link href="/admin/orders" className="text-xs text-primary hover:text-primary font-medium">View all</Link>
+            <Link href="/admin/orders" className="text-xs text-primary font-medium hover:underline">View all</Link>
           </div>
           <div className="space-y-3">
             {recentOrders.length === 0
@@ -323,13 +323,13 @@ export default function AdminOverviewPage() {
           </div>
         </div>
 
-        <div className="bg-card rounded-xl p-5 border border-border">
+        <div className="rounded-xl bg-card shadow-card p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <AlertCircle size={15} className="text-amber" />
               <h3 className="text-base font-bold text-foreground">Recent Reports</h3>
             </div>
-            <Link href="/admin/reports" className="text-xs text-primary hover:text-primary font-medium">View all</Link>
+            <Link href="/admin/reports" className="text-xs text-primary font-medium hover:underline">View all</Link>
           </div>
           <div className="space-y-3">
             {recentReports.length === 0

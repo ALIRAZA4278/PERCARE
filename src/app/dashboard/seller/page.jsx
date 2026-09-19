@@ -130,7 +130,7 @@ export default function SellerDashboardPage() {
           { icon: DollarSign, label: 'Revenue (Month)', value: `Rs. ${(stats.revenue / 1000).toFixed(0)}K`, color: 'bg-amber/10 text-amber' },
           { icon: Star, label: 'Store Rating', value: stats.rating || '—', color: 'bg-primary/10 text-primary' },
         ].map(({ icon: Icon, label, value, color }) => (
-          <div key={label} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border">
+          <div key={label} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-4 sm:p-5">
             <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-3`}><Icon size={20} /></div>
             <p className="text-xl sm:text-2xl font-bold text-foreground">{value}</p>
             <p className="text-xs sm:text-sm text-muted-foreground">{label}</p>
@@ -141,10 +141,10 @@ export default function SellerDashboardPage() {
       {/* Recent Orders + Low Stock + Quick Stats */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6">
         {/* Recent Orders */}
-        <div className="lg:col-span-3 bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="lg:col-span-3 rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-foreground">Recent Orders</h3>
-            <Link href="/dashboard/seller/orders" className="text-sm text-primary font-medium hover:text-primary">View all</Link>
+            <Link href="/dashboard/seller/orders" className="text-sm text-primary font-medium hover:underline">View all</Link>
           </div>
           {recentOrders.length > 0 ? (
             <div className="space-y-3">
@@ -171,7 +171,7 @@ export default function SellerDashboardPage() {
         {/* Right Column */}
         <div className="lg:col-span-2 space-y-4 sm:space-y-6">
           {/* Low Stock Alert */}
-          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+          <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
             <div className="flex items-center gap-2 mb-4">
               <AlertCircle size={18} className="text-amber" />
               <h3 className="text-lg font-bold text-foreground">Low Stock Alert</h3>
@@ -194,7 +194,7 @@ export default function SellerDashboardPage() {
           </div>
 
           {/* Quick Stats */}
-          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+          <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
             <div className="flex items-center gap-2 mb-4">
               <TrendingUp size={18} className="text-primary" />
               <h3 className="text-lg font-bold text-foreground">Quick Stats</h3>

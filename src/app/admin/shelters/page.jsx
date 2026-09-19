@@ -154,7 +154,7 @@ export default function SheltersPage() {
           <p className="text-sm text-muted-foreground mt-1">{shelters.length} total · {counts.verified} verified · {counts.unverified} unverified</p>
         </div>
         <button onClick={openAdd}
-          className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-xl transition-colors">
+          className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-xl btn-press transition-expo">
           <Plus size={16} /> Add Shelter
         </button>
       </div>
@@ -175,7 +175,7 @@ export default function SheltersPage() {
         </div>
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="rounded-xl bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -221,7 +221,7 @@ export default function SheltersPage() {
                   </td>
                   <td className="px-4 py-3 hidden lg:table-cell">
                     {shelter.website
-                      ? <a href={shelter.website} target="_blank" rel="noreferrer" className="text-primary hover:text-primary inline-flex items-center gap-1 text-xs"><ExternalLink size={12} /> Visit</a>
+                      ? <a href={shelter.website} target="_blank" rel="noreferrer" className="text-primary inline-flex items-center gap-1 text-xs hover:underline"><ExternalLink size={12} /> Visit</a>
                       : <span className="text-muted-foreground text-xs">—</span>}
                   </td>
                   <td className="px-4 py-3">
@@ -232,7 +232,7 @@ export default function SheltersPage() {
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-1.5">
                       <button onClick={() => openEdit(shelter)} disabled={processing === shelter.id}
-                        className="flex items-center gap-1 px-2.5 py-1.5 bg-muted hover:bg-muted text-foreground text-xs font-semibold rounded-lg transition-colors border border-border">
+                        className="flex items-center gap-1 px-2.5 py-1.5 bg-muted hover:bg-muted-foreground/10 text-foreground text-xs font-semibold rounded-lg transition-colors border border-border">
                         <Pencil size={12} /> Edit
                       </button>
                       {shelter.is_verified ? (
@@ -242,7 +242,7 @@ export default function SheltersPage() {
                         </button>
                       ) : (
                         <button onClick={() => handleVerify(shelter)} disabled={processing === shelter.id}
-                          className="flex items-center gap-1 px-2.5 py-1.5 bg-vitality/10 hover:bg-vitality/10 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-40">
+                          className="flex items-center gap-1 px-2.5 py-1.5 bg-vitality/10 hover:bg-vitality/20 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-40">
                           <CheckCircle size={12} /> Verify
                         </button>
                       )}
@@ -259,8 +259,8 @@ export default function SheltersPage() {
         <div className="flex items-center justify-between mt-4">
           <p className="text-xs text-muted-foreground">Page {page + 1} of {totalPages}</p>
           <div className="flex gap-2">
-            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border"><ChevronLeft size={16} /></button>
-            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border"><ChevronRight size={16} /></button>
+            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-muted-foreground/30"><ChevronLeft size={16} /></button>
+            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-muted-foreground/30"><ChevronRight size={16} /></button>
           </div>
         </div>
       )}
@@ -345,10 +345,10 @@ export default function SheltersPage() {
 
               <div className="flex gap-2 mt-5">
                 <button onClick={handleSave} disabled={saving || (modal.mode === 'add' && (!form.user_id || !form.name))}
-                  className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                   <Save size={15} /> {saving ? 'Saving...' : 'Save'}
                 </button>
-                <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-xl text-sm">Cancel</button>
+                <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>

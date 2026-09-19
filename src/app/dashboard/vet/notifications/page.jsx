@@ -57,7 +57,7 @@ export default function VetNotificationsPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Notifications</h1>
         {unreadCount > 0 && (
-          <button onClick={markAllRead} className="text-primary font-medium text-sm hover:text-primary">Mark all read</button>
+          <button onClick={markAllRead} className="text-primary font-medium text-sm hover:underline">Mark all read</button>
         )}
       </div>
       <div className="max-w-3xl space-y-3">

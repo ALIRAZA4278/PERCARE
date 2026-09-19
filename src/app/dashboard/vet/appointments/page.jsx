@@ -109,7 +109,7 @@ export default function VetAppointmentsPage() {
           <p className="text-sm text-muted-foreground mt-1">Manage your upcoming and past appointments</p>
         </div>
         <button onClick={() => setShowBlockModal(true)}
-          className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2 self-start">
+          className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-2 rounded-lg btn-press transition-expo text-sm flex items-center gap-2 self-start">
           <Calendar size={16} /> Block Time Slot
         </button>
       </div>
@@ -132,7 +132,7 @@ export default function VetAppointmentsPage() {
       </div>
 
       {/* Upcoming Appointments */}
-      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-6">
+      <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6 mb-6">
         <h3 className="text-lg font-bold text-foreground mb-4">Upcoming ({filteredUpcoming.length})</h3>
         {filteredUpcoming.length > 0 ? (
           <div className="space-y-3">
@@ -180,7 +180,7 @@ export default function VetAppointmentsPage() {
 
       {/* Past Appointments */}
       {filteredPast.length > 0 && (
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-4">Past Appointments</h3>
           <div className="space-y-3">
             {filteredPast.slice(0, 10).map((apt) => (
@@ -241,7 +241,7 @@ export default function VetAppointmentsPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <button onClick={handleBlockSlot}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">
+                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg btn-press transition-expo text-sm">
                     Block Slot
                   </button>
                   <button onClick={() => setShowBlockModal(false)}

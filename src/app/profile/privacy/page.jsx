@@ -38,7 +38,7 @@ export default function PrivacySecurityPage() {
                   <p className="text-xs sm:text-sm text-muted-foreground">{description}</p>
                 </div>
               </div>
-              <ChevronRight size={18} className="text-muted-foreground group-hover:text-muted-foreground transition-colors flex-shrink-0" />
+              <ChevronRight size={18} className="text-muted-foreground transition-colors flex-shrink-0 group-hover:text-primary" />
             </button>
           ))}
         </div>

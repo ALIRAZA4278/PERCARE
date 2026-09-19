@@ -81,20 +81,20 @@ export default function SellerReviewsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-4 gap-3 sm:gap-4 mb-6">
-        <div className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+        <div className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
           <p className="text-2xl font-bold text-foreground">{avgRating}</p>
           <div className="flex items-center justify-center gap-0.5 my-1">{renderStars(Math.round(avgRating))}</div>
           <p className="text-xs text-muted-foreground">Avg Rating</p>
         </div>
-        <div className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+        <div className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
           <p className="text-2xl font-bold text-foreground">{reviews.length}</p>
           <p className="text-xs sm:text-sm text-muted-foreground mt-2">Total Reviews</p>
         </div>
-        <div className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+        <div className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
           <p className="text-2xl font-bold text-vitality">{positive}</p>
           <p className="text-xs sm:text-sm text-muted-foreground mt-2">Positive</p>
         </div>
-        <div className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+        <div className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
           <p className="text-2xl font-bold text-amber">{needsReply}</p>
           <p className="text-xs sm:text-sm text-muted-foreground mt-2">Needs Reply</p>
         </div>
@@ -103,7 +103,7 @@ export default function SellerReviewsPage() {
       {/* Reviews List */}
       <div className="space-y-4">
         {reviews.map((review) => (
-          <div key={review.id} className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+          <div key={review.id} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
             {/* Review Header */}
             <div className="flex items-start justify-between mb-2">
               <div>
@@ -139,7 +139,7 @@ export default function SellerReviewsPage() {
                       className="flex-1 px-4 py-2 rounded-lg border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground"
                       onKeyDown={(e) => e.key === 'Enter' && handleReply(review.id)} />
                     <button onClick={() => handleReply(review.id)}
-                      className="bg-primary hover:bg-primary/90 text-white p-2 rounded-lg transition-colors">
+                      className="bg-primary hover:bg-primary/90 text-white p-2 rounded-lg btn-press transition-expo">
                       <Send size={16} />
                     </button>
                   </div>

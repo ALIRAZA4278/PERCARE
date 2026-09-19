@@ -131,7 +131,7 @@ export default function VetPatientsPage() {
           const isVaccinated = patient.vaccination_status === 'up_to_date';
 
           return (
-            <div key={patient.id} className="bg-card rounded-xl sm:rounded-2xl border border-border overflow-hidden">
+            <div key={patient.id} className="rounded-2xl bg-card shadow-card overflow-hidden">
               {/* Header Row */}
               <button onClick={() => setExpandedId(isExpanded ? null : patient.id)}
                 className="w-full flex items-center gap-3 sm:gap-4 p-4 sm:p-5 hover:bg-muted transition-colors text-left">
@@ -202,7 +202,7 @@ export default function VetPatientsPage() {
 
                   <div className="flex items-center gap-3">
                     <button onClick={() => openAddNote(patient.id, patient.name)}
-                      className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-1.5">
+                      className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-2 rounded-lg btn-press transition-expo text-sm flex items-center gap-1.5">
                       <Plus size={14} /> Add Note
                     </button>
                     <button onClick={() => openHistory(patient.id, patient.name)}
@@ -256,7 +256,7 @@ export default function VetPatientsPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <button onClick={handleSaveNote}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">
+                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg btn-press transition-expo text-sm">
                     Save Note
                   </button>
                   <button onClick={() => setShowAddNote(false)}

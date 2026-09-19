@@ -112,7 +112,7 @@ export default function VetDashboardPage() {
           <div className="text-6xl mb-4">🩺</div>
           <h2 className="text-xl font-bold text-foreground mb-2">Set Up Your Vet Profile</h2>
           <p className="text-muted-foreground mb-6">Complete your professional profile to start using the dashboard.</p>
-          <Link href="/dashboard/vet/profile" className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition-colors text-sm">
+          <Link href="/dashboard/vet/profile" className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg btn-press transition-expo text-sm">
             Create Profile
           </Link>
         </div>
@@ -135,7 +135,7 @@ export default function VetDashboardPage() {
             className="bg-card border border-border hover:bg-muted text-foreground font-medium px-4 py-2 rounded-lg transition-colors text-sm">
             View Schedule
           </Link>
-          <button className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm">
+          <button className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-2 rounded-lg btn-press transition-expo text-sm">
             Accept Walk-in
           </button>
         </div>
@@ -149,7 +149,7 @@ export default function VetDashboardPage() {
           { icon: DollarSign, label: 'This Month Revenue', value: `Rs. ${(stats.revenue / 1000).toFixed(0)}K`, color: 'bg-amber/10 text-amber' },
           { icon: Star, label: 'Avg. Rating', value: stats.rating || '—', color: 'bg-primary/10 text-primary' },
         ].map(({ icon: Icon, label, value, color }) => (
-          <div key={label} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border">
+          <div key={label} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-4 sm:p-5">
             <div className={`w-10 h-10 ${color} rounded-xl flex items-center justify-center mb-3`}>
               <Icon size={20} />
             </div>
@@ -162,7 +162,7 @@ export default function VetDashboardPage() {
       {/* Today's Schedule + Recent Patients */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-6 mb-6 sm:mb-8">
         {/* Today's Schedule */}
-        <div className="lg:col-span-3 bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="lg:col-span-3 rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-foreground">Today's Schedule</h3>
             <span className="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary">
@@ -199,7 +199,7 @@ export default function VetDashboardPage() {
         </div>
 
         {/* Recent Patients */}
-        <div className="lg:col-span-2 bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="lg:col-span-2 rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-4">Recent Patients</h3>
           {recentPatients.length > 0 ? (
             <div className="space-y-4">
@@ -225,7 +225,7 @@ export default function VetDashboardPage() {
       {/* Pending Actions + Performance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Pending Actions */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <div className="flex items-center gap-2 mb-4">
             <AlertCircle size={18} className="text-amber" />
             <h3 className="text-lg font-bold text-foreground">Pending Actions</h3>
@@ -239,13 +239,13 @@ export default function VetDashboardPage() {
             )}
             {pendingActions.vaccineReminders > 0 && (
               <div className="flex items-center gap-2 text-sm text-foreground">
-                <span className="w-2 h-2 rounded-full bg-primary" />
+                <span className="w-2 h-2 rounded-full bg-primary btn-press transition-expo" />
                 {pendingActions.vaccineReminders} vaccination reminder{pendingActions.vaccineReminders > 1 ? 's' : ''} to send
               </div>
             )}
             {pendingActions.pendingReviews > 0 && (
               <div className="flex items-center gap-2 text-sm text-foreground">
-                <span className="w-2 h-2 rounded-full bg-vitality" />
+                <span className="w-2 h-2 rounded-full bg-vitality btn-press transition-expo" />
                 {pendingActions.pendingReviews} review request{pendingActions.pendingReviews > 1 ? 's' : ''} pending
               </div>
             )}
@@ -256,7 +256,7 @@ export default function VetDashboardPage() {
         </div>
 
         {/* Performance */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <div className="flex items-center gap-2 mb-4">
             <TrendingUp size={18} className="text-primary" />
             <h3 className="text-lg font-bold text-foreground">Performance</h3>

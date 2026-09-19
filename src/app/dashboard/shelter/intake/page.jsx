@@ -92,7 +92,7 @@ export default function ShelterIntakePage() {
         </div>
         {!showForm && (
           <button onClick={() => setShowForm(true)}
-            className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+            className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 btn-press transition-expo">
             <Plus size={16} /> New Intake
           </button>
         )}
@@ -100,7 +100,7 @@ export default function ShelterIntakePage() {
 
       {/* Inline Register Form */}
       {showForm && (
-        <div className="bg-card rounded-2xl border border-border p-6 mb-6">
+        <div className="rounded-2xl bg-card shadow-card p-6 mb-6">
           <h3 className="text-base font-bold text-foreground mb-5">Register New Animal</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div>
@@ -148,7 +148,7 @@ export default function ShelterIntakePage() {
           </div>
           <div className="flex items-center gap-3">
             <button onClick={handleSave} disabled={saving || !form.species.trim()}
-              className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors">
+              className="bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold px-6 py-2.5 rounded-xl text-sm btn-press transition-expo">
               {saving ? 'Registering...' : 'Register Animal'}
             </button>
             <button onClick={() => { setShowForm(false); setForm(emptyForm); }}
@@ -160,7 +160,7 @@ export default function ShelterIntakePage() {
       )}
 
       {/* Recent Intakes */}
-      <div className="bg-card rounded-2xl border border-border">
+      <div className="rounded-2xl bg-card shadow-card">
         <div className="p-5 border-b border-border">
           <h3 className="text-base font-bold text-foreground">Recent Intakes</h3>
         </div>
@@ -190,7 +190,7 @@ export default function ShelterIntakePage() {
               )}
               <div className="pl-13">
                 <button onClick={() => handleMoveToAnimals(intake)} disabled={movingId === intake.id}
-                  className="bg-amber hover:bg-amber disabled:opacity-50 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors">
+                  className="bg-amber hover:bg-amber/90 disabled:opacity-50 text-white text-xs font-semibold px-4 py-2 rounded-lg flex items-center gap-1.5 transition-colors">
                   <ArrowRight size={13} /> {movingId === intake.id ? 'Moving...' : 'Move to Animals'}
                 </button>
               </div>

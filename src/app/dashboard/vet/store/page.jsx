@@ -121,7 +121,7 @@ export default function VetStorePage() {
           <div className="text-6xl mb-4">🏪</div>
           <h2 className="text-xl font-bold text-foreground mb-2">Create Your Store</h2>
           <p className="text-muted-foreground mb-6">Set up a store to start listing products.</p>
-          <button onClick={createStore} className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition-colors text-sm inline-flex items-center gap-2">
+          <button onClick={createStore} className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg btn-press transition-expo text-sm inline-flex items-center gap-2">
             <Plus size={16} /> Create Store
           </button>
         </div>
@@ -138,22 +138,22 @@ export default function VetStorePage() {
           <p className="text-sm text-muted-foreground mt-1">Manage your veterinary product inventory</p>
         </div>
         <button onClick={openAdd}
-          className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-2 rounded-lg transition-colors text-sm flex items-center gap-2 self-start">
+          className="bg-primary hover:bg-primary/90 text-white font-medium px-4 py-2 rounded-lg btn-press transition-expo text-sm flex items-center gap-2 self-start">
           <Plus size={16} /> Add Product
         </button>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-6">
-        <div className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+        <div className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
           <p className="text-2xl font-bold text-foreground">{products.length}</p>
           <p className="text-xs sm:text-sm text-muted-foreground">Products</p>
         </div>
-        <div className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+        <div className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
           <p className="text-2xl font-bold text-amber">{lowStock}</p>
           <p className="text-xs sm:text-sm text-muted-foreground">Low Stock</p>
         </div>
-        <div className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+        <div className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
           <p className="text-2xl font-bold text-emergency">{outOfStock}</p>
           <p className="text-xs sm:text-sm text-muted-foreground">Out of Stock</p>
         </div>
@@ -171,7 +171,7 @@ export default function VetStorePage() {
         {filtered.map((product) => {
           const status = getStatus(product.stock_quantity);
           return (
-            <div key={product.id} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border flex items-center gap-3 sm:gap-4">
+            <div key={product.id} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-4 sm:p-5 flex items-center gap-3 sm:gap-4">
               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden">
                 {product.image_url ? (
                   <img src={product.image_url} alt="" className="w-full h-full object-cover" />
@@ -292,7 +292,7 @@ export default function VetStorePage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <button onClick={() => handleSaveProduct(!!editProduct)} disabled={saving}
-                    className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white font-semibold py-2.5 rounded-lg btn-press transition-expo text-sm">
                     {saving ? 'Saving...' : editProduct ? 'Save Changes' : 'Add Product'}
                   </button>
                   <button onClick={() => { setShowAddModal(false); setEditProduct(null); }}

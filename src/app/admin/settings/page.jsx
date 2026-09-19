@@ -91,7 +91,7 @@ export default function SettingsPage() {
         {modules.map(({ key, icon: Icon, title, description }) => {
           const enabled = !!settings[key];
           return (
-            <div key={key} className="bg-card rounded-xl border border-border p-5 flex items-center gap-4">
+            <div key={key} className="rounded-xl bg-card shadow-card p-5 flex items-center gap-4">
               <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${enabled ? 'bg-vitality/10' : 'bg-muted'}`}>
                 <Icon size={20} className={enabled ? 'text-vitality' : 'text-muted-foreground'} />
               </div>

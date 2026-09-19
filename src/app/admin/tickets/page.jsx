@@ -92,7 +92,7 @@ export default function TicketsPage() {
         ))}
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="rounded-xl bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -172,7 +172,7 @@ export default function TicketsPage() {
                               <button
                                 onClick={() => handleSave(ticket)}
                                 disabled={saving === ticket.id || !isDirty}
-                                className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white text-xs font-semibold rounded-lg transition-colors">
+                                className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white text-xs font-semibold rounded-lg btn-press transition-expo">
                                 <Save size={13} />
                                 {saving === ticket.id ? 'Saving...' : 'Save Changes'}
                               </button>

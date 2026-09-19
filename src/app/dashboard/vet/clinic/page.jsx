@@ -158,7 +158,7 @@ export default function VetClinicPage() {
           <h2 className="text-xl font-bold text-foreground mb-2">No Clinic Yet</h2>
           <p className="text-muted-foreground mb-6">Create your own clinic or join an existing one.</p>
           <button onClick={() => setShowCreateModal(true)}
-            className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg transition-colors text-sm inline-flex items-center gap-2">
+            className="bg-primary hover:bg-primary/90 text-white font-medium px-6 py-3 rounded-lg btn-press transition-expo text-sm inline-flex items-center gap-2">
             <Plus size={16} /> Create Clinic
           </button>
 
@@ -186,7 +186,7 @@ export default function VetClinicPage() {
                       </div>
                     ))}
                     <div className="flex items-center gap-3">
-                      <button onClick={handleCreateClinic} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">Create Clinic</button>
+                      <button onClick={handleCreateClinic} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg btn-press transition-expo text-sm">Create Clinic</button>
                       <button onClick={() => setShowCreateModal(false)} className="px-4 py-2.5 bg-card hover:bg-muted text-foreground font-medium rounded-lg transition-colors border border-border text-sm">Cancel</button>
                     </div>
                   </div>
@@ -229,7 +229,7 @@ export default function VetClinicPage() {
           { icon: CheckCircle, value: stats.patients, label: 'Patients Served', color: 'text-vitality' },
           { icon: Star, value: `${stats.rating}★`, label: 'Average Rating', color: 'text-amber' },
         ].map(({ icon: Icon, value, label, color }) => (
-          <div key={label} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border">
+          <div key={label} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-4 sm:p-5">
             <div className="flex items-center gap-2 mb-2">
               <Icon size={18} className={color} />
             </div>
@@ -241,7 +241,7 @@ export default function VetClinicPage() {
 
       {/* Clinic Details + Team Members */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6">
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-4">Clinic Details</h3>
           <div className="space-y-4">
             <div className="flex items-start gap-3">
@@ -271,7 +271,7 @@ export default function VetClinicPage() {
           </div>
         </div>
 
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-bold text-foreground">Team Members</h3>
             {clinic.owner_id === user.id && (
@@ -298,7 +298,7 @@ export default function VetClinicPage() {
       </div>
 
       {/* Services Offered */}
-      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+      <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
         <h3 className="text-lg font-bold text-foreground mb-4">Services Offered</h3>
         {services.length > 0 ? (
           <div className="flex flex-wrap gap-2">
@@ -339,7 +339,7 @@ export default function VetClinicPage() {
                   </div>
                 ))}
                 <div className="flex items-center gap-3">
-                  <button onClick={handleSaveEdit} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">Save Changes</button>
+                  <button onClick={handleSaveEdit} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg btn-press transition-expo text-sm">Save Changes</button>
                   <button onClick={() => setShowEditModal(false)} className="px-4 py-2.5 bg-card hover:bg-muted text-foreground font-medium rounded-lg transition-colors border border-border text-sm">Cancel</button>
                 </div>
               </div>
@@ -379,7 +379,7 @@ export default function VetClinicPage() {
                         </div>
                         <button onClick={() => handleInviteVet(vet.id, vet.user_id)}
                           disabled={inviting === vet.id}
-                          className="text-xs font-medium px-3 py-1.5 rounded-lg bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white flex items-center gap-1 transition-colors flex-shrink-0">
+                          className="text-xs font-medium px-3 py-1.5 rounded-lg bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white flex items-center gap-1 btn-press transition-expo flex-shrink-0">
                           <UserPlus size={12} />
                           {inviting === vet.id ? '...' : 'Invite'}
                         </button>

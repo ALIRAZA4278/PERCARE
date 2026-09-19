@@ -86,7 +86,7 @@ export default function AddPetModal({ isOpen, onClose, onAdd }) {
             <div className="flex justify-center mb-5">
               <input type="file" ref={fileInputRef} accept="image/*" onChange={handleImageSelect} className="hidden" />
               <div onClick={() => fileInputRef.current?.click()}
-                className="w-20 h-20 bg-muted rounded-full flex items-center justify-center cursor-pointer hover:bg-muted transition-colors border-2 border-dashed border-border overflow-hidden">
+                className="w-20 h-20 bg-muted rounded-full flex items-center justify-center cursor-pointer hover:bg-muted-foreground/10 transition-colors border-2 border-dashed border-border overflow-hidden">
                 {imagePreview ? (
                   <img src={imagePreview} alt="Preview" className="w-full h-full object-cover" />
                 ) : (
@@ -168,7 +168,7 @@ export default function AddPetModal({ isOpen, onClose, onAdd }) {
               <div className="flex items-center justify-between mb-3">
                 <label className="block text-xs font-semibold text-muted-foreground uppercase tracking-wider">Vaccination History</label>
                 <button type="button" onClick={addVaccine}
-                  className="text-xs text-primary font-semibold flex items-center gap-1 hover:text-primary">
+                  className="text-xs text-primary font-semibold flex items-center gap-1 hover:underline">
                   <Plus size={14} /> Add Vaccine
                 </button>
               </div>
@@ -179,7 +179,7 @@ export default function AddPetModal({ isOpen, onClose, onAdd }) {
                 <div key={i} className="bg-muted rounded-lg p-3 mb-2 border border-border">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-xs font-semibold text-muted-foreground">Vaccine #{i + 1}</span>
-                    <button type="button" onClick={() => removeVaccine(i)} className="p-1 hover:bg-emergency/10 rounded text-emergency hover:text-emergency">
+                    <button type="button" onClick={() => removeVaccine(i)} className="p-1 hover:bg-emergency/10 rounded text-emergency hover:opacity-90">
                       <Trash2 size={14} />
                     </button>
                   </div>

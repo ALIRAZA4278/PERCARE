@@ -87,7 +87,7 @@ export default function ShelterAnimalsPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Animals</h1>
           <p className="text-sm text-muted-foreground mt-1">Manage animals in your shelter</p>
         </div>
-        <button onClick={openAdd} className="bg-vitality hover:bg-vitality text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+        <button onClick={openAdd} className="bg-vitality hover:bg-vitality/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 btn-press transition-expo">
           <Plus size={16} /> Add Animal
         </button>
       </div>
@@ -108,7 +108,7 @@ export default function ShelterAnimalsPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {filtered.map((animal) => (
-          <div key={animal.id} className="bg-card rounded-xl border border-border overflow-hidden hover:shadow-card-hover transition-shadow">
+          <div key={animal.id} className="rounded-xl bg-card shadow-card overflow-hidden hover:shadow-card-hover transition-shadow">
             <div className="h-40 bg-muted flex items-center justify-center overflow-hidden">
               {animal.image_url ? <img src={animal.image_url} alt={animal.name} className="w-full h-full object-cover" /> : <PawPrint size={40} className="text-muted-foreground/40" />}
             </div>
@@ -125,8 +125,8 @@ export default function ShelterAnimalsPage() {
                 {animal.gender && <span>· {animal.gender}</span>}
               </div>
               <div className="flex gap-2">
-                <button onClick={() => openEdit(animal)} className="flex-1 text-xs font-medium bg-muted hover:bg-muted text-foreground py-1.5 rounded-lg transition-colors">Edit</button>
-                <button onClick={() => handleDelete(animal.id)} className="flex-1 text-xs font-medium bg-emergency/10 hover:bg-emergency/10 text-emergency py-1.5 rounded-lg transition-colors">Remove</button>
+                <button onClick={() => openEdit(animal)} className="flex-1 text-xs font-medium bg-muted hover:bg-muted-foreground/10 text-foreground py-1.5 rounded-lg transition-colors">Edit</button>
+                <button onClick={() => handleDelete(animal.id)} className="flex-1 text-xs font-medium bg-emergency/10 hover:bg-emergency/20 text-emergency py-1.5 rounded-lg transition-colors">Remove</button>
               </div>
             </div>
           </div>
@@ -203,7 +203,7 @@ export default function ShelterAnimalsPage() {
                   </label>
                 </div>
                 <button onClick={handleSave} disabled={saving || uploading}
-                  className="w-full bg-vitality hover:bg-vitality disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors">
+                  className="w-full bg-vitality hover:bg-vitality/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl btn-press transition-expo">
                   {saving ? 'Saving...' : editAnimal ? 'Save Changes' : 'Add Animal'}
                 </button>
               </div>

@@ -155,7 +155,7 @@ export default function PetsPage() {
         </div>
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="rounded-xl bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -201,7 +201,7 @@ export default function PetsPage() {
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-1.5">
                       <button onClick={() => openEdit(pet)}
-                        className="flex items-center gap-1 px-2.5 py-1.5 bg-muted hover:bg-muted text-foreground text-xs font-semibold rounded-lg transition-colors border border-border">
+                        className="flex items-center gap-1 px-2.5 py-1.5 bg-muted hover:bg-muted-foreground/10 text-foreground text-xs font-semibold rounded-lg transition-colors border border-border">
                         <Pencil size={12} /> Edit
                       </button>
                       <button onClick={() => setDeleteModal(pet)} disabled={processing === pet.id}
@@ -221,8 +221,8 @@ export default function PetsPage() {
         <div className="flex items-center justify-between mt-4">
           <p className="text-xs text-muted-foreground">Page {page + 1} of {totalPages}</p>
           <div className="flex gap-2">
-            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border"><ChevronLeft size={16} /></button>
-            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border"><ChevronRight size={16} /></button>
+            <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-muted-foreground/30"><ChevronLeft size={16} /></button>
+            <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1} className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-muted-foreground/30"><ChevronRight size={16} /></button>
           </div>
         </div>
       )}
@@ -324,10 +324,10 @@ export default function PetsPage() {
 
               <div className="flex gap-2 mt-5">
                 <button onClick={handleSave} disabled={saving}
-                  className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                   <Save size={15} /> {saving ? 'Saving...' : 'Save Changes'}
                 </button>
-                <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-xl text-sm">Cancel</button>
+                <button onClick={() => setModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -345,10 +345,10 @@ export default function PetsPage() {
               <p className="text-xs text-emergency mb-5">This will permanently delete this pet and all its data.</p>
               <div className="flex gap-2">
                 <button onClick={handleDelete} disabled={processing === deleteModal.id}
-                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm">
+                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm btn-press transition-expo">
                   {processing === deleteModal.id ? 'Deleting...' : 'Delete'}
                 </button>
-                <button onClick={() => setDeleteModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-lg text-sm">Cancel</button>
+                <button onClick={() => setDeleteModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>

@@ -67,7 +67,7 @@ export default function SettingsPage() {
                 <p className="text-xs sm:text-sm text-muted-foreground">English (US)</p>
               </div>
             </div>
-            <ChevronRight size={18} className="text-muted-foreground group-hover:text-muted-foreground transition-colors flex-shrink-0" />
+            <ChevronRight size={18} className="text-muted-foreground transition-colors flex-shrink-0 group-hover:text-primary" />
           </button>
 
           {/* Help & Support */}
@@ -81,7 +81,7 @@ export default function SettingsPage() {
                 <p className="text-xs sm:text-sm text-muted-foreground">FAQs and contact</p>
               </div>
             </div>
-            <ChevronRight size={18} className="text-muted-foreground group-hover:text-muted-foreground transition-colors flex-shrink-0" />
+            <ChevronRight size={18} className="text-muted-foreground transition-colors flex-shrink-0 group-hover:text-primary" />
           </button>
 
           {/* About PetCare */}
@@ -95,7 +95,7 @@ export default function SettingsPage() {
                 <p className="text-xs sm:text-sm text-muted-foreground">Version 1.0.0</p>
               </div>
             </div>
-            <ChevronRight size={18} className="text-muted-foreground group-hover:text-muted-foreground transition-colors flex-shrink-0" />
+            <ChevronRight size={18} className="text-muted-foreground transition-colors flex-shrink-0 group-hover:text-primary" />
           </button>
 
           {/* Log Out */}
@@ -119,7 +119,7 @@ export default function SettingsPage() {
             <div className="bg-card rounded-2xl w-full max-w-md shadow-elevated">
               <div className="flex items-center justify-between p-5 border-b border-border">
                 <h2 className="text-lg font-bold text-foreground">Help & Support</h2>
-                <button onClick={() => setShowHelp(false)} className="w-8 h-8 bg-muted hover:bg-muted rounded-full flex items-center justify-center transition-colors">
+                <button onClick={() => setShowHelp(false)} className="w-8 h-8 bg-muted hover:bg-muted-foreground/10 rounded-full flex items-center justify-center transition-colors">
                   <X size={16} className="text-muted-foreground" />
                 </button>
               </div>
@@ -171,7 +171,7 @@ export default function SettingsPage() {
             <div className="bg-card rounded-2xl w-full max-w-md shadow-elevated">
               <div className="flex items-center justify-between p-5 border-b border-border">
                 <h2 className="text-lg font-bold text-foreground">About PetCare</h2>
-                <button onClick={() => setShowAbout(false)} className="w-8 h-8 bg-muted hover:bg-muted rounded-full flex items-center justify-center transition-colors">
+                <button onClick={() => setShowAbout(false)} className="w-8 h-8 bg-muted hover:bg-muted-foreground/10 rounded-full flex items-center justify-center transition-colors">
                   <X size={16} className="text-muted-foreground" />
                 </button>
               </div>

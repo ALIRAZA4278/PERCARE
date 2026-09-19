@@ -52,7 +52,7 @@ export default function VetSettingsPage() {
       </div>
 
       <div className="max-w-3xl">
-        <div className="bg-card rounded-xl sm:rounded-2xl border border-border divide-y divide-border">
+        <div className="rounded-2xl bg-card shadow-card divide-y divide-border">
           {settingsItems.map(({ icon: Icon, label, description, type, value, onChange, iconBg, iconColor }) => (
             <div key={label} className="flex items-center justify-between p-4 sm:p-5 hover:bg-muted transition-colors cursor-pointer">
               <div className="flex items-center gap-3 sm:gap-4">
@@ -77,7 +77,7 @@ export default function VetSettingsPage() {
         </div>
 
         {/* Log Out */}
-        <div className="bg-card rounded-xl sm:rounded-2xl border border-border mt-4">
+        <div className="rounded-2xl bg-card shadow-card mt-4">
           <button onClick={handleLogout}
             className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 w-full hover:bg-emergency/10 transition-colors rounded-xl sm:rounded-2xl">
             <div className="w-10 h-10 sm:w-11 sm:h-11 bg-emergency/10 rounded-full flex items-center justify-center flex-shrink-0">
