@@ -106,7 +106,7 @@ export default function ReviewsPage() {
         </div>
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="rounded-xl bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -176,11 +176,11 @@ export default function ReviewsPage() {
               <p className="text-xs text-emergency mb-4">This cannot be undone.</p>
               <div className="flex gap-2">
                 <button onClick={handleDelete} disabled={processing === deleteModal.id}
-                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm">
+                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm btn-press transition-expo">
                   {processing === deleteModal.id ? 'Deleting...' : 'Delete Review'}
                 </button>
                 <button onClick={() => setDeleteModal(null)}
-                  className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-lg text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>

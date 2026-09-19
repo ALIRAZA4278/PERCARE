@@ -99,7 +99,7 @@ export default function ShelterOverviewPage() {
   if (!shelter) return (
     <div className="p-4 sm:p-6 lg:p-8">
       <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">Welcome to Shelter Dashboard</h1>
-      <div className="bg-card rounded-2xl border border-border p-6 max-w-xl">
+      <div className="rounded-2xl bg-card shadow-card p-6 max-w-xl">
         <h2 className="text-lg font-bold text-foreground mb-1">Set Up Your Shelter</h2>
         <p className="text-sm text-muted-foreground mb-5">Create your shelter profile to start managing animals and adoptions.</p>
         <div className="space-y-4">
@@ -138,7 +138,7 @@ export default function ShelterOverviewPage() {
             </div>
           </div>
           <button onClick={handleCreateShelter} disabled={creating || !createForm.name.trim() || !createForm.address.trim() || !createForm.city.trim()}
-            className="w-full bg-vitality hover:bg-vitality disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
+            className="w-full bg-vitality hover:bg-vitality/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl btn-press transition-expo text-sm">
             {creating ? 'Creating...' : 'Create Shelter Profile'}
           </button>
         </div>
@@ -156,7 +156,7 @@ export default function ShelterOverviewPage() {
         </div>
         <div className="flex items-center gap-2">
           <Link href="/dashboard/shelter/intake"
-            className="bg-vitality hover:bg-vitality text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+            className="bg-vitality hover:bg-vitality/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 btn-press transition-expo">
             <Plus size={16} /> New Intake
           </Link>
           <Link href="/dashboard/shelter/adoptions"
@@ -174,7 +174,7 @@ export default function ShelterOverviewPage() {
           { icon: HandHeart, label: 'Donations (Month)', value: formatK(stats.donationsMonth), iconBg: 'bg-vitality/10', iconColor: 'text-vitality' },
           { icon: CheckCircle, label: 'Adopted This Month', value: stats.adoptedMonth, iconBg: 'bg-primary/10', iconColor: 'text-primary' },
         ].map(({ icon: Icon, label, value, iconBg, iconColor }) => (
-          <div key={label} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border">
+          <div key={label} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-4 sm:p-5">
             <div className={`w-10 h-10 ${iconBg} rounded-xl flex items-center justify-center mb-3`}>
               <Icon size={20} className={iconColor} />
             </div>
@@ -185,7 +185,7 @@ export default function ShelterOverviewPage() {
       </div>
 
       {/* Monthly Expense Goal */}
-      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-6">
+      <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6 mb-6">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-base font-bold text-foreground">Monthly Expense Goal</h3>
           <span className="text-sm font-semibold text-foreground">{progressPct.toFixed(0)}%</span>
@@ -208,10 +208,10 @@ export default function ShelterOverviewPage() {
       {/* Two-column: Adoption Requests + Recent Donations */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Adoption Requests */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-foreground">Adoption Requests</h3>
-            <Link href="/dashboard/shelter/adoptions" className="text-sm text-vitality hover:text-vitality font-medium">View all</Link>
+            <Link href="/dashboard/shelter/adoptions" className="text-sm text-vitality font-medium hover:opacity-90">View all</Link>
           </div>
           {adoptionRequests.length > 0 ? (
             <div className="space-y-3">
@@ -228,11 +228,11 @@ export default function ShelterOverviewPage() {
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
                     <button onClick={() => handleRequest(req.id, 'approved')}
-                      className="w-8 h-8 bg-vitality/10 hover:bg-vitality/10 text-vitality rounded-lg flex items-center justify-center transition-colors">
+                      className="w-8 h-8 bg-vitality/10 hover:bg-vitality/20 text-vitality rounded-lg flex items-center justify-center transition-colors">
                       <Check size={15} />
                     </button>
                     <button onClick={() => handleRequest(req.id, 'rejected')}
-                      className="w-8 h-8 bg-emergency/10 hover:bg-emergency/10 text-emergency rounded-lg flex items-center justify-center transition-colors">
+                      className="w-8 h-8 bg-emergency/10 hover:bg-emergency/20 text-emergency rounded-lg flex items-center justify-center transition-colors">
                       <X size={15} />
                     </button>
                   </div>
@@ -245,10 +245,10 @@ export default function ShelterOverviewPage() {
         </div>
 
         {/* Recent Donations */}
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-base font-bold text-foreground">Recent Donations</h3>
-            <Link href="/dashboard/shelter/donations" className="text-sm text-vitality hover:text-vitality font-medium">View all</Link>
+            <Link href="/dashboard/shelter/donations" className="text-sm text-vitality font-medium hover:opacity-90">View all</Link>
           </div>
           {donations.length > 0 ? (
             <div className="space-y-3">

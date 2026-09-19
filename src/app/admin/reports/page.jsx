@@ -91,12 +91,12 @@ export default function ReportsPage() {
 
       <div className="space-y-3">
         {filtered.length === 0 ? (
-          <div className="text-center py-16 bg-card rounded-xl border border-border">
+          <div className="text-center py-16 rounded-xl bg-card shadow-card">
             <div className="text-4xl mb-3">✅</div>
             <p className="text-muted-foreground text-sm">No reports in this category</p>
           </div>
         ) : filtered.map(report => (
-          <div key={report.id} className="bg-card rounded-xl p-4 sm:p-5 border border-border">
+          <div key={report.id} className="rounded-xl bg-card shadow-card p-4 sm:p-5">
             <div className="flex flex-col sm:flex-row sm:items-start gap-3">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -116,11 +116,11 @@ export default function ReportsPage() {
               {(report.status === 'pending' || report.status === 'investigating') && (
                 <div className="flex gap-2 shrink-0">
                   <button onClick={() => setResolveModal(report)} disabled={processing === report.id}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-vitality/10 hover:bg-vitality/10 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-vitality/10 hover:bg-vitality/20 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-50">
                     <CheckCircle size={13} /> Resolve
                   </button>
                   <button onClick={() => handleDismiss(report)} disabled={processing === report.id}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-muted hover:bg-muted text-muted-foreground text-xs font-semibold rounded-lg transition-colors border border-border disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-muted hover:bg-muted-foreground/10 text-muted-foreground text-xs font-semibold rounded-lg transition-colors border border-border disabled:opacity-50">
                     <XCircle size={13} /> Dismiss
                   </button>
                 </div>
@@ -144,11 +144,11 @@ export default function ReportsPage() {
                 className="w-full px-3 py-2.5 rounded-lg bg-muted border border-border outline-none focus:border-primary text-foreground text-sm resize-none mb-4 placeholder:text-muted-foreground" />
               <div className="flex gap-2">
                 <button onClick={handleResolve} disabled={processing === resolveModal.id}
-                  className="flex-1 bg-vitality hover:bg-vitality/90 disabled:bg-vitality/60 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
+                  className="flex-1 bg-vitality hover:bg-vitality/90 disabled:bg-vitality/60 text-white font-semibold py-2.5 rounded-lg text-sm btn-press transition-expo">
                   {processing === resolveModal.id ? 'Processing...' : 'Mark Resolved'}
                 </button>
                 <button onClick={() => { setResolveModal(null); setAdminNotes(''); }}
-                  className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-lg text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>

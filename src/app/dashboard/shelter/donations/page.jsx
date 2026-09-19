@@ -113,24 +113,24 @@ export default function ShelterDonationsPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Donations</h1>
           <p className="text-sm text-vitality mt-0.5">Manage donation packages and track contributions</p>
         </div>
-        <button onClick={openCreate} className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+        <button onClick={openCreate} className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 btn-press transition-expo">
           <Plus size={16} /> Create Package
         </button>
       </div>
 
       {/* Stat Cards */}
       <div className="grid grid-cols-3 gap-4 mb-5">
-        <div className="bg-card rounded-2xl p-5 border border-border">
+        <div className="rounded-2xl bg-card shadow-card p-5">
           <DollarSign size={22} className="text-vitality mb-2" />
           <p className="text-2xl font-bold text-foreground">{formatK(thisMonth)}</p>
           <p className="text-sm text-vitality mt-0.5">This Month</p>
         </div>
-        <div className="bg-card rounded-2xl p-5 border border-border">
+        <div className="rounded-2xl bg-card shadow-card p-5">
           <Heart size={22} className="text-emergency mb-2" />
           <p className="text-2xl font-bold text-foreground">{uniqueDonors}</p>
           <p className="text-sm text-vitality mt-0.5">Total Donors</p>
         </div>
-        <div className="bg-card rounded-2xl p-5 border border-border">
+        <div className="rounded-2xl bg-card shadow-card p-5">
           <TrendingUp size={22} className="text-vitality mb-2" />
           <p className="text-2xl font-bold text-foreground">{formatK(allTime)}</p>
           <p className="text-sm text-vitality mt-0.5">All Time</p>
@@ -139,7 +139,7 @@ export default function ShelterDonationsPage() {
 
       {/* Monthly Goal Progress */}
       {monthlyGoal > 0 && (
-        <div className="bg-card rounded-2xl p-5 border border-border mb-5">
+        <div className="rounded-2xl bg-card shadow-card p-5 mb-5">
           <div className="flex items-center justify-between mb-3">
             <span className="font-semibold text-foreground">Monthly Goal Progress</span>
             <span className="text-sm font-medium text-muted-foreground">{formatK(thisMonth)} / {formatK(monthlyGoal)}</span>
@@ -152,7 +152,7 @@ export default function ShelterDonationsPage() {
       )}
 
       {/* Donation Packages */}
-      <div className="bg-card rounded-2xl border border-border mb-5">
+      <div className="rounded-2xl bg-card shadow-card mb-5">
         <div className="p-5 border-b border-border">
           <h3 className="text-base font-bold text-foreground">Donation Packages</h3>
         </div>
@@ -181,7 +181,7 @@ export default function ShelterDonationsPage() {
       </div>
 
       {/* Bank Details */}
-      <div className="bg-card rounded-2xl border border-border mb-5">
+      <div className="rounded-2xl bg-card shadow-card mb-5">
         <div className="p-5 border-b border-border">
           <h3 className="text-base font-bold text-foreground">Bank Details</h3>
         </div>
@@ -206,7 +206,7 @@ export default function ShelterDonationsPage() {
       </div>
 
       {/* Recent Donations */}
-      <div className="bg-card rounded-2xl border border-border">
+      <div className="rounded-2xl bg-card shadow-card">
         <div className="p-5 border-b border-border">
           <h3 className="text-base font-bold text-foreground">Recent Donations</h3>
         </div>
@@ -272,7 +272,7 @@ export default function ShelterDonationsPage() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleCreatePkg} disabled={pkgSaving}
-                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                     {pkgSaving ? 'Submitting...' : 'Submit for Approval'}
                   </button>
                   <button onClick={() => setShowCreatePkg(false)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
@@ -316,7 +316,7 @@ export default function ShelterDonationsPage() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleEditPkg} disabled={pkgSaving}
-                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                     {pkgSaving ? 'Saving...' : 'Save Changes'}
                   </button>
                   <button onClick={() => setEditPkg(null)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
@@ -350,7 +350,7 @@ export default function ShelterDonationsPage() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleBankSave} disabled={bankSaving}
-                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                     {bankSaving ? 'Saving...' : 'Save Changes'}
                   </button>
                   <button onClick={() => setShowBankEdit(false)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>

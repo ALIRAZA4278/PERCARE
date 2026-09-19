@@ -106,7 +106,7 @@ export default function SellerOrdersPage() {
           { value: statCounts.delivered, label: 'Delivered', color: 'text-vitality' },
           { value: statCounts.cancelled, label: 'Cancelled', color: 'text-emergency' },
         ].map(({ value, label, color }) => (
-          <div key={label} className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+          <div key={label} className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
             <p className="text-xs sm:text-sm text-muted-foreground">{label}</p>
           </div>
@@ -133,7 +133,7 @@ export default function SellerOrdersPage() {
       {/* Order List */}
       <div className="space-y-3">
         {filtered.map((order) => (
-          <div key={order.id} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border flex flex-col sm:flex-row sm:items-center gap-3">
+          <div key={order.id} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 <span className="font-bold text-foreground text-sm">ORD-{order.shortId.slice(0, 4)}</span>
@@ -149,7 +149,7 @@ export default function SellerOrdersPage() {
               </div>
               {['pending', 'processing', 'confirmed'].includes(order.status) && (
                 <button onClick={() => handleShip(order.id)}
-                  className="bg-primary hover:bg-primary/90 text-white text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
+                  className="bg-primary hover:bg-primary/90 text-white text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 btn-press transition-expo">
                   <Truck size={12} /> Ship
                 </button>
               )}

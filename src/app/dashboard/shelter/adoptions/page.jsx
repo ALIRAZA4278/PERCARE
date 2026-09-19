@@ -71,7 +71,7 @@ export default function ShelterAdoptionsPage() {
           { value: statCounts.completed, label: 'Completed', color: 'text-primary' },
           { value: statCounts.rejected, label: 'Rejected', color: 'text-emergency' },
         ].map(({ value, label, color }) => (
-          <div key={label} className="bg-card rounded-xl p-4 sm:p-5 border border-border text-center">
+          <div key={label} className="rounded-xl bg-card shadow-card p-4 sm:p-5 text-center">
             <p className={`text-2xl font-bold ${color}`}>{value}</p>
             <p className="text-xs sm:text-sm text-muted-foreground">{label}</p>
           </div>
@@ -94,7 +94,7 @@ export default function ShelterAdoptionsPage() {
 
       <div className="space-y-3">
         {filtered.map((req) => (
-          <div key={req.id} className="bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border flex flex-col sm:flex-row sm:items-center gap-3">
+          <div key={req.id} className="rounded-xl sm:rounded-2xl bg-card shadow-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="flex items-center gap-3 flex-1 min-w-0">
               <div className="w-10 h-10 bg-emergency/10 rounded-full flex items-center justify-center text-emergency font-bold shrink-0">
                 {req.adopter?.full_name?.charAt(0) || 'A'}
@@ -112,11 +112,11 @@ export default function ShelterAdoptionsPage() {
               {req.status === 'pending' && (
                 <>
                   <button onClick={() => handleAction(req.id, 'approved')}
-                    className="bg-vitality/10 hover:bg-vitality/10 text-vitality text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
+                    className="bg-vitality/10 hover:bg-vitality/20 text-vitality text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
                     <Check size={12} /> Approve
                   </button>
                   <button onClick={() => handleAction(req.id, 'rejected')}
-                    className="bg-emergency/10 hover:bg-emergency/10 text-emergency text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
+                    className="bg-emergency/10 hover:bg-emergency/20 text-emergency text-xs font-medium px-3 py-1.5 rounded-lg flex items-center gap-1 transition-colors">
                     <X size={12} /> Reject
                   </button>
                 </>
@@ -154,8 +154,8 @@ export default function ShelterAdoptionsPage() {
                 <div><p className="text-xs text-vitality mb-0.5">Date</p><p className="font-semibold text-foreground text-sm">{formatDate(viewReq.created_at)}</p></div>
                 {viewReq.status === 'pending' && (
                   <div className="flex gap-2 pt-2">
-                    <button onClick={() => handleAction(viewReq.id, 'approved')} className="flex-1 bg-vitality hover:bg-vitality/90 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">Approve</button>
-                    <button onClick={() => handleAction(viewReq.id, 'rejected')} className="flex-1 bg-emergency hover:bg-emergency/90 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">Reject</button>
+                    <button onClick={() => handleAction(viewReq.id, 'approved')} className="flex-1 bg-vitality hover:bg-vitality/90 text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">Approve</button>
+                    <button onClick={() => handleAction(viewReq.id, 'rejected')} className="flex-1 bg-emergency hover:bg-emergency/90 text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">Reject</button>
                   </div>
                 )}
               </div>

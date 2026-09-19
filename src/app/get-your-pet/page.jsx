@@ -151,7 +151,7 @@ export default function BrowsePetsPage() {
               <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
                 {filtered.map((pet) => (
                   <Link key={pet.id} href={`/get-your-pet/${pet.id}`} className="rounded-2xl bg-card shadow-card overflow-hidden hover:shadow-card-hover transition-all group">
-                    <div className="relative aspect-square bg-muted flex items-center justify-center group-hover:bg-muted transition-colors">
+                    <div className="relative aspect-square bg-muted flex items-center justify-center group-hover:bg-muted-foreground/10 transition-colors">
                       {pet.image_url ? (
                         <img src={pet.image_url} alt={pet.name} className="w-full h-full object-cover" />
                       ) : (

@@ -136,7 +136,7 @@ export default function ShelterFinancialsPage() {
             <Lightbulb size={15} /> Suggest
           </button>
           <button onClick={() => setShowAdd(true)}
-            className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 transition-colors">
+            className="bg-primary hover:bg-primary/90 text-white text-sm font-medium px-4 py-2 rounded-xl flex items-center gap-1.5 btn-press transition-expo">
             <Plus size={16} /> Add Expense
           </button>
         </div>
@@ -144,17 +144,17 @@ export default function ShelterFinancialsPage() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-3 gap-4 mb-5">
-        <div className="bg-card rounded-2xl p-5 border border-border">
+        <div className="rounded-2xl bg-card shadow-card p-5">
           <DollarSign size={20} className="text-vitality mb-2" />
           <p className="text-2xl font-bold text-foreground">{formatK(monthlyIncome)}</p>
           <p className="text-sm text-vitality mt-0.5">Monthly Income</p>
         </div>
-        <div className="bg-card rounded-2xl p-5 border border-border">
+        <div className="rounded-2xl bg-card shadow-card p-5">
           <TrendingUp size={20} className="text-emergency mb-2" />
           <p className="text-2xl font-bold text-foreground">{formatK(monthlyExpenses)}</p>
           <p className="text-sm text-emergency mt-0.5">Monthly Expenses</p>
         </div>
-        <div className="bg-card rounded-2xl p-5 border border-border">
+        <div className="rounded-2xl bg-card shadow-card p-5">
           <AlertCircle size={20} className={deficit >= 0 ? 'text-vitality' : 'text-emergency'} style={{ marginBottom: 8 }} />
           <p className={`text-2xl font-bold ${deficit >= 0 ? 'text-foreground' : 'text-emergency'}`}>{formatK(deficit)}</p>
           <p className={`text-sm mt-0.5 ${deficit >= 0 ? 'text-vitality' : 'text-emergency'}`}>{deficit >= 0 ? 'Surplus' : 'Deficit'}</p>
@@ -162,7 +162,7 @@ export default function ShelterFinancialsPage() {
       </div>
 
       {/* Expense Breakdown */}
-      <div className="bg-card rounded-2xl border border-border mb-5">
+      <div className="rounded-2xl bg-card shadow-card mb-5">
         <div className="p-5 border-b border-border">
           <h3 className="text-base font-bold text-foreground">Expense Breakdown</h3>
         </div>
@@ -187,11 +187,11 @@ export default function ShelterFinancialsPage() {
                 </div>
                 <div className="relative w-full bg-muted rounded-full h-2.5 overflow-hidden">
                   {over ? (
-                    <div className="absolute left-0 top-0 h-full rounded-full bg-emergency/40" style={{ width: '100%' }} />
+                    <div className="absolute left-0 top-0 h-full rounded-full bg-emergency/40 btn-press transition-expo" style={{ width: '100%' }} />
                   ) : (
                     <>
                       <div className="absolute left-0 top-0 h-full rounded-full bg-amber" style={{ width: `${pct}%` }} />
-                      <div className="absolute right-0 top-0 h-full rounded-full bg-vitality/60" style={{ width: `${100 - pct}%` }} />
+                      <div className="absolute right-0 top-0 h-full rounded-full bg-vitality/60 btn-press transition-expo" style={{ width: `${100 - pct}%` }} />
                     </>
                   )}
                 </div>
@@ -205,7 +205,7 @@ export default function ShelterFinancialsPage() {
       </div>
 
       {/* Monthly Trends */}
-      <div className="bg-card rounded-2xl border border-border">
+      <div className="rounded-2xl bg-card shadow-card">
         <div className="p-5 border-b border-border">
           <h3 className="text-base font-bold text-foreground">Monthly Trends</h3>
         </div>
@@ -217,14 +217,14 @@ export default function ShelterFinancialsPage() {
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] text-vitality font-medium w-14 shrink-0">Income</span>
                   <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                    <div className="h-full rounded-full bg-vitality" style={{ width: `${Math.max((income / maxTrend) * 100, 2)}%` }} />
+                    <div className="h-full rounded-full bg-vitality btn-press transition-expo" style={{ width: `${Math.max((income / maxTrend) * 100, 2)}%` }} />
                   </div>
                   <span className="text-xs font-semibold text-muted-foreground w-14 text-right shrink-0">{formatK(income)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] text-emergency font-medium w-14 shrink-0">Expenses</span>
                   <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                    <div className="h-full rounded-full bg-emergency/40" style={{ width: `${Math.max((exp / maxTrend) * 100, 2)}%` }} />
+                    <div className="h-full rounded-full bg-emergency/40 btn-press transition-expo" style={{ width: `${Math.max((exp / maxTrend) * 100, 2)}%` }} />
                   </div>
                   <span className="text-xs font-semibold text-muted-foreground w-14 text-right shrink-0">{formatK(exp)}</span>
                 </div>
@@ -259,7 +259,7 @@ export default function ShelterFinancialsPage() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleAdd} disabled={saving}
-                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                     {saving ? 'Adding...' : 'Add Expense'}
                   </button>
                   <button onClick={() => setShowAdd(false)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
@@ -298,7 +298,7 @@ export default function ShelterFinancialsPage() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleEdit} disabled={saving}
-                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                     {saving ? 'Saving...' : 'Save'}
                   </button>
                   <button onClick={() => setEditCat(null)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>
@@ -332,7 +332,7 @@ export default function ShelterFinancialsPage() {
                 </div>
                 <div className="flex gap-2">
                   <button onClick={handleSuggest} disabled={saving || !suggestion.trim()}
-                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                    className="flex-1 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                     {saving ? 'Submitting...' : 'Submit Suggestion'}
                   </button>
                   <button onClick={() => setShowSuggest(false)} className="flex-1 bg-card border border-border hover:bg-muted text-foreground font-semibold py-2.5 rounded-xl text-sm transition-colors">Cancel</button>

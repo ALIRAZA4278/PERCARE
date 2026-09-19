@@ -106,7 +106,7 @@ export default function VetProfilePage() {
       </div>
 
       {/* Profile Card */}
-      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+      <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6 mb-4 sm:mb-5">
         <div className="flex items-start gap-4 sm:gap-5">
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-vitality/10 rounded-2xl flex items-center justify-center flex-shrink-0">
             {profile?.avatar_url ? (
@@ -136,7 +136,7 @@ export default function VetProfilePage() {
 
       {/* Contact + Qualifications */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-5 mb-4 sm:mb-5">
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-4">Contact Information</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
@@ -158,7 +158,7 @@ export default function VetProfilePage() {
           </div>
         </div>
 
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+        <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
           <h3 className="text-lg font-bold text-foreground mb-4">Qualifications</h3>
           <div className="space-y-3">
             {qualifications.length > 0 ? qualifications.map((q, i) => (
@@ -174,7 +174,7 @@ export default function VetProfilePage() {
       </div>
 
       {/* Specializations */}
-      <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border">
+      <div className="rounded-xl sm:rounded-2xl bg-card shadow-card p-5 sm:p-6">
         <h3 className="text-lg font-bold text-foreground mb-4">Specializations</h3>
         {specializations.length > 0 ? (
           <div className="flex flex-wrap gap-2">
@@ -264,7 +264,7 @@ export default function VetProfilePage() {
                 </div>
                 <div className="flex items-center gap-3 pt-2">
                   <button onClick={handleSave}
-                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg transition-colors text-sm">Save Changes</button>
+                    className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg btn-press transition-expo text-sm">Save Changes</button>
                   <button onClick={() => setShowEditModal(false)}
                     className="px-4 py-2.5 bg-card hover:bg-muted text-foreground font-medium rounded-lg transition-colors border border-border text-sm">Cancel</button>
                 </div>

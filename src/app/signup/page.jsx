@@ -52,7 +52,7 @@ export default function SignupPage() {
   if (needsConfirmation) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-lg text-center bg-card rounded-2xl border border-border p-8">
+        <div className="w-full max-w-lg text-center p-8 rounded-2xl bg-card shadow-card">
           <div className="w-14 h-14 bg-vitality/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
             <MailCheck size={28} className="text-vitality" />
           </div>
@@ -79,7 +79,7 @@ export default function SignupPage() {
           <p className="text-sm text-muted-foreground mt-1">Join the PetCare Ecosystem</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="bg-card rounded-2xl border border-border p-6 sm:p-8">
+        <form onSubmit={handleSubmit} className="p-6 sm:p-8 rounded-2xl bg-card shadow-card">
           {error && (
             <div className="mb-4 p-3 bg-emergency/10 border border-emergency/20 rounded-xl text-sm text-emergency">
               {error}
@@ -92,7 +92,7 @@ export default function SignupPage() {
             <div className="grid grid-cols-2 gap-3">
               {roles.map(({ id, icon: Icon, label, approval }) => (
                 <button key={id} type="button" onClick={() => setSelectedRole(id)}
-                  className={`p-4 rounded-xl border-2 text-center transition-all ${selectedRole === id ? 'border-primary bg-primary/10' : 'border-border bg-card hover:border-border'}`}>
+                  className={`p-4 rounded-xl border-2 text-center btn-press transition-expo ${selectedRole === id ? 'border-primary bg-primary/5' : 'border-border bg-card hover:border-muted-foreground/30'}`}>
                   <Icon size={24} className={`mx-auto mb-2 ${selectedRole === id ? 'text-primary' : 'text-muted-foreground'}`} />
                   <p className={`text-sm font-semibold ${selectedRole === id ? 'text-primary' : 'text-foreground'}`}>{label}</p>
                   {approval && <p className="text-xs text-amber mt-0.5">Requires approval</p>}
@@ -118,21 +118,21 @@ export default function SignupPage() {
             <div className="relative">
               <input type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6}
                 className="w-full px-4 py-3 pr-12 rounded-xl border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-foreground text-sm bg-muted" />
-              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 p-1 text-muted-foreground hover:text-muted-foreground transition-colors">
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground transition-colors">
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
             </div>
           </div>
 
           <button type="submit" disabled={isLoading}
-            className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm">
+            className="w-full h-12 bg-primary hover:opacity-90 disabled:opacity-50 text-primary-foreground font-semibold rounded-xl btn-press transition-expo flex items-center justify-center gap-2 text-sm">
             <UserPlus size={16} />
             {isLoading ? 'Creating Account...' : 'Create Account'}
           </button>
 
           <p className="text-center text-sm text-muted-foreground mt-5">
             Already have an account?{' '}
-            <Link href="/login" className="text-primary font-semibold hover:text-primary transition-colors">Sign in</Link>
+            <Link href="/login" className="text-primary font-semibold hover:underline">Sign in</Link>
           </p>
         </form>
       </div>

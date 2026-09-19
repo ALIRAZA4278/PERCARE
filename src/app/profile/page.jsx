@@ -75,7 +75,7 @@ export default function ProfilePage() {
         <div className="px-4 md:px-8 max-w-3xl mx-auto py-4 sm:py-5">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Profile</h1>
-            <button onClick={handleLogout} className="flex items-center gap-2 text-emergency hover:text-emergency text-sm font-medium">
+            <button onClick={handleLogout} className="flex items-center gap-2 text-emergency text-sm font-medium hover:opacity-90">
               <LogOut size={16} /> Logout
             </button>
           </div>
@@ -183,7 +183,7 @@ export default function ProfilePage() {
                   <p className="text-xs sm:text-sm text-muted-foreground">{description}</p>
                 </div>
               </div>
-              <ChevronRight size={18} className="text-muted-foreground group-hover:text-muted-foreground transition-colors flex-shrink-0" />
+              <ChevronRight size={18} className="text-muted-foreground transition-colors flex-shrink-0 group-hover:text-primary" />
             </Link>
           ))}
         </div>

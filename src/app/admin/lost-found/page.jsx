@@ -110,12 +110,12 @@ export default function LostFoundAdminPage() {
 
       <div className="space-y-3">
         {filtered.length === 0 ? (
-          <div className="text-center py-16 bg-card rounded-xl border border-border">
+          <div className="text-center py-16 rounded-xl bg-card shadow-card">
             <div className="text-4xl mb-3">🔍</div>
             <p className="text-muted-foreground text-sm">No posts in this category</p>
           </div>
         ) : filtered.map(post => (
-          <div key={post.id} className="bg-card rounded-xl p-4 sm:p-5 border border-border">
+          <div key={post.id} className="rounded-xl bg-card shadow-card p-4 sm:p-5">
             <div className="flex flex-col sm:flex-row sm:items-start gap-3">
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${post.type === 'lost' ? 'bg-emergency/10' : 'bg-vitality/10'}`}>
                 <AlertTriangle size={18} className={post.type === 'lost' ? 'text-emergency' : 'text-vitality'} />
@@ -137,12 +137,12 @@ export default function LostFoundAdminPage() {
               <div className="flex gap-2 shrink-0">
                 {post.status === 'active' ? (
                   <button onClick={() => handleResolve(post)} disabled={processing === post.id}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-vitality/10 hover:bg-vitality/10 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-vitality/10 hover:bg-vitality/20 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-50">
                     <CheckCircle2 size={13} /> Resolve
                   </button>
                 ) : (
                   <button onClick={() => handleReopen(post)} disabled={processing === post.id}
-                    className="flex items-center gap-1.5 px-3 py-1.5 bg-muted hover:bg-muted text-foreground text-xs font-semibold rounded-lg transition-colors border border-border disabled:opacity-50">
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-muted hover:bg-muted-foreground/10 text-foreground text-xs font-semibold rounded-lg transition-colors border border-border disabled:opacity-50">
                     Reopen
                   </button>
                 )}
@@ -170,10 +170,10 @@ export default function LostFoundAdminPage() {
               </p>
               <div className="flex gap-2">
                 <button onClick={handleDelete} disabled={processing === deleteModal.id}
-                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
+                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm btn-press transition-expo">
                   {processing === deleteModal.id ? 'Removing...' : 'Remove'}
                 </button>
-                <button onClick={() => setDeleteModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-lg text-sm">Cancel</button>
+                <button onClick={() => setDeleteModal(null)} className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>

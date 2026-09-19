@@ -60,7 +60,7 @@ export default function ShelterNotificationsPage() {
           <p className="text-sm text-muted-foreground mt-1">Stay updated on your shelter activity</p>
         </div>
         {unreadCount > 0 && (
-          <button onClick={markAllRead} className="text-vitality font-medium text-sm hover:text-vitality">Mark all read</button>
+          <button onClick={markAllRead} className="text-vitality font-medium text-sm hover:opacity-90">Mark all read</button>
         )}
       </div>
       <div className="max-w-3xl space-y-3">

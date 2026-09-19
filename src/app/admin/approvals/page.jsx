@@ -135,7 +135,7 @@ export default function ApprovalsPage() {
   const btnR = "flex items-center gap-1.5 px-3 py-1.5 bg-muted hover:bg-emergency/10 text-emergency text-xs font-semibold rounded-lg transition-colors border border-border";
 
   const Card = ({ children, actions }) => (
-    <div className="bg-card rounded-xl p-4 sm:p-5 border border-border flex flex-col sm:flex-row sm:items-center gap-4">
+    <div className="rounded-xl bg-card shadow-card p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
       <div className="flex-1 min-w-0">{children}</div>
       <div className="flex gap-2 shrink-0">{actions}</div>
     </div>
@@ -253,11 +253,11 @@ export default function ApprovalsPage() {
                 className="w-full px-3 py-2.5 rounded-lg bg-muted border border-border outline-none focus:border-primary text-foreground text-sm resize-none mb-4 placeholder:text-muted-foreground" />
               <div className="flex gap-2">
                 <button onClick={handleReject} disabled={processing}
-                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
+                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm btn-press transition-expo">
                   {processing ? 'Processing...' : 'Confirm Reject'}
                 </button>
                 <button onClick={() => { setRejectModal(null); setRejectReason(''); }}
-                  className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-lg text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -269,7 +269,7 @@ export default function ApprovalsPage() {
 
 function Empty() {
   return (
-    <div className="text-center py-16 bg-card rounded-xl border border-border">
+    <div className="text-center py-16 rounded-xl bg-card shadow-card">
       <div className="text-4xl mb-3">✅</div>
       <p className="text-muted-foreground text-sm">All clear — nothing pending</p>
     </div>

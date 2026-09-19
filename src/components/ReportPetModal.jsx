@@ -55,7 +55,7 @@ export default function ReportPetModal({ isOpen, onClose, onSubmit }) {
 
             {/* Photo Upload Placeholder */}
             <div className="flex justify-center mb-5">
-              <div className="w-20 h-20 bg-muted rounded-xl flex items-center justify-center cursor-pointer hover:bg-muted transition-colors border-2 border-dashed border-border">
+              <div className="w-20 h-20 bg-muted rounded-xl flex items-center justify-center cursor-pointer hover:bg-muted-foreground/10 transition-colors border-2 border-dashed border-border">
                 <Camera size={24} className="text-muted-foreground" />
               </div>
             </div>

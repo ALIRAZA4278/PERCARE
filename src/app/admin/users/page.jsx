@@ -162,7 +162,7 @@ export default function UsersPage() {
         </div>
         {isSuperAdmin && (
           <button onClick={openAdd}
-            className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-xl transition-colors">
+            className="flex items-center gap-2 px-4 py-2.5 bg-primary hover:bg-primary/90 text-white text-sm font-semibold rounded-xl btn-press transition-expo">
             <UserPlus size={16} /> Add User
           </button>
         )}
@@ -184,7 +184,7 @@ export default function UsersPage() {
         </div>
       </div>
 
-      <div className="bg-card rounded-xl border border-border overflow-hidden">
+      <div className="rounded-xl bg-card shadow-card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -239,7 +239,7 @@ export default function UsersPage() {
                       )}
                       {u.is_banned ? (
                         <button onClick={() => handleUnban(u)} disabled={processing === u.id}
-                          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-vitality/10 hover:bg-vitality/10 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-50">
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 bg-vitality/10 hover:bg-vitality/20 text-vitality text-xs font-semibold rounded-lg transition-colors border border-vitality/20 disabled:opacity-50">
                           <CheckCircle size={12} /> Unban
                         </button>
                       ) : (
@@ -262,9 +262,9 @@ export default function UsersPage() {
           <p className="text-xs text-muted-foreground">Page {page + 1} of {totalPages}</p>
           <div className="flex gap-2">
             <button onClick={() => setPage(p => Math.max(0, p - 1))} disabled={page === 0}
-              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border transition-colors"><ChevronLeft size={16} /></button>
+              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-muted-foreground/30 transition-colors"><ChevronLeft size={16} /></button>
             <button onClick={() => setPage(p => Math.min(totalPages - 1, p + 1))} disabled={page >= totalPages - 1}
-              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-border transition-colors"><ChevronRight size={16} /></button>
+              className="p-2 bg-card border border-border rounded-lg text-muted-foreground disabled:opacity-30 hover:border-muted-foreground/30 transition-colors"><ChevronRight size={16} /></button>
           </div>
         </div>
       )}
@@ -338,10 +338,10 @@ export default function UsersPage() {
 
               <div className="flex gap-2">
                 <button onClick={handleAddUser} disabled={addLoading}
-                  className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                   {addLoading ? 'Creating...' : 'Create User'}
                 </button>
-                <button onClick={() => setAddModal(false)} className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-xl text-sm">Cancel</button>
+                <button onClick={() => setAddModal(false)} className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -382,11 +382,11 @@ export default function UsersPage() {
               </div>
               <div className="flex gap-2">
                 <button onClick={handleAdminRoleChange} disabled={processing === adminRoleModal.id}
-                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                   {processing === adminRoleModal.id ? 'Saving...' : 'Assign Role'}
                 </button>
                 <button onClick={() => setAdminRoleModal(null)}
-                  className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-xl text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -441,11 +441,11 @@ export default function UsersPage() {
               )}
               <div className="flex gap-2">
                 <button onClick={handleRoleChange} disabled={processing === roleModal.id || (newRole === roleModal.role && (newRole !== 'admin' || newRoleAdminRole === (roleModal.admin_role || 'operations')))}
-                  className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm transition-colors">
+                  className="flex-1 bg-primary hover:bg-primary/90 disabled:bg-muted disabled:text-muted-foreground text-white font-semibold py-2.5 rounded-xl text-sm btn-press transition-expo">
                   {processing === roleModal.id ? 'Saving...' : 'Save Type'}
                 </button>
                 <button onClick={() => setRoleModal(null)}
-                  className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-xl text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-xl text-sm">Cancel</button>
               </div>
             </div>
           </div>
@@ -467,11 +467,11 @@ export default function UsersPage() {
                 className="w-full px-3 py-2.5 rounded-lg bg-muted border border-border outline-none focus:border-primary text-foreground text-sm resize-none mb-4 placeholder:text-muted-foreground" />
               <div className="flex gap-2">
                 <button onClick={handleBan} disabled={processing === banModal.id}
-                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm transition-colors">
+                  className="flex-1 bg-emergency hover:bg-emergency/90 disabled:bg-emergency/40 text-white font-semibold py-2.5 rounded-lg text-sm btn-press transition-expo">
                   {processing === banModal.id ? 'Processing...' : 'Confirm Ban'}
                 </button>
                 <button onClick={() => { setBanModal(null); setBanReason(''); }}
-                  className="px-4 py-2.5 bg-muted hover:bg-muted text-foreground rounded-lg text-sm">Cancel</button>
+                  className="px-4 py-2.5 bg-muted hover:bg-muted-foreground/10 text-foreground rounded-lg text-sm">Cancel</button>
               </div>
             </div>
           </div>

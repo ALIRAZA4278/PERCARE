@@ -78,7 +78,7 @@ ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
           <p className="text-sm text-muted-foreground mt-1">Create the admin account</p>
         </div>
 
-        <div className="bg-card rounded-2xl border border-border p-6">
+        <div className="rounded-2xl bg-card shadow-card p-6">
           {status === 'idle' || status === 'error' ? (
             <form onSubmit={handleCreate} className="space-y-4">
               {status === 'error' && (
@@ -101,7 +101,7 @@ ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
                 </div>
               </div>
               <button type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm transition-colors">
+                className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm btn-press transition-expo">
                 Create Admin Account
               </button>
             </form>
@@ -110,7 +110,7 @@ ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
           ) : status === 'success' ? (
             <div className="space-y-3">
               <div className="p-3 bg-vitality/10 border border-vitality/20 rounded-xl text-sm text-vitality">✓ {message}</div>
-              <a href="/admin/login" className="block w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm text-center">
+              <a href="/admin/login" className="block w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm text-center btn-press transition-expo">
                 Go to Admin Login
               </a>
             </div>
@@ -121,7 +121,7 @@ ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
                 <p className="text-xs text-muted-foreground mb-2">Run this SQL in Supabase SQL Editor:</p>
                 <pre className="bg-muted border border-border rounded-lg p-3 text-xs text-vitality overflow-x-auto whitespace-pre-wrap">{sqlFix}</pre>
               </div>
-              <a href="/admin/login" className="block w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm text-center">
+              <a href="/admin/login" className="block w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 rounded-xl text-sm text-center btn-press transition-expo">
                 Try Admin Login
               </a>
             </div>
