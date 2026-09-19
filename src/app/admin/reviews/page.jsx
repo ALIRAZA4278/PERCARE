@@ -81,10 +81,10 @@ export default function ReviewsPage() {
 
   const avgRating = reviews.length ? (reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length).toFixed(1) : '—';
 
-  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
+  if (loading) return <div className="flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       <div className="mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Reviews</h1>
         <p className="text-sm text-muted-foreground mt-1">{reviews.length} total · Avg rating: {avgRating} ★</p>

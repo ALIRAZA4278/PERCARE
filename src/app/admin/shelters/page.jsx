@@ -144,10 +144,10 @@ export default function SheltersPage() {
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const counts = { all: shelters.length, verified: shelters.filter(s => s.is_verified).length, unverified: shelters.filter(s => !s.is_verified).length };
 
-  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-muted-foreground text-sm">Loading...</p></div>;
+  if (loading) return <div className="flex items-center justify-center"><p className="text-muted-foreground text-sm">Loading...</p></div>;
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Shelters</h1>

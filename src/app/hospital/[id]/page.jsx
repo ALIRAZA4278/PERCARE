@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Star, MapPin, Heart, Shield, Phone, Globe, Clock, Stethoscope, Bed } from 'lucide-react';
+import { ArrowLeft, Star, MapPin, Heart, Shield, Phone, Globe, Clock, Stethoscope, Bed, Calendar } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -169,19 +169,25 @@ export default function HospitalDetailPage() {
         )}
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border p-4 z-10 lg:ml-64">
-        <div className="max-w-4xl mx-auto grid grid-cols-2 gap-3">
-          {clinic.phone ? (
-            <a href={`tel:${clinic.phone}`} className="bg-card border border-border text-foreground font-semibold py-3.5 rounded-xl text-center text-sm hover:bg-muted transition-colors">
-              Call
-            </a>
-          ) : (
-            <div className="bg-muted text-muted-foreground font-semibold py-3.5 rounded-xl text-center text-sm cursor-not-allowed">No phone</div>
-          )}
-          <button onClick={() => setIsBookOpen(true)} className="bg-primary hover:bg-primary/90 text-white font-semibold py-3.5 rounded-xl text-sm transition-colors">
-            Book Appointment
-          </button>
-        </div>
+      <div className="px-4 md:px-8 pb-8 max-w-3xl mx-auto flex gap-3">
+        {clinic.phone ? (
+          <a
+            href={`tel:${clinic.phone}`}
+            className="flex-1 h-12 rounded-xl border border-border bg-card flex items-center justify-center gap-2 text-sm font-semibold text-foreground btn-press transition-expo hover:bg-muted"
+          >
+            <Phone className="h-4 w-4" /> Call
+          </a>
+        ) : (
+          <div className="flex-1 h-12 rounded-xl bg-muted flex items-center justify-center text-sm font-semibold text-muted-foreground">
+            No phone
+          </div>
+        )}
+        <button
+          onClick={() => setIsBookOpen(true)}
+          className="flex-1 h-12 rounded-xl bg-primary text-primary-foreground flex items-center justify-center gap-2 text-sm font-semibold btn-press transition-expo hover:opacity-90"
+        >
+          <Calendar className="h-4 w-4" /> Book Appointment
+        </button>
       </div>
 
       <BookVetModal isOpen={isBookOpen} onClose={() => setIsBookOpen(false)} petName="Buddy" petEmoji="🐕" />

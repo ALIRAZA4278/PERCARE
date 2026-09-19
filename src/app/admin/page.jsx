@@ -157,7 +157,7 @@ export default function AdminOverviewPage() {
   const orderStatusBadge = { pending: 'bg-amber/10 text-amber', confirmed: 'bg-primary/10 text-primary', shipped: 'bg-primary/10 text-primary', delivered: 'bg-vitality/10 text-vitality', cancelled: 'bg-emergency/10 text-emergency' };
 
   if (loading) return (
-    <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <div className="flex items-center gap-3 text-muted-foreground">
         <Activity size={20} className="animate-pulse" />
         <span className="text-sm">Loading dashboard...</span>
@@ -166,7 +166,7 @@ export default function AdminOverviewPage() {
   );
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Overview</h1>
         <p className="text-sm text-muted-foreground mt-1">Welcome back, {profile?.full_name?.split(' ')[0]} — FluffyNest at a glance</p>

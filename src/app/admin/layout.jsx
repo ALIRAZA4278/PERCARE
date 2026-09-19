@@ -3,8 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import AdminSidebar from '@/components/AdminSidebar';
-import AdminHeader from '@/components/AdminHeader';
+import AdminShell from '@/components/AdminShell';
 import { canAccess } from '@/lib/adminRoles';
 
 export default function AdminLayout({ children }) {
@@ -52,13 +51,5 @@ export default function AdminLayout({ children }) {
   const adminRole = profile.admin_role;
   if (adminRole && !canAccess(adminRole, pathname) && pathname !== '/admin') return null;
 
-  return (
-    <div className="bg-background min-h-screen">
-      <AdminSidebar />
-      <main className="lg:ml-64 pt-14 lg:pt-0 min-h-screen bg-background">
-        <AdminHeader />
-        {children}
-      </main>
-    </div>
-  );
+  return <AdminShell>{children}</AdminShell>;
 }
