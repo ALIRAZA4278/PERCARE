@@ -151,10 +151,10 @@ export default function UsersPage() {
   const paged = filtered.slice(page * PAGE_SIZE, (page + 1) * PAGE_SIZE);
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
 
-  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
+  if (loading) return <div className="flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Users</h1>

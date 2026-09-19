@@ -57,7 +57,7 @@ export default function AdminHeader() {
   };
 
   return (
-    <div className="sticky top-0 z-10 bg-card border-b border-border px-4 sm:px-6 py-3 flex items-center gap-3">
+    <div className="flex items-center gap-3 flex-1 min-w-0">
       <div ref={searchRef} className="relative flex-1 max-w-xl">
         <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
         <input
@@ -68,7 +68,7 @@ export default function AdminHeader() {
           className="w-full pl-9 pr-8 py-2 bg-muted border border-border rounded-lg text-sm text-foreground placeholder:text-muted-foreground outline-none focus:border-primary focus:bg-card transition-colors"
         />
         {query && (
-          <button onClick={() => { setQuery(''); setShowResults(false); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-muted-foreground">
+          <button onClick={() => { setQuery(''); setShowResults(false); }} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
             <X size={14} />
           </button>
         )}
@@ -96,7 +96,7 @@ export default function AdminHeader() {
         )}
       </div>
 
-      <div ref={alertsRef} className="relative shrink-0">
+      <div ref={alertsRef} className="relative shrink-0 ml-auto">
         <button onClick={() => setShowAlerts(v => !v)} className="relative p-2 hover:bg-muted rounded-lg text-muted-foreground transition-colors">
           <Bell size={18} />
           {alerts.length > 0 && (

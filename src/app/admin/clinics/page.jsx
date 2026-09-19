@@ -131,10 +131,10 @@ export default function ClinicsPage() {
     hospital: clinics.filter(c => c.is_emergency_available).length,
   };
 
-  if (loading) return <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center"><p className="text-muted-foreground text-sm">Loading...</p></div>;
+  if (loading) return <div className="flex items-center justify-center"><p className="text-muted-foreground text-sm">Loading...</p></div>;
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Clinics & Hospitals</h1>
