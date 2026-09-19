@@ -70,7 +70,7 @@ export default function PetDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+      <div className="px-4 md:px-8 max-w-5xl mx-auto py-4 sm:py-6">
         <Link href="/get-your-pet" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-5 transition-colors">
           <ArrowLeft size={16} />Back to Pets
         </Link>

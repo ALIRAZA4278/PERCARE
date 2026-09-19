@@ -50,10 +50,10 @@ export default function SellerProfilePage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="px-4 md:px-8 max-w-5xl mx-auto py-3 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-              <Link href="/shop" className="p-2 hover:bg-muted rounded-lg transition-colors shrink-0">
+              <Link href="/shop" className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center btn-press transition-expo hover:bg-muted-foreground/10 shrink-0">
                 <ArrowLeft size={18} className="text-foreground" />
               </Link>
               <h1 className="text-base sm:text-xl font-bold text-foreground truncate">{store.name}</h1>
@@ -70,8 +70,8 @@ export default function SellerProfilePage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="bg-card rounded-2xl p-5 sm:p-6 border border-border mb-5">
+      <div className="px-4 md:px-8 max-w-5xl mx-auto py-6 sm:py-8">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-5">
           <div className="flex items-center gap-4 mb-3">
             <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 overflow-hidden">
               {store.logo_url ? (
@@ -161,12 +161,12 @@ export default function SellerProfilePage() {
           </div>
         )}
 
-        <div className="bg-card rounded-2xl p-5 sm:p-6 border border-border">
-          <h3 className="text-lg font-bold text-foreground mb-4">Reviews ({reviews.length})</h3>
+        <div className="p-5 rounded-2xl bg-card shadow-card">
+          <h3 className="text-sm font-bold text-foreground mb-3">Reviews ({reviews.length})</h3>
           {reviews.length > 0 ? (
             <div className="space-y-4">
               {reviews.map((review, i) => (
-                <div key={i} className="p-4 rounded-xl bg-muted border border-border">
+                <div key={i} className="p-4 rounded-xl bg-muted/50">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2.5">
                       <div className="w-9 h-9 bg-primary/10 rounded-full flex items-center justify-center shrink-0">

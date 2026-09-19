@@ -84,7 +84,7 @@ export default function BrowsePetsPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="bg-gradient-to-b from-muted to-muted py-8 sm:py-14">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="px-4 md:px-8 max-w-5xl mx-auto">
           <Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors">
             <ArrowLeft size={16} />Back to Home
           </Link>
@@ -105,7 +105,7 @@ export default function BrowsePetsPage() {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+      <div className="px-4 md:px-8 max-w-5xl mx-auto">
         <div className="py-10 sm:py-14">
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">What You Get With Every Pet</h2>
@@ -113,7 +113,7 @@ export default function BrowsePetsPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map(({ icon: Icon, title, description }) => (
-              <div key={title} className="bg-card rounded-2xl p-5 sm:p-6 border border-border hover:shadow-card-hover transition-all">
+              <div key={title} className="p-5 rounded-2xl bg-card shadow-card hover:shadow-card-hover transition-all">
                 <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center mb-3"><Icon size={20} className="text-primary" /></div>
                 <h3 className="font-bold text-foreground text-sm sm:text-base mb-1">{title}</h3>
                 <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">{description}</p>
@@ -207,7 +207,7 @@ export default function BrowsePetsPage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
             {reviews.map((review) => (
-              <div key={review.name} className="bg-card rounded-2xl p-5 sm:p-6 border border-border">
+              <div key={review.name} className="p-5 rounded-2xl bg-card shadow-card">
                 <div className="flex items-center gap-0.5 mb-3">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={16} className={i < review.rating ? 'text-amber fill-amber' : 'text-muted-foreground/40'} />

@@ -83,7 +83,7 @@ export default function ProfilePage() {
       </div>
 
       <div className="px-4 md:px-8 max-w-3xl mx-auto py-6 sm:py-8">
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-4 sm:mb-5">
           <div className="flex items-center gap-4 mb-5">
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
               {profile.avatar_url ? (
@@ -104,7 +104,7 @@ export default function ProfilePage() {
                     </div>
                   )}
                 </div>
-                <Link href="/profile/edit" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
+                <Link href="/profile/edit" className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center btn-press transition-expo hover:bg-muted-foreground/10 shrink-0">
                   <Edit size={18} className="text-muted-foreground" />
                 </Link>
               </div>
@@ -117,7 +117,7 @@ export default function ProfilePage() {
               { value: stats.appointments, label: 'Appointments' },
               { value: stats.orders, label: 'Orders' },
             ].map(({ value, label }) => (
-              <div key={label} className="bg-muted rounded-xl p-3 sm:p-4 text-center border border-border">
+              <div key={label} className="text-center p-3 rounded-xl bg-muted/50">
                 <p className="text-lg sm:text-xl font-bold text-foreground">{value}</p>
                 <p className="text-[10px] sm:text-xs text-muted-foreground">{label}</p>
               </div>
@@ -125,7 +125,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+        <div className="p-5 rounded-2xl bg-card shadow-card mb-4 sm:mb-5">
           <div className="space-y-3">
             {profile.phone && (
               <div className="flex items-center gap-3">
@@ -141,7 +141,7 @@ export default function ProfilePage() {
         </div>
 
         {appointments.length > 0 && (
-          <div className="bg-card rounded-xl sm:rounded-2xl p-5 sm:p-6 border border-border mb-4 sm:mb-5">
+          <div className="p-5 rounded-2xl bg-card shadow-card mb-4 sm:mb-5">
             <div className="flex items-center gap-2 mb-4">
               <Calendar size={18} className="text-primary" />
               <h3 className="text-lg font-bold text-foreground">Upcoming Appointments</h3>
@@ -175,7 +175,7 @@ export default function ProfilePage() {
             <Link key={label} href={href}
               className="flex items-center justify-between bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border hover:shadow-card-hover transition-all group">
               <div className="flex items-center gap-3 sm:gap-4">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0 border border-border">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0">
                   <Icon size={20} className="text-primary" />
                 </div>
                 <div>

@@ -23,7 +23,7 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-background">
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="px-4 md:px-8 max-w-3xl mx-auto py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/profile/settings" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
               <ArrowLeft size={18} className="text-foreground" />
@@ -33,7 +33,7 @@ export default function FAQPage() {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="px-4 md:px-8 max-w-3xl mx-auto py-6 sm:py-8">
         <div className="flex items-center gap-2.5 mb-6">
           <div className="w-9 h-9 bg-primary/10 rounded-lg flex items-center justify-center">
             <HelpCircle size={18} className="text-primary" />
