@@ -25,6 +25,7 @@ export const PAGE_PERMISSIONS = {
   '/admin/users':      ['super_admin', 'operations', 'moderator', 'support'],
   '/admin/vets':       ['super_admin', 'operations', 'vet_admin'],
   '/admin/clinics':    ['super_admin', 'operations', 'vet_admin'],
+  '/admin/sellers':    ['super_admin', 'commerce'],
   '/admin/stores':     ['super_admin', 'commerce'],
   '/admin/shelters':   ['super_admin', 'operations'],
   '/admin/products':   ['super_admin', 'commerce'],

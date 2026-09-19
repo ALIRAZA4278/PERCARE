@@ -77,7 +77,7 @@ export default function PetDetailPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           <div className="relative">
-            <div className="bg-card rounded-2xl border border-border aspect-square flex items-center justify-center overflow-hidden">
+            <div className="rounded-2xl bg-card shadow-card aspect-square flex items-center justify-center overflow-hidden">
               {pet.image_url ? (
                 <img src={pet.image_url} alt={pet.name} className="w-full h-full object-cover" />
               ) : (

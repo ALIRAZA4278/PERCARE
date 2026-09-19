@@ -22,7 +22,7 @@ export default function FAQPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-card border-b border-border sticky top-0 z-10">
+      <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/profile/settings" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
@@ -43,7 +43,7 @@ export default function FAQPage() {
 
         <div className="space-y-2 sm:space-y-3">
           {faqs.map((faq, index) => (
-            <div key={index} className="bg-card rounded-xl border border-border overflow-hidden">
+            <div key={index} className="rounded-xl bg-card shadow-card overflow-hidden">
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full flex items-center justify-between p-4 sm:p-5 text-left hover:bg-muted transition-colors"

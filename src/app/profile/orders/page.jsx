@@ -57,8 +57,8 @@ export default function MyOrdersPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="bg-card border-b border-border sticky top-0 z-10">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+      <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-border">
+        <div className="px-4 md:px-8 max-w-3xl mx-auto py-3 sm:py-4">
           <div className="flex items-center gap-2 sm:gap-3">
             <Link href="/profile" className="p-2 hover:bg-muted rounded-lg transition-colors flex-shrink-0">
               <ArrowLeft size={18} className="text-foreground" />
@@ -68,13 +68,13 @@ export default function MyOrdersPage() {
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <div className="px-4 md:px-8 max-w-3xl mx-auto py-6 sm:py-8">
         <div className="space-y-2 sm:space-y-3">
           {orders.map((order) => {
             const config = statusConfig[order.status] || statusConfig.pending;
             const StatusIcon = config.icon;
             return (
-              <div key={order.id} className="flex items-center justify-between bg-card rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-border hover:shadow-card-hover transition-all cursor-pointer group">
+              <Link key={order.id} href={`/profile/orders/${order.id}`} className="flex items-center justify-between rounded-2xl bg-card shadow-card p-4 sm:p-5 hover:shadow-card-hover transition-all btn-press cursor-pointer group">
                 <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-muted rounded-xl flex items-center justify-center flex-shrink-0 border border-border">
                     <Package size={20} className="text-muted-foreground" />
@@ -91,8 +91,8 @@ export default function MyOrdersPage() {
                     </div>
                   </div>
                 </div>
-                <ChevronRight size={18} className="text-muted-foreground group-hover:text-muted-foreground transition-colors flex-shrink-0" />
-              </div>
+                <ChevronRight size={18} className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
+              </Link>
             );
           })}
         </div>

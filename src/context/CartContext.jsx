@@ -20,21 +20,21 @@ export function CartProvider({ children }) {
     localStorage.setItem('petcare-cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const addToCart = (product) => {
+  // The product page has a quantity stepper, so callers can add more than one
+  // at a time; everywhere else the default of 1 keeps the old behaviour.
+  const addToCart = (product, quantity = 1) => {
+    const amount = Math.max(1, quantity);
     setCartItems(currentItems => {
       const existingItem = currentItems.find(item => item.id === product.id);
-      
+
       if (existingItem) {
-        // Item already exists, increase quantity
         return currentItems.map(item =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + amount }
             : item
         );
-      } else {
-        // New item, add to cart
-        return [...currentItems, { ...product, quantity: 1 }];
       }
+      return [...currentItems, { ...product, quantity: amount }];
     });
   };
 

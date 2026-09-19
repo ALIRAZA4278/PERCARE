@@ -31,6 +31,7 @@ const ALL_NAV = [
   { name: 'Users', icon: Users, href: '/admin/users' },
   { name: 'Vets', icon: Stethoscope, href: '/admin/vets' },
   { name: 'Clinics', icon: Building2, href: '/admin/clinics' },
+  { name: 'Sellers', icon: ShoppingBag, href: '/admin/sellers' },
   { name: 'Stores', icon: Store, href: '/admin/stores' },
   { name: 'Shelters', icon: Home, href: '/admin/shelters' },
   { name: 'Products', icon: Package, href: '/admin/products' },
