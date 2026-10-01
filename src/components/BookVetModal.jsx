@@ -15,6 +15,7 @@ export default function BookVetModal({ isOpen, onClose, petName, petEmoji, vetId
   const [vets, setVets] = useState([]);
   const [booking, setBooking] = useState(false);
   const [booked, setBooked] = useState(false);
+  const [error, setError] = useState('');
   const [pets, setPets] = useState([]);
   const [selectedPetId, setSelectedPetId] = useState(null);
 
@@ -66,7 +67,7 @@ export default function BookVetModal({ isOpen, onClose, petName, petEmoji, vetId
       if (selectedTime.includes('AM') && hour === 12) hour = 0;
       const formattedTime = `${String(hour).padStart(2, '0')}:${m}:00`;
 
-      await supabase.from('appointments').insert({
+      const { error: writeError } = await supabase.from('appointments').insert({
         pet_owner_id: user.id,
         vet_id: vetToBook.id,
         pet_id: selectedPetId || null,
@@ -75,8 +76,18 @@ export default function BookVetModal({ isOpen, onClose, petName, petEmoji, vetId
         reason: service,
         status: 'pending',
       });
+      setBooking(false);
+
+      // A rejected insert used to land here as a confirmed booking.
+      if (writeError) {
+        setError(writeError.message || 'Could not book this appointment. Please try again.');
+        return;
+      }
       setBooked(true);
-    } catch {}
+      return;
+    } catch (err) {
+      setError(err?.message || 'Could not book this appointment. Please try again.');
+    }
     setBooking(false);
   };
 
@@ -252,6 +263,9 @@ export default function BookVetModal({ isOpen, onClose, petName, petEmoji, vetId
 
                 {!user && <p className="text-sm text-emergency mb-3 text-center">Please log in to book an appointment.</p>}
 
+                {error && (
+                  <p className="text-xs font-medium text-emergency bg-emergency/10 rounded-xl px-3 py-2 mb-3">{error}</p>
+                )}
                 <button onClick={handleConfirmBooking} disabled={booking || !user}
                   className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white font-semibold py-3.5 rounded-lg transition-colors shadow-card flex items-center justify-center gap-2 text-sm"
                 >
