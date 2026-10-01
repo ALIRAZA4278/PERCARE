@@ -76,27 +76,58 @@ CREATE POLICY "Users can insert own notifications" ON notifications
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
 -- ---------- support_tickets ----------
--- The admin panel reads this table but no migration ever created it.
+-- The admin panel queries this table. On this database it already exists and
+-- its owner column is `created_by` (the app selects
+-- `creator:profiles!created_by`), which is why the first version of this
+-- script failed on `creator_id`. The block below works either way: it creates
+-- the table if missing, then builds the user-facing policy against whichever
+-- owner column is actually present.
 CREATE TABLE IF NOT EXISTS support_tickets (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  creator_id UUID REFERENCES profiles(id) ON DELETE SET NULL,
+  created_by UUID REFERENCES profiles(id) ON DELETE SET NULL,
   subject TEXT NOT NULL,
   message TEXT,
-  priority TEXT DEFAULT 'normal' CHECK (priority IN ('low', 'normal', 'high', 'urgent')),
-  status TEXT DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'resolved', 'closed')),
+  admin_notes TEXT,
+  priority TEXT DEFAULT 'normal',
+  status TEXT DEFAULT 'open',
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
 ALTER TABLE support_tickets ENABLE ROW LEVEL SECURITY;
 
-DROP POLICY IF EXISTS "Users can view own tickets" ON support_tickets;
-CREATE POLICY "Users can view own tickets" ON support_tickets
-  FOR SELECT USING (auth.uid() = creator_id);
+DO $$
+DECLARE
+  owner_col text;
+BEGIN
+  SELECT column_name INTO owner_col
+  FROM information_schema.columns
+  WHERE table_schema = 'public'
+    AND table_name = 'support_tickets'
+    AND column_name IN ('created_by', 'creator_id', 'user_id')
+  ORDER BY CASE column_name
+             WHEN 'created_by' THEN 1
+             WHEN 'creator_id' THEN 2
+             ELSE 3
+           END
+  LIMIT 1;
 
-DROP POLICY IF EXISTS "Users can create tickets" ON support_tickets;
-CREATE POLICY "Users can create tickets" ON support_tickets
-  FOR INSERT WITH CHECK (auth.uid() = creator_id);
+  IF owner_col IS NULL THEN
+    RAISE NOTICE 'support_tickets has no owner column — admin policies only';
+  ELSE
+    RAISE NOTICE 'support_tickets owner column: %', owner_col;
+
+    EXECUTE 'DROP POLICY IF EXISTS "Users can view own tickets" ON support_tickets';
+    EXECUTE format(
+      'CREATE POLICY "Users can view own tickets" ON support_tickets
+         FOR SELECT USING (auth.uid() = %I)', owner_col);
+
+    EXECUTE 'DROP POLICY IF EXISTS "Users can create tickets" ON support_tickets';
+    EXECUTE format(
+      'CREATE POLICY "Users can create tickets" ON support_tickets
+         FOR INSERT WITH CHECK (auth.uid() = %I)', owner_col);
+  END IF;
+END $$;
 
 DROP POLICY IF EXISTS "Admins can view all tickets" ON support_tickets;
 CREATE POLICY "Admins can view all tickets" ON support_tickets
