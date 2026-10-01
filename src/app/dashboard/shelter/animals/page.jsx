@@ -28,6 +28,7 @@ export default function ShelterAnimalsPage() {
   const [form, setForm] = useState({ name: '', species: 'dog', breed: '', age_years: '', gender: 'male', adoption_status: 'available', description: '', image_url: '', health_status: '' });
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => { if (user) fetchData(); }, [user]);
 
@@ -40,8 +41,14 @@ export default function ShelterAnimalsPage() {
     setLoading(false);
   };
 
-  const openAdd = () => { setEditAnimal(null); setForm({ name: '', species: 'Dog', breed: '', age: '', gender: 'Male', status: 'available', description: '', image_url: '' }); setShowModal(true); };
-  const openEdit = (a) => { setEditAnimal(a); setForm({ name: a.name, species: a.species, breed: a.breed || '', age_years: a.age_years || '', gender: a.gender || 'male', adoption_status: a.adoption_status || 'available', description: a.description || '', image_url: a.image_url || '', health_status: a.health_status || '' }); setShowModal(true); };
+  // Keys and casing must match the form inputs and the shelter_animals CHECK
+  // constraints: species/gender/adoption_status are all lowercase enums.
+  const emptyForm = {
+    name: '', species: 'dog', breed: '', age_years: '', gender: 'male',
+    adoption_status: 'available', description: '', image_url: '', health_status: '',
+  };
+  const openAdd = () => { setEditAnimal(null); setForm(emptyForm); setError(''); setShowModal(true); };
+  const openEdit = (a) => { setEditAnimal(a); setForm({ name: a.name, species: a.species, breed: a.breed || '', age_years: a.age_years || '', gender: a.gender || 'male', adoption_status: a.adoption_status || 'available', description: a.description || '', image_url: a.image_url || '', health_status: a.health_status || '' }); setError(''); setShowModal(true); };
 
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -53,17 +60,26 @@ export default function ShelterAnimalsPage() {
   };
 
   const handleSave = async () => {
-    if (!form.name.trim()) return;
+    if (!form.name.trim()) { setError('Name is required'); return; }
+    if (!shelter) { setError('No shelter is linked to this account yet.'); return; }
+
     setSaving(true);
+    setError('');
     const payload = { ...form, shelter_id: shelter.id, age_years: form.age_years ? parseInt(form.age_years) : null };
-    if (editAnimal) {
-      const { data } = await supabase.from('shelter_animals').update(payload).eq('id', editAnimal.id).select().single();
-      setAnimals(animals.map(a => a.id === editAnimal.id ? data : a));
-    } else {
-      const { data } = await supabase.from('shelter_animals').insert(payload).select().single();
-      setAnimals([data, ...animals]);
-    }
+
+    const { data, error: writeError } = editAnimal
+      ? await supabase.from('shelter_animals').update(payload).eq('id', editAnimal.id).select().single()
+      : await supabase.from('shelter_animals').insert(payload).select().single();
+
     setSaving(false);
+
+    // Without this the modal closed on failure and the row was never created.
+    if (writeError || !data) {
+      setError(writeError?.message || 'Could not save this animal. Please try again.');
+      return;
+    }
+
+    setAnimals(editAnimal ? animals.map(a => (a.id === editAnimal.id ? data : a)) : [data, ...animals]);
     setShowModal(false);
   };
 
@@ -81,7 +97,7 @@ export default function ShelterAnimalsPage() {
   if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Animals</h1>
@@ -202,6 +218,9 @@ export default function ShelterAnimalsPage() {
                     <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
                   </label>
                 </div>
+                {error && (
+                  <p className="text-xs font-medium text-emergency bg-emergency/10 rounded-xl px-3 py-2">{error}</p>
+                )}
                 <button onClick={handleSave} disabled={saving || uploading}
                   className="w-full bg-vitality hover:bg-vitality/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl btn-press transition-expo">
                   {saving ? 'Saving...' : editAnimal ? 'Save Changes' : 'Add Animal'}

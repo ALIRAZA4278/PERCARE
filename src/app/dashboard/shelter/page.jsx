@@ -97,7 +97,7 @@ export default function ShelterOverviewPage() {
   };
 
   if (!shelter) return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">Welcome to Shelter Dashboard</h1>
       <div className="rounded-2xl bg-card shadow-card p-6 max-w-xl">
         <h2 className="text-lg font-bold text-foreground mb-1">Set Up Your Shelter</h2>
@@ -147,7 +147,7 @@ export default function ShelterOverviewPage() {
   );
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>

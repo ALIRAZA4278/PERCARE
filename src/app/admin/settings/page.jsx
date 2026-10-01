@@ -38,8 +38,10 @@ export default function SettingsPage() {
     setLoading(false);
   };
 
+  // target_id is NOT NULL and site_settings has no UUID (its PK is a boolean),
+  // so the acting admin is recorded as the target; details names the flag.
   const logAudit = (action, details) =>
-    supabase.from('admin_audit_log').insert({ admin_id: user.id, action, target_type: 'site_settings', target_id: null, details });
+    supabase.from('admin_audit_log').insert({ admin_id: user.id, action, target_type: 'site_settings', target_id: user.id, details });
 
   const handleToggle = async (field, value) => {
     setSaving(field);

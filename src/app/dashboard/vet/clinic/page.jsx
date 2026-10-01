@@ -152,7 +152,7 @@ export default function VetClinicPage() {
   // No clinic — show create option
   if (!clinic) {
     return (
-      <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-[60vh]">
+      <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center max-w-md">
           <div className="text-6xl mb-4">🏥</div>
           <h2 className="text-xl font-bold text-foreground mb-2">No Clinic Yet</h2>
@@ -200,7 +200,7 @@ export default function VetClinicPage() {
   }
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
         <div>

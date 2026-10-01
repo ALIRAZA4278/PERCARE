@@ -43,7 +43,7 @@ export default function VetSettingsPage() {
   ];
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       <div className="flex items-center gap-3 mb-6">
         <Link href="/dashboard/vet" className="p-2 hover:bg-muted rounded-lg transition-colors">
           <ArrowLeft size={18} className="text-foreground" />

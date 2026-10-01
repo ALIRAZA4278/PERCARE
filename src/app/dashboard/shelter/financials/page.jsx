@@ -123,7 +123,7 @@ export default function ShelterFinancialsPage() {
   if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
