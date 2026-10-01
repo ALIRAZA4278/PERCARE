@@ -11,10 +11,12 @@ export default function ReportPetModal({ isOpen, onClose, onSubmit }) {
     contact_phone: '', contact_email: '', description: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     try {
       if (onSubmit) await onSubmit({ ...formData, type: reportType });
       onClose();
@@ -25,7 +27,8 @@ export default function ReportPetModal({ isOpen, onClose, onSubmit }) {
       });
       setReportType('lost');
     } catch (err) {
-      console.error('Error submitting report:', err);
+      // Previously console-only: the modal stayed open with no explanation.
+      setError(err?.message || 'Could not submit this report. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -132,6 +135,9 @@ export default function ReportPetModal({ isOpen, onClose, onSubmit }) {
                 placeholder="Distinguishing features, collar details, behavior..." rows={4} className={`${inputClass} resize-none py-3`} />
             </div>
 
+            {error && (
+              <p className="text-xs font-medium text-emergency bg-emergency/10 rounded-xl px-3 py-2 mb-3">{error}</p>
+            )}
             <button type="submit" disabled={isLoading}
               className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white font-semibold py-3.5 rounded-lg transition-colors shadow-card">
               {isLoading ? 'Submitting...' : 'Submit Report'}
