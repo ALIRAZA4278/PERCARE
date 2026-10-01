@@ -16,6 +16,7 @@ export default function AddPetModal({ isOpen, onClose, onAdd }) {
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
@@ -28,6 +29,7 @@ export default function AddPetModal({ isOpen, onClose, onAdd }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
     try {
       let image_url = null;
       if (imageFile && user) {
@@ -43,7 +45,9 @@ export default function AddPetModal({ isOpen, onClose, onAdd }) {
       setImageFile(null);
       setImagePreview(null);
     } catch (err) {
-      console.error('Error adding pet:', err);
+      // Previously this only reached the console, so a failed save looked
+      // like nothing had happened at all.
+      setError(err?.message || 'Could not add this pet. Please try again.');
     } finally {
       setIsLoading(false);
     }
@@ -204,6 +208,9 @@ export default function AddPetModal({ isOpen, onClose, onAdd }) {
               ))}
             </div>
 
+            {error && (
+              <p className="text-xs font-medium text-emergency bg-emergency/10 rounded-xl px-3 py-2 mb-3">{error}</p>
+            )}
             <button type="submit" disabled={isLoading}
               className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white font-semibold py-3.5 rounded-lg transition-colors shadow-card">
               {isLoading ? 'Adding Pet...' : 'Add Pet'}
