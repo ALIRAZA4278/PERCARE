@@ -11,7 +11,7 @@ const storeTypeMap = { physical: 'Physical Store', online: 'Online Store', both:
 const reverseStoreTypeMap = { 'Physical Store': 'physical', 'Online Store': 'online', 'Physical + Online Store': 'both' };
 
 export default function SellerStorePage() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [store, setStore] = useState(null);
   const [stats, setStats] = useState({ products: 0, orders: 0, fulfillment: 0, avgDelivery: '—' });
   const [loading, setLoading] = useState(true);
@@ -22,6 +22,7 @@ export default function SellerStorePage() {
   });
   const [createForm, setCreateForm] = useState({ name: '', description: '', store_category: 'General Pet Store', address: '', city: '', phone: '' });
   const [creating, setCreating] = useState(false);
+  const [createError, setCreateError] = useState('');
 
   useEffect(() => {
     if (user) fetchData();
@@ -86,8 +87,12 @@ export default function SellerStorePage() {
   const handleCreateStore = async () => {
     if (!createForm.name.trim()) return;
     setCreating(true);
-    const { data } = await supabase.from('stores').insert({
+    // stores.store_type is NOT NULL with a CHECK; leaving it out made every
+    // create fail, and the discarded error made it look like nothing happened.
+    const storeType = profile?.role === 'company' ? 'company' : 'individual';
+    const { data, error: createError } = await supabase.from('stores').insert({
       owner_id: user.id,
+      store_type: storeType,
       name: createForm.name,
       description: createForm.description || null,
       store_category: createForm.store_category || null,
@@ -96,13 +101,17 @@ export default function SellerStorePage() {
       phone: createForm.phone || null,
       location_type: 'both',
     }).select().single();
-    if (data) setStore(data);
     setCreating(false);
+    if (createError || !data) {
+      setCreateError(createError?.message || 'Could not create the store. Please try again.');
+      return;
+    }
+    setStore(data);
   };
 
   if (!store) {
     return (
-      <div className="p-4 sm:p-6 lg:p-8">
+      <div>
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-6">My Store</h1>
         <div className="rounded-2xl bg-card shadow-card p-6 max-w-xl">
           <h2 className="text-lg font-bold text-foreground mb-1">Create Your Store</h2>
@@ -144,8 +153,11 @@ export default function SellerStorePage() {
                   className="w-full px-4 py-2.5 rounded-xl border border-border outline-none focus:border-primary text-sm text-foreground bg-card placeholder:text-muted-foreground" />
               </div>
             </div>
+            {createError && (
+              <p className="text-xs font-medium text-emergency bg-emergency/10 rounded-xl px-3 py-2">{createError}</p>
+            )}
             <button onClick={handleCreateStore} disabled={creating || !createForm.name.trim()}
-              className="w-full bg-amber hover:bg-amber/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl transition-colors text-sm">
+              className="w-full bg-amber hover:bg-amber/90 disabled:opacity-50 text-white font-semibold py-3 rounded-xl btn-press transition-expo text-sm">
               {creating ? 'Creating...' : 'Create Store'}
             </button>
           </div>
@@ -157,7 +169,7 @@ export default function SellerStorePage() {
   const inputClass = "w-full px-4 py-2.5 rounded-lg border border-border outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-sm text-foreground bg-card placeholder:text-muted-foreground";
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground">My Store</h1>

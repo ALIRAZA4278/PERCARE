@@ -101,8 +101,11 @@ export default function UsersPage() {
     setProcessing(banModal.id);
     const expiresAt = new Date();
     expiresAt.setFullYear(expiresAt.getFullYear() + 10);
+    // ban_type is NOT NULL with a CHECK of temporary|permanent; without it the
+    // ban record was never written even though the profile was flagged banned.
     await supabase.from('user_bans').insert({
       user_id: banModal.id, banned_by: user.id,
+      ban_type: 'permanent',
       reason: banReason || 'Banned by admin',
       expires_at: expiresAt.toISOString(), is_active: true,
     });

@@ -61,7 +61,7 @@ function SellersTable() {
       action: approved ? 'seller_approved' : 'seller_revoked',
       target_type: 'profile',
       target_id: seller.id,
-      details: { email: seller.email },
+      details: seller.email || '',
     });
     setSellers((rows) =>
       rows.map((r) => (r.id === seller.id ? { ...r, is_approved: approved } : r))

@@ -65,7 +65,9 @@ export default function ShelterDonationsPage() {
   const handleCreatePkg = async () => {
     if (!pkgForm.name.trim()) return;
     setPkgSaving(true);
-    const amount = pkgForm.amount === 'Custom' || pkgForm.amount === '' ? null : parseFloat(pkgForm.amount);
+    // donation_packages.amount is NOT NULL, so a "Custom" package has to carry
+    // a number; 0 marks it as open-ended rather than failing the insert.
+    const amount = pkgForm.amount === 'Custom' || pkgForm.amount === '' ? 0 : parseFloat(pkgForm.amount);
     const { data } = await supabase.from('donation_packages').insert({
       shelter_id: shelter.id,
       name: pkgForm.name,
@@ -81,7 +83,9 @@ export default function ShelterDonationsPage() {
   const handleEditPkg = async () => {
     if (!pkgForm.name.trim() || !editPkg) return;
     setPkgSaving(true);
-    const amount = pkgForm.amount === 'Custom' || pkgForm.amount === '' ? null : parseFloat(pkgForm.amount);
+    // donation_packages.amount is NOT NULL, so a "Custom" package has to carry
+    // a number; 0 marks it as open-ended rather than failing the insert.
+    const amount = pkgForm.amount === 'Custom' || pkgForm.amount === '' ? 0 : parseFloat(pkgForm.amount);
     const { data } = await supabase.from('donation_packages').update({
       name: pkgForm.name,
       amount,
@@ -106,7 +110,7 @@ export default function ShelterDonationsPage() {
   if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-muted-foreground">Loading...</p></div>;
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8">
+    <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
