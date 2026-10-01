@@ -10,21 +10,28 @@ export default function AdoptModal({ isOpen, onClose, animal, shelterName }) {
   const [formData, setFormData] = useState({ fullName: '', phone: '', email: '', address: '', experience: '', reason: '' });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user || !animal) return;
     setSubmitting(true);
-    try {
-      await supabase.from('adoption_requests').insert({
+    setError('');
+    const { error: writeError } = await supabase.from('adoption_requests').insert({
         animal_id: animal.id,
         requester_id: user.id,
         shelter_id: animal.shelter_id,
         message: `Name: ${formData.fullName}\nPhone: ${formData.phone}\nAddress: ${formData.address}\nExperience: ${formData.experience}\nReason: ${formData.reason}`,
-      });
-      setSubmitted(true);
-    } catch {}
+    });
     setSubmitting(false);
+
+    // supabase-js resolves with { error } instead of throwing, so the previous
+    // catch never ran and a rejected insert still showed the success screen.
+    if (writeError) {
+      setError(writeError.message || 'Could not send the request. Please try again.');
+      return;
+    }
+    setSubmitted(true);
   };
 
   const handleClose = () => {
@@ -106,6 +113,9 @@ export default function AdoptModal({ isOpen, onClose, animal, shelterName }) {
               <textarea name="reason" value={formData.reason} onChange={handleChange} placeholder="Tell us why you'd like to adopt..." rows={3} className={`${inputClass} resize-none`} />
             </div>
             {!user && <p className="text-sm text-emergency mb-3 text-center">Please log in to submit an adoption request.</p>}
+            {error && (
+              <p className="text-xs font-medium text-emergency bg-emergency/10 rounded-xl px-3 py-2 mb-3">{error}</p>
+            )}
             <button type="submit" disabled={submitting || !user} className="w-full bg-primary hover:bg-primary/90 disabled:bg-primary/60 text-white font-semibold py-3.5 rounded-lg transition-colors shadow-card flex items-center justify-center gap-2">
               <Heart size={16} /> {submitting ? 'Submitting...' : 'Submit Application'}
             </button>

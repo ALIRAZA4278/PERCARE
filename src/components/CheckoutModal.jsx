@@ -22,6 +22,7 @@ export default function CheckoutModal({ isOpen, onClose, total, onSuccess }) {
   const [paymentMethod, setPaymentMethod] = useState('card');
   const [placing, setPlacing] = useState(false);
   const [placed, setPlaced] = useState(false);
+  const [placeError, setPlaceError] = useState('');
 
   if (!isOpen) return null;
 
@@ -59,7 +60,10 @@ export default function CheckoutModal({ isOpen, onClose, total, onSuccess }) {
 
       clearCart();
       setPlaced(true);
-    } catch {}
+    } catch (err) {
+      // orderError is thrown above; anything else lands here.
+      setPlaceError(err?.message || 'Could not place the order. Please try again.');
+    }
     setPlacing(false);
   };
 
@@ -195,6 +199,9 @@ export default function CheckoutModal({ isOpen, onClose, total, onSuccess }) {
                 </div>
               </div>
 
+              {placeError && (
+                <p className="text-xs font-medium text-emergency bg-emergency/10 rounded-xl px-3 py-2">{placeError}</p>
+              )}
               <button
                 onClick={handleConfirm}
                 disabled={!deliveryAddress.trim() || placing || !user}

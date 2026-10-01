@@ -22,14 +22,22 @@ export default function RescueRequestModal({ isOpen, onClose }) {
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      // RLS on lost_found_pets is WITH CHECK (auth.uid() = reporter_id), so a
+      // signed-out insert is always rejected.
+      setError('Please log in first — rescue reports are tied to your account.');
+      return;
+    }
+
     setSubmitting(true);
-    try {
-      await supabase.from('lost_found_pets').insert({
+    setError('');
+    const { error: writeError } = await supabase.from('lost_found_pets').insert({
         reporter_id: user?.id || null,
         type: 'found',
         species: formData.animalType.toLowerCase(),
@@ -38,17 +46,25 @@ export default function RescueRequestModal({ isOpen, onClose }) {
         description: formData.situation,
         contact_phone: formData.contact || null,
         city: formData.location,
-        pet_name: 'Unknown',
-      });
-      setSubmitted(true);
-    } catch {}
+      pet_name: 'Unknown',
+    });
+
     setSubmitting(false);
+
+    // supabase-js returns { error } rather than throwing, so the old
+    // try/catch never fired and this reported success on every failure.
+    if (writeError) {
+      setError(writeError.message || 'Could not submit the report. Please try again.');
+      return;
+    }
+    setSubmitted(true);
   };
 
   const handleClose = () => {
     onClose();
     setFormData({ animalType: '', breed: '', location: '', situation: '', contact: '' });
     setSubmitted(false);
+    setError('');
   };
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -172,6 +188,9 @@ export default function RescueRequestModal({ isOpen, onClose }) {
                 />
               </div>
 
+              {error && (
+                <p className="text-xs font-medium text-emergency bg-emergency/10 rounded-xl px-3 py-2">{error}</p>
+              )}
               <button
                 type="submit"
                 disabled={submitting}
