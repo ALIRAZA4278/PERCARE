@@ -30,7 +30,7 @@ export async function GET() {
     email,
     password,
     email_confirm: true,
-    user_metadata: { full_name: 'FluffyNest Admin', role: 'admin' },
+    user_metadata: { full_name: 'PetCare Admin', role: 'admin' },
   });
 
   if (authError) {
@@ -43,7 +43,7 @@ export async function GET() {
   const { error: profileError } = await supabaseAdmin.from('profiles').upsert({
     id: userId,
     email,
-    full_name: 'FluffyNest Admin',
+    full_name: 'PetCare Admin',
     role: 'admin',
   });
 

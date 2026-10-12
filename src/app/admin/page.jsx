@@ -169,7 +169,7 @@ export default function AdminOverviewPage() {
     <div>
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-foreground">Overview</h1>
-        <p className="text-sm text-muted-foreground mt-1">Welcome back, {profile?.full_name?.split(' ')[0]} — FluffyNest at a glance</p>
+        <p className="text-sm text-muted-foreground mt-1">Welcome back, {profile?.full_name?.split(' ')[0]} — PetCare at a glance</p>
       </div>
 
       <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mb-3">Platform</p>

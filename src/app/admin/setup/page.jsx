@@ -20,7 +20,7 @@ export default function AdminSetupPage() {
       email,
       password,
       options: {
-        data: { full_name: 'FluffyNest Admin', role: 'admin' },
+        data: { full_name: 'PetCare Admin', role: 'admin' },
       },
     });
 
@@ -47,7 +47,7 @@ export default function AdminSetupPage() {
     const { error: pe } = await supabase.from('profiles').upsert({
       id: userId,
       email,
-      full_name: 'FluffyNest Admin',
+      full_name: 'PetCare Admin',
       role: 'admin',
     });
 
@@ -62,10 +62,10 @@ export default function AdminSetupPage() {
   };
 
   const sqlFix = `INSERT INTO profiles (id, email, full_name, role)
-SELECT id, email, 'FluffyNest Admin', 'admin'
+SELECT id, email, 'PetCare Admin', 'admin'
 FROM auth.users
 WHERE email = '${email}'
-ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'FluffyNest Admin';`;
+ON CONFLICT (id) DO UPDATE SET role = 'admin', full_name = 'PetCare Admin';`;
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
